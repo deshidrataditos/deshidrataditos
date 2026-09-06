@@ -280,6 +280,18 @@ function removeItem(key) {
   saveCart();
 }
 
+function renderRecommendationDetails(recommendations) {
+  document.getElementById("recommendation-list").innerHTML = recommendations.map(product => {
+    const [weight, price] = Object.entries(product.prices)[0];
+    const photo = PRODUCT_PHOTOS[product.id];
+    return `<article class="recommendation-item">
+      <img src="${photo.src}" alt="${product.name}" loading="lazy" style="--rec-position:${photo.position}">
+      <div><strong>${product.name}</strong><span>${product.type}</span><b>${weight} · ${money(price)}</b></div>
+      <button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button>
+    </article>`;
+  }).join("");
+}
+
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -311,20 +323,12 @@ function renderCart() {
   document.getElementById("checkout-subtotal").textContent = money(subtotal);
 
   const selectedIds = new Set(cart.map(item => item.productId));
-  const selectedCategories = new Set(cart.map(item => PRODUCTS.find(product => product.id === item.productId)?.category));
-  const availableProducts = PRODUCTS.filter(product => !selectedIds.has(product.id));
-  const recommendations = availableProducts
-    .sort((a, b) => Number(selectedCategories.has(b.category)) - Number(selectedCategories.has(a.category)))
-    .slice(0, 3);
+  const recommendations = PRODUCTS.filter(product => !selectedIds.has(product.id)).slice(0, 3);
   document.getElementById("recommendation-list").innerHTML = recommendations.map(product => {
     const [weight, price] = Object.entries(product.prices)[0];
-    const photo = PRODUCT_PHOTOS[product.id];
-    return `<article class="recommendation-item">
-      <img src="${photo.src}" alt="${product.name}" loading="lazy" style="--rec-position:${photo.position};--rec-scale:${photo.scale}">
-      <div><strong>${product.name}</strong><span>${product.type}</span><b>${weight} · ${money(price)}</b></div>
-      <button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button>
-    </article>`;
+    return `<article class="recommendation-item"><div style="--rec-bg:${product.bg}"><strong>${product.name}</strong><span>${weight} · ${money(price)}</span></div><button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button></article>`;
   }).join("");
+  renderRecommendationDetails(recommendations);
 
   const percentage = Math.min(100, subtotal / FREE_SHIPPING * 100);
   document.getElementById("shipping-progress-bar").style.width = `${percentage}%`;
