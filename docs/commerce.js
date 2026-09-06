@@ -1,0 +1,99 @@
+/* Pure storefront rules. Prices are always resolved from the current catalog. */
+(() => {
+  "use strict";
+  const MAX_QUANTITY = 99;
+  const FREE_SHIPPING = 2000;
+  const NATIONAL_SHIPPING = 200;
+  const normalize = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const variant = (product, label) => product?.variants.find(item => item.label === label);
+  const findProduct = (products, id) => products.find(product => product.id === id);
+
+  function sanitizeCart(input, products) {
+    if (!Array.isArray(input)) return [];
+    const entries = new Map();
+    for (const row of input.slice(0, 500)) {
+      if (!row || typeof row !== "object") continue;
+      const product = findProduct(products, row.productId);
+      const selected = variant(product, row.weight);
+      if (!selected || product.availability === "Agotado" || !Number.isSafeInteger(row.quantity) || row.quantity < 1) continue;
+      const key = `${product.id}-${selected.label}`;
+      const quantity = Math.min(MAX_QUANTITY, row.quantity + (entries.get(key)?.quantity || 0));
+      entries.set(key, {key, productId:product.id, weight:selected.label, price:selected.price, quantity});
+    }
+    return [...entries.values()];
+  }
+
+  function addItem(cart, products, productId, label, quantity = 1) {
+    if (!Number.isSafeInteger(quantity) || quantity < 1) return sanitizeCart(cart, products);
+    return sanitizeCart([...cart, {productId, weight:label, quantity}], products);
+  }
+
+  function totals(cart, delivery = "national") {
+    const subtotal = cart.reduce((sum, row) => sum + row.price * row.quantity, 0);
+    const count = cart.reduce((sum, row) => sum + row.quantity, 0);
+    const shipping = count === 0 || subtotal >= FREE_SHIPPING ? 0 : delivery === "regional" ? null : NATIONAL_SHIPPING;
+    return {subtotal, count, shipping, total:subtotal + (shipping || 0), remaining:Math.max(0, FREE_SHIPPING - subtotal)};
+  }
+
+  function filterProducts(products, filters = {}) {
+    const words = normalize(filters.search).split(/\s+/).filter(Boolean);
+    const result = products.filter(product => {
+      const text = normalize([product.name, product.type, product.description, ...(product.tags || [])].join(" "));
+      return words.every(word => text.includes(word))
+        && (!filters.category || filters.category === "all" || product.category === filters.category)
+        && (!filters.occasion || filters.occasion === "all" || product.occasions.includes(filters.occasion))
+        && (!filters.onlyNew || product.isNew);
+    });
+    const per100 = product => product.variants[0].price / product.variants[0].grams * 100;
+    if (filters.sort === "price-asc") result.sort((a,b) => a.variants[0].price - b.variants[0].price);
+    else if (filters.sort === "unit-price") result.sort((a,b) => per100(a) - per100(b));
+    else if (filters.sort === "name") result.sort((a,b) => a.name.localeCompare(b.name, "es"));
+    else if (filters.sort === "new") result.sort((a,b) => Number(b.isNew) - Number(a.isNew) || a.rank - b.rank);
+    else result.sort((a,b) => a.rank - b.rank);
+    return result;
+  }
+
+  function recommend(products, cart, limit = 3) {
+    const selected = cart.map(row => findProduct(products, row.productId)).filter(Boolean);
+    const ids = new Set(selected.map(product => product.id));
+    const occasions = new Set(selected.flatMap(product => product.occasions));
+    const categories = new Set(selected.map(product => product.category));
+    const score = product => product.occasions.filter(occasion => occasions.has(occasion)).length * 5
+      + (categories.has(product.category) ? 1 : 2) + (product.isNew ? 1 : 0);
+    return products.filter(product => !ids.has(product.id) && product.availability !== "Agotado")
+      .sort((a,b) => score(b) - score(a) || a.rank - b.rank).slice(0, limit);
+  }
+
+  function bundleValue(product, products) {
+    if (!product.bundle) return null;
+    const regular = product.bundle.reduce((sum, item) => sum + variant(findProduct(products,item.id),item.label).price * item.quantity, 0);
+    return {regular, saving:Math.max(0, regular - product.variants[0].price)};
+  }
+
+  function orderMessage({cart, products, address, delivery, payment, notes = ""}) {
+    const clean = sanitizeCart(cart, products);
+    const total = totals(clean, delivery);
+    if (!clean.length) return "";
+    const lines = clean.flatMap(row => {
+      const product = findProduct(products, row.productId);
+      const result = [`• ${product.name} | ${row.weight} × ${row.quantity} | $${row.price * row.quantity} MXN | ${product.availability}`];
+      if (product.bundle) result.push(`  Contenido por paquete: ${product.bundle.map(item => `${item.quantity} × ${findProduct(products,item.id).name} (${item.label})`).join(", ")}`);
+      return result;
+    });
+    return ["Hola Deshidrataditos, quiero confirmar este pedido:", "", ...lines, "",
+      `Subtotal: $${total.subtotal} MXN`,
+      total.shipping === null ? "Entrega regional: costo por confirmar" : `Envío: ${total.shipping === 0 ? "gratis" : `$${total.shipping} MXN`}`,
+      `${total.shipping === null ? "Total sin entrega regional" : "Total de catálogo"}: $${total.total} MXN`,
+      `Entrega: ${delivery === "regional" ? "Regional (cobertura por confirmar)" : "Nacional"}`,
+      `Preferencia de pago: ${payment === "contra-entrega" ? "Contra entrega (sujeto a cobertura regional)" : "Transferencia"}`,
+      "", "Datos de envío:", `Nombre: ${address.name}`, `Teléfono: ${address.phone}`,
+      address.email ? `Correo: ${address.email}` : null, `C.P.: ${address.postcode}`,
+      `Dirección: ${address.street}`, `Colonia: ${address.neighborhood}`,
+      `Municipio/ciudad: ${address.city}`, `Estado: ${address.state}`,
+      address.references ? `Referencias: ${address.references}` : null,
+      notes.trim() ? `Notas del pedido: ${notes.trim()}` : null, "",
+      "Por favor confirma disponibilidad, ingredientes y fecha de preparación/entrega antes del pago."
+    ].filter(line => line !== null).join("\n");
+  }
+  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, orderMessage};
+})();

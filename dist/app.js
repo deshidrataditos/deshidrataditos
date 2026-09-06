@@ -1,525 +1,215 @@
-const PRODUCTS = [
-  {
-    id: "jerky-res",
-    name: "Jerky de res",
-    category: "jerky",
-    type: "Cecina tipo jerky",
-    description: "Carne de res con finas hierbas y sal ahumada. Picante bajo a intermedio.",
-    availability: "Disponible",
-    prices: { "50 g": 89, "100 g": 169, "250 g": 399, "1 kg": 1490 },
-    bg: "#ead2bc",
-    color: "#542311"
-  },
-  {
-    id: "jerky-conejo",
-    name: "Jerky de conejo",
-    category: "jerky",
-    type: "Cecina tipo jerky",
-    description: "Carne de conejo con finas hierbas y sal ahumada. Elaboración sobre pedido.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 119, "100 g": 219, "250 g": 519, "1 kg": 1990 },
-    bg: "#e7ddd3",
-    color: "#6b442c"
-  },
-  {
-    id: "pina-chile",
-    name: "Piña con chile",
-    category: "fruit",
-    type: "Fruta deshidratada",
-    description: "Dulce y tropical con chile en polvo, sal y un picante amable.",
-    availability: "Disponible",
-    prices: { "50 g": 35, "100 g": 59, "250 g": 139, "1 kg": 499 },
-    bg: "#f7d45d",
-    color: "#b64a1d"
-  },
-  {
-    id: "fresa-chile",
-    name: "Fresa con chile",
-    category: "fruit",
-    type: "Fruta deshidratada",
-    description: "Notas dulces y ácidas con chile en polvo y una pizca de sal.",
-    availability: "Disponible",
-    prices: { "50 g": 49, "100 g": 89, "250 g": 209, "1 kg": 749 },
-    bg: "#f5b1a6",
-    color: "#a62622"
-  },
-  {
-    id: "mango-chile",
-    name: "Mango con chile",
-    category: "fruit",
-    type: "Fruta deshidratada",
-    description: "Mango de sabor concentrado con chile y sal. Disponible sobre pedido.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 35, "100 g": 59, "250 g": 139, "1 kg": 499 },
-    bg: "#ffc447",
-    color: "#a74319"
-  },
-  {
-    id: "manzana-canela",
-    name: "Manzana con canela",
-    category: "fruit",
-    type: "Fruta deshidratada",
-    description: "Crujiente, aromática y naturalmente dulce. Una opción sin picante.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 35, "100 g": 59, "250 g": 139, "1 kg": 499 },
-    bg: "#ead39f",
-    color: "#75401e"
-  },
-  {
-    id: "platano-natural",
-    name: "Plátano natural",
-    category: "fruit",
-    type: "Fruta deshidratada",
-    description: "Práctico, dulce y listo para llevar. Sin chile y sobre pedido.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 29, "100 g": 49, "250 g": 109, "1 kg": 399 },
-    bg: "#f1dc7f",
-    color: "#725819"
-  },
-  {
-    id: "betabel",
-    name: "Chips de betabel",
-    category: "vegetable",
-    type: "Vegetal deshidratado",
-    description: "Láminas crujientes con chile en polvo, sal y un color naturalmente intenso.",
-    availability: "Disponible",
-    prices: { "50 g": 39, "100 g": 69, "250 g": 159, "1 kg": 549 },
-    bg: "#d7a0b3",
-    color: "#7a193d"
-  },
-  {
-    id: "jicama",
-    name: "Jícama deshidratada",
-    category: "vegetable",
-    type: "Vegetal deshidratado",
-    description: "Ligera y crujiente, con chile en polvo y sal. Picante bajo a intermedio.",
-    availability: "Disponible",
-    prices: { "50 g": 39, "100 g": 69, "250 g": 159, "1 kg": 549 },
-    bg: "#efe6d5",
-    color: "#6f5135"
-  },
-  {
-    id: "pepino",
-    name: "Pepino deshidratado",
-    category: "vegetable",
-    type: "Vegetal deshidratado",
-    description: "Una botana fresca de sabor con chile en polvo y sal.",
-    availability: "Disponible",
-    prices: { "50 g": 39, "100 g": 69, "250 g": 159, "1 kg": 549 },
-    bg: "#b8db9d",
-    color: "#295f2d"
-  },
-  {
-    id: "camote",
-    name: "Chips de camote",
-    category: "vegetable",
-    type: "Vegetal deshidratado",
-    description: "Dulzor natural, textura crujiente y un toque de chile con sal.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 35, "100 g": 59, "250 g": 139, "1 kg": 499 },
-    bg: "#efb17d",
-    color: "#8d3e19"
-  },
-  {
-    id: "mix-vegetales",
-    name: "Mix de vegetales",
-    category: "vegetable",
-    type: "Selección mixta",
-    description: "Una mezcla para probar diferentes sabores y texturas en una sola bolsa.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 39, "100 g": 69, "250 g": 159, "1 kg": 549 },
-    bg: "#c7dc75",
-    color: "#3b6728"
-  },
-  {
-    id: "tisana-floral",
-    name: "Tisana floral",
-    category: "flower",
-    type: "Mezcla para infusión",
-    description: "Mezcla aromática de flores deshidratadas para preparar una bebida caliente o fría.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 55, "100 g": 99, "250 g": 229, "1 kg": 849 },
-    bg: "#f2b7c6",
-    color: "#8b3151"
-  },
-  {
-    id: "flor-jamaica",
-    name: "Flor de jamaica",
-    category: "flower",
-    type: "Flor deshidratada",
-    description: "De sabor ácido y color intenso, ideal para preparar infusiones calientes o agua fresca.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 35, "100 g": 59, "250 g": 129, "1 kg": 449 },
-    bg: "#d895aa",
-    color: "#731d3d"
-  },
-  {
-    id: "manzanilla",
-    name: "Manzanilla",
-    category: "flower",
-    type: "Flor para infusión",
-    description: "Flores deshidratadas de aroma suave y delicado para preparar una infusión reconfortante.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 45, "100 g": 79, "250 g": 179, "1 kg": 649 },
-    bg: "#f4df80",
-    color: "#7a5d16"
-  },
-  {
-    id: "petalos-rosa",
-    name: "Pétalos de rosa",
-    category: "flower",
-    type: "Flor para infusión",
-    description: "Pétalos deshidratados de aroma floral, pensados para tisanas y mezclas especiales.",
-    availability: "Sobre pedido",
-    prices: { "50 g": 65, "100 g": 119, "250 g": 279, "1 kg": 999 },
-    bg: "#efb0bc",
-    color: "#862f48"
+/* Browser controller; catalog and commerce rules are shared by every view. */
+(() => {
+  "use strict";
+  const {products: PRODUCTS} = globalThis.DeshidrataditosCatalog;
+  const C = globalThis.DeshidrataditosCommerce;
+  const $ = id => document.getElementById(id);
+  const money = value => new Intl.NumberFormat("es-MX", {style:"currency",currency:"MXN",maximumFractionDigits:0}).format(value);
+  const escape = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+  const STORAGE_KEY = "deshidrataditos-cart";
+  const filters = {search:"",category:"all",occasion:"all",sort:"recommended",onlyNew:false};
+  const selections = new Map();
+  let cart = [], timer, focusBeforeCart, detailId;
+  try { cart = C.sanitizeCart(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"),PRODUCTS); } catch { cart = []; }
+  const options = (product,selected) => product.variants.map(item => '<option value="' + escape(item.label) + '"' + (selected === item.label ? " selected" : "") + ">" + escape(item.label) + " · " + money(item.price) + "</option>").join("");
+  const photo = product => '<img src="' + product.photo.src + '" alt="' + escape(product.photo.alt) + '" loading="lazy" width="1000" height="1000" style="object-position:' + product.photo.position + '">';
+  const per100 = (product,label) => { const item = C.variant(product,label); return money(item.price / item.grams * 100) + " / 100 g"; };
+  const whatsappUrl = message => "https://wa.me/523931173611?text=" + encodeURIComponent(message);
+  const deliveryFor = prefix => document.querySelector('input[name="' + prefix + '-delivery"]:checked')?.value || "national";
+  function card(product) {
+    const label = selections.get(product.id) || product.variants[0].label;
+    const item = C.variant(product,label), bundle = C.bundleValue(product,PRODUCTS);
+    return '<article class="product-card" data-product-card="' + product.id + '">' +
+      '<button type="button" class="product-photo-button" data-detail="' + product.id + '" aria-label="Ver detalles de ' + escape(product.name) + '"><span class="product-image-placeholder" style="--product-bg:' + product.bg + '">' + photo(product) +
+      (product.isNew ? '<span class="new-badge">Nuevo</span>' : "") + '<span class="image-caption">Imagen ilustrativa</span></span></button>' +
+      '<div class="product-body"><div class="product-meta"><span class="product-type">' + escape(product.type) + '</span><span class="availability ' + (product.availability === "Sobre pedido" ? "preorder" : "") + '">' + product.availability + '</span></div>' +
+      '<h3><button type="button" data-detail="' + product.id + '">' + escape(product.name) + '</button></h3><p>' + escape(product.description) + '</p>' +
+      '<div class="product-tags">' + product.tags.slice(0,2).map(tag => "<span>" + escape(tag) + "</span>").join("") + '</div>' +
+      (bundle?.saving ? '<p class="bundle-saving">Ahorras ' + money(bundle.saving) + ' frente a las tres bolsas por separado.</p>' : "") +
+      '<div class="product-controls"><label>Presentación<select class="weight-select" aria-label="Presentación de ' + escape(product.name) + '">' + options(product,label) + '</select></label><div class="price-block"><span class="price">' + money(item.price) + '</span><small class="unit-price">' + per100(product,label) + '</small></div></div>' +
+      '<button class="button button-primary add-button" type="button" data-add-product="' + product.id + '">Agregar al carrito</button><button class="product-detail-link" type="button" data-detail="' + product.id + '">Usos y detalles ↗</button></div></article>';
   }
-];
-
-const PRODUCT_PHOTOS = {
-  "jerky-res": { src: "assets/product-jerky-temp.webp", position: "left center", scale: 1.45 },
-  "jerky-conejo": { src: "assets/product-jerky-temp.webp", position: "right center", scale: 1.45 },
-  "pina-chile": { src: "assets/product-fruits-temp.webp", position: "center top", scale: 1.55 },
-  "fresa-chile": { src: "assets/product-fruits-temp.webp", position: "left top", scale: 1.55 },
-  "mango-chile": { src: "assets/product-fruits-temp.webp", position: "right top", scale: 1.55 },
-  "manzana-canela": { src: "assets/product-fruits-temp.webp", position: "left bottom", scale: 1.55 },
-  "platano-natural": { src: "assets/product-fruits-temp.webp", position: "right bottom", scale: 1.55 },
-  "betabel": { src: "assets/product-vegetables-temp.webp", position: "left top", scale: 1.55 },
-  "jicama": { src: "assets/product-vegetables-temp.webp", position: "center top", scale: 1.55 },
-  "pepino": { src: "assets/product-vegetables-temp.webp", position: "right top", scale: 1.55 },
-  "camote": { src: "assets/product-vegetables-temp.webp", position: "left bottom", scale: 1.55 },
-  "mix-vegetales": { src: "assets/product-vegetables-temp.webp", position: "right bottom", scale: 1.55 },
-  "tisana-floral": { src: "assets/product-flowers-temp.webp", position: "right bottom", scale: 1.55 },
-  "flor-jamaica": { src: "assets/product-flowers-temp.webp", position: "left top", scale: 1.55 },
-  "manzanilla": { src: "assets/product-flowers-temp.webp", position: "center top", scale: 1.55 },
-  "petalos-rosa": { src: "assets/product-flowers-temp.webp", position: "left bottom", scale: 1.55 }
-};
-
-const FREE_SHIPPING = 2000;
-const NATIONAL_SHIPPING_FEE = 200;
-const MERCADO_PAGO_URL = "";
-const WHATSAPP_NUMBER = "523931173611";
-
-let cart = JSON.parse(localStorage.getItem("deshidrataditos-cart") || "[]");
-let toastTimer;
-
-const money = value => new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 }).format(value);
-
-function productCard(product) {
-  const priceEntries = Object.entries(product.prices);
-  const options = priceEntries.map(([weight, price]) => `<option value="${weight}" data-price="${price}">${weight} · ${money(price)}</option>`).join("");
-  const badgeClass = product.availability === "Sobre pedido" ? "preorder" : "";
-  const photo = PRODUCT_PHOTOS[product.id];
-  return `
-    <article class="product-card" data-product-card="${product.id}">
-      <div class="product-image-placeholder" style="--product-bg:${product.bg};--product-color:${product.color};--photo-position:${photo.position};--photo-scale:${photo.scale}">
-        <img src="${photo.src}" alt="Fotografía temporal de ${product.name}" loading="lazy" width="1200" height="800">
-        <span class="product-badge ${badgeClass}">${product.availability}</span>
-      </div>
-      <div class="product-body">
-        <span class="product-type">${product.type}</span>
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <div class="product-controls">
-          <label>Presentación
-            <select class="weight-select" aria-label="Presentación de ${product.name}">${options}</select>
-          </label>
-          <span class="price">${money(priceEntries[0][1])}</span>
-        </div>
-        <button class="button button-primary add-button" type="button" data-add-product="${product.id}">Agregar al carrito</button>
-      </div>
-    </article>`;
-}
-
-function renderProducts() {
-  document.getElementById("featured-grid").innerHTML = [PRODUCTS[0], PRODUCTS[2], PRODUCTS[7]].map(productCard).join("");
-  document.getElementById("jerky-grid").innerHTML = PRODUCTS.filter(p => p.category === "jerky").map(productCard).join("");
-  document.getElementById("fruit-grid").innerHTML = PRODUCTS.filter(p => p.category === "fruit").map(productCard).join("");
-  document.getElementById("vegetable-grid").innerHTML = PRODUCTS.filter(p => p.category === "vegetable").map(productCard).join("");
-  document.getElementById("flower-grid").innerHTML = PRODUCTS.filter(p => p.category === "flower").map(productCard).join("");
-}
-
-function showView(name, updateHash = true) {
-  const next = document.querySelector(`[data-view="${name}"]`) || document.querySelector('[data-view="inicio"]');
-  document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view === next));
-  document.querySelectorAll(".main-nav [data-view-link]").forEach(link => link.classList.toggle("active", link.dataset.viewLink === name));
-  document.getElementById("main-nav").classList.remove("open");
-  document.getElementById("menu-toggle").setAttribute("aria-expanded", "false");
-  closeCart();
-  if (updateHash) history.replaceState(null, "", name === "inicio" ? "#inicio" : `#${name}`);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function saveCart() {
-  localStorage.setItem("deshidrataditos-cart", JSON.stringify(cart));
-  renderCart();
-}
-
-function addToCart(productId, weight) {
-  const product = PRODUCTS.find(item => item.id === productId);
-  if (!product) return;
-  const key = `${productId}-${weight}`;
-  const existing = cart.find(item => item.key === key);
-  if (existing) existing.quantity += 1;
-  else cart.push({ key, productId, weight, price: product.prices[weight], quantity: 1 });
-  saveCart();
-  showToast(`${product.name} de ${weight} se agregó al carrito`);
-}
-
-function updateItem(key, change) {
-  const item = cart.find(entry => entry.key === key);
-  if (!item) return;
-  item.quantity += change;
-  if (item.quantity <= 0) cart = cart.filter(entry => entry.key !== key);
-  saveCart();
-}
-
-function removeItem(key) {
-  cart = cart.filter(item => item.key !== key);
-  saveCart();
-}
-
-function renderCart() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  document.getElementById("cart-count").textContent = count;
-  document.getElementById("cart-subtotal").textContent = money(subtotal);
-  document.getElementById("cart-empty").classList.toggle("visible", cart.length === 0);
-  document.getElementById("cart-recommendations").style.display = cart.length ? "block" : "none";
-  document.getElementById("cart-footer").style.display = cart.length ? "block" : "none";
-
-  document.getElementById("cart-items").innerHTML = cart.map(item => {
-    const product = PRODUCTS.find(entry => entry.id === item.productId);
-    return `
-      <div class="cart-item">
-        <div><strong>${product.name}</strong><p>${item.weight} · ${product.availability}</p></div>
-        <div class="cart-item-price">${money(item.price * item.quantity)}</div>
-        <div class="cart-item-actions">
-          <button type="button" data-cart-change="-1" data-key="${item.key}" aria-label="Restar uno">−</button>
-          <span>${item.quantity}</span>
-          <button type="button" data-cart-change="1" data-key="${item.key}" aria-label="Sumar uno">+</button>
-        </div>
-        <button class="remove-item" type="button" data-remove-key="${item.key}">Quitar</button>
-      </div>`;
-  }).join("");
-
-  document.getElementById("checkout-items").innerHTML = cart.map(item => {
-    const product = PRODUCTS.find(entry => entry.id === item.productId);
-    return `<div class="checkout-item"><span class="checkout-item-visual" style="--item-bg:${product.bg}">${item.quantity}</span><div><strong>${product.name}</strong><small>${item.weight} × ${item.quantity}</small></div><b>${money(item.price * item.quantity)}</b></div>`;
-  }).join("");
-  document.getElementById("checkout-subtotal").textContent = money(subtotal);
-
-  const selectedIds = new Set(cart.map(item => item.productId));
-  const recommendations = PRODUCTS.filter(product => !selectedIds.has(product.id)).slice(0, 3);
-  document.getElementById("recommendation-list").innerHTML = recommendations.map(product => {
-    const [weight, price] = Object.entries(product.prices)[0];
-    return `<article class="recommendation-item"><div style="--rec-bg:${product.bg}"><strong>${product.name}</strong><span>${weight} · ${money(price)}</span></div><button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button></article>`;
-  }).join("");
-
-  const percentage = Math.min(100, subtotal / FREE_SHIPPING * 100);
-  document.getElementById("shipping-progress-bar").style.width = `${percentage}%`;
-  document.getElementById("shipping-progress-text").textContent = subtotal >= FREE_SHIPPING
-    ? "¡Tu pedido ya tiene envío gratis a todo México!"
-    : subtotal > 0
-      ? `Te faltan ${money(FREE_SHIPPING - subtotal)} para el envío gratis`
-      : "Envío gratis a partir de $2,000";
-  updateCheckoutTotals();
-}
-
-function selectedDelivery(formPrefix) {
-  return document.querySelector(`input[name="${formPrefix}-delivery"]:checked`)?.value || "national";
-}
-
-function shippingCost(subtotal, delivery) {
-  if (subtotal >= FREE_SHIPPING) return 0;
-  return delivery === "national" ? NATIONAL_SHIPPING_FEE : null;
-}
-
-function updateCheckoutTotals() {
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const delivery = selectedDelivery("checkout");
-  const fee = shippingCost(subtotal, delivery);
-  const shippingElement = document.getElementById("cart-shipping");
-  const totalElement = document.getElementById("cart-grand-total");
-  const summaryElement = document.getElementById("shipping-summary");
-  if (!shippingElement || !totalElement || !summaryElement) return;
-
-  if (fee === null) {
-    shippingElement.textContent = "Por confirmar";
-    totalElement.textContent = money(subtotal);
-    summaryElement.textContent = "La entrega regional se confirma según la ubicación indicada.";
-  } else {
-    shippingElement.textContent = fee === 0 ? "Gratis" : money(fee);
-    totalElement.textContent = money(subtotal + fee);
-    summaryElement.textContent = fee === 0
-      ? "Envío gratis aplicado por compra desde $2,000."
-      : "Envío nacional: $200.";
+  function renderCatalog() {
+    const result = C.filterProducts(PRODUCTS,filters);
+    $("catalog-grid").innerHTML = result.map(card).join("");
+    $("catalog-count").textContent = result.length + (result.length === 1 ? " producto" : " productos");
+    $("catalog-empty").hidden = result.length > 0;
+    $("catalog-reset").hidden = !filters.search && filters.category === "all" && filters.occasion === "all" && !filters.onlyNew && filters.sort === "recommended";
+    document.querySelectorAll("[data-category]").forEach(button => { const selected = button.dataset.category === filters.category; button.setAttribute("aria-pressed",String(selected)); button.classList.toggle("selected",selected); });
   }
-}
-
-function updateQuoteShipping() {
-  const delivery = selectedDelivery("quote");
-  document.getElementById("quote-shipping-label").textContent = delivery === "national"
-    ? "Envío nacional"
-    : "Entrega en zona regional";
-  document.getElementById("quote-shipping-price").textContent = delivery === "national" ? "$200" : "Por confirmar";
-}
-
-function openCart() {
-  document.getElementById("cart-drawer").classList.add("open");
-  document.getElementById("drawer-backdrop").classList.add("open");
-  document.getElementById("cart-drawer").setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  document.getElementById("cart-close").focus();
-}
-
-function closeCart() {
-  document.getElementById("cart-drawer").classList.remove("open");
-  document.getElementById("drawer-backdrop").classList.remove("open");
-  document.getElementById("cart-drawer").setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
-}
-
-function addressData(prefix) {
-  return {
-    postcode: document.getElementById(`${prefix}-postcode`).value.trim(),
-    name: document.getElementById(`${prefix}-name`).value.trim(),
-    phone: document.getElementById(`${prefix}-phone`).value.trim(),
-    state: document.getElementById(`${prefix}-state`).value.trim(),
-    street: document.getElementById(`${prefix}-street`).value.trim(),
-    neighborhood: document.getElementById(`${prefix}-neighborhood`).value.trim(),
-    city: document.getElementById(`${prefix}-city`).value.trim(),
-    references: document.getElementById(`${prefix}-references`).value.trim()
-  };
-}
-
-function addressLines(address) {
-  return [
-    `Nombre: ${address.name}`,
-    `Teléfono: ${address.phone}`,
-    `Código postal: ${address.postcode}`,
-    `Dirección: ${address.street}`,
-    `Colonia: ${address.neighborhood}`,
-    `Municipio/ciudad: ${address.city}`,
-    `Estado: ${address.state}`,
-    address.references ? `Referencias: ${address.references}` : null
-  ].filter(Boolean);
-}
-
-function cartMessage(payment, delivery, address) {
-  const lines = cart.map(item => {
-    const product = PRODUCTS.find(entry => entry.id === item.productId);
-    return `• ${product.name}, ${item.weight} × ${item.quantity} — ${money(item.price * item.quantity)}`;
+  function renderProducts() {
+    Object.entries({"jerky-grid":"jerky","fruit-grid":"fruit","vegetable-grid":"vegetable","flower-grid":"flower","citrus-grid":"citrus","pantry-grid":"pantry","bundle-grid":"bundle"}).forEach(([id,category]) => { $(id).innerHTML = C.filterProducts(PRODUCTS,{category}).map(card).join(""); });
+    $("featured-grid").innerHTML = ["pina-chile","jerky-res","pack-degustacion"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
+    $("new-grid").innerHTML = ["naranja-rodajas","tisana-jamaica-pina","mix-tropical"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
+    renderCatalog();
+  }
+  function resetFilters() {
+    Object.assign(filters,{search:"",category:"all",occasion:"all",sort:"recommended",onlyNew:false});
+    $("catalog-search").value = ""; $("catalog-occasion").value = "all"; $("catalog-sort").value = "recommended"; $("catalog-new").checked = false;
+    renderCatalog();
+  }
+  function setBackgroundInert(value) { document.querySelectorAll("header,main,footer,.announcement,.whatsapp-float,.skip-link").forEach(element => { element.inert = value; }); }
+  function closeCart(restore = true) {
+    const wasOpen = $("cart-drawer").classList.contains("open");
+    $("cart-drawer").classList.remove("open"); $("drawer-backdrop").classList.remove("open");
+    $("cart-drawer").setAttribute("aria-hidden","true"); $("cart-drawer").inert = true;
+    $("cart-trigger").setAttribute("aria-expanded","false"); setBackgroundInert(false);
+    if (!$("product-dialog").open) document.body.style.overflow = "";
+    if (wasOpen && restore && focusBeforeCart?.isConnected) focusBeforeCart.focus();
+  }
+  function showView(requested,updateHash = true,focus = true) {
+    const next = Array.from(document.querySelectorAll("[data-view]")).find(view => view.dataset.view === requested) || document.querySelector('[data-view="inicio"]');
+    const name = next.dataset.view;
+    document.querySelectorAll(".view").forEach(view => { view.classList.toggle("active",view === next); view.hidden = view !== next; });
+    document.querySelectorAll(".main-nav [data-view-link]").forEach(link => {
+      const active = link.dataset.viewLink === name || link.dataset.viewLink === "catalogo" && ["cecina","frutas","vegetales","flores","citricos","cocina","paquetes"].includes(name);
+      link.classList.toggle("active",active); if (active) link.setAttribute("aria-current","page"); else link.removeAttribute("aria-current");
+    });
+    $("main-nav").classList.remove("open"); $("menu-toggle").setAttribute("aria-expanded","false"); closeCart(false);
+    if (updateHash && location.hash !== "#" + name) history.pushState(null,"","#" + name);
+    const heading = name === "checkout" ? $(cart.length ? "checkout-content" : "checkout-empty").querySelector("h1") : next.querySelector("h1");
+    document.title = (heading?.textContent.replace(/\s+/g," ").trim() || "Inicio") + " | Deshidrataditos";
+    if (focus && heading) { heading.tabIndex = -1; heading.focus({preventScroll:true}); }
+    window.scrollTo({top:0,behavior:"auto"});
+  }
+  function toast(message) { $("toast").textContent = message; $("toast").classList.add("show"); clearTimeout(timer); timer = setTimeout(() => $("toast").classList.remove("show"),3200); }
+  function invalidateHandoff(prefix) { $(prefix + "-whatsapp").hidden = true; $(prefix + "-whatsapp").removeAttribute("href"); $(prefix + "-status").textContent = ""; }
+  function saveCart() {
+    cart = C.sanitizeCart(cart,PRODUCTS);
+    try { localStorage.setItem(STORAGE_KEY,JSON.stringify(cart)); } catch { toast("Tu carrito seguirá disponible mientras mantengas esta página abierta."); }
+    renderCart(); invalidateHandoff("checkout");
+  }
+  function addToCart(id,label,quantity = 1) {
+    const product = C.findProduct(PRODUCTS,id);
+    if (!C.variant(product,label)) return;
+    const current = cart.find(row => row.productId === id && row.weight === label);
+    if ((current?.quantity || 0) + quantity > C.MAX_QUANTITY) { toast("Para más de 99 unidades, solicita una cotización para tu negocio."); return; }
+    cart = C.addItem(cart,PRODUCTS,id,label,quantity);
+    toast(product.name + " · " + label + " agregado al carrito"); saveCart();
+  }
+  function updateCheckoutTotals() {
+    const delivery = deliveryFor("checkout"), total = C.totals(cart,delivery), cash = $("payment-cash");
+    cash.disabled = delivery !== "regional"; if (cash.disabled && cash.checked) $("payment-transfer").checked = true;
+    cash.closest("label").classList.toggle("disabled",cash.disabled);
+    $("cart-shipping").textContent = total.shipping === null ? "Por confirmar" : total.shipping === 0 ? "Gratis" : money(total.shipping);
+    $("cart-grand-total").textContent = money(total.total);
+    $("grand-total-label").textContent = total.shipping === null ? "Total sin entrega" : "Total de catálogo";
+    $("shipping-summary").textContent = !cart.length ? "Agrega productos para calcular tu pedido." : total.shipping === null ? "Confirmaremos cobertura y costo de entrega regional antes del pago." : total.shipping === 0 ? "Envío gratis aplicado desde $2,000." : "Envío nacional: $200. La fecha de entrega se confirma con tu pedido.";
+  }
+  function renderCart() {
+    const total = C.totals(cart);
+    $("cart-count").textContent = total.count; $("cart-trigger").setAttribute("aria-label","Abrir carrito, " + total.count + " artículos");
+    $("cart-subtotal").textContent = money(total.subtotal); $("checkout-subtotal").textContent = money(total.subtotal);
+    $("cart-empty").classList.toggle("visible",!cart.length); $("cart-recommendations").hidden = !cart.length; $("cart-footer").hidden = !cart.length;
+    $("checkout-submit").disabled = !cart.length; $("checkout-empty").hidden = Boolean(cart.length); $("checkout-content").hidden = !cart.length;
+    $("cart-items").innerHTML = cart.map(row => {
+      const product = C.findProduct(PRODUCTS,row.productId);
+      return '<div class="cart-item"><div><strong>' + escape(product.name) + '</strong><p>' + escape(row.weight) + " · " + product.availability + '</p></div><div class="cart-item-price">' + money(row.price * row.quantity) + '</div><div class="cart-item-actions"><button type="button" data-cart-change="-1" data-key="' + escape(row.key) + '" aria-label="Restar una unidad de ' + escape(product.name) + '">−</button><span>' + row.quantity + '</span><button type="button" data-cart-change="1" data-key="' + escape(row.key) + '" aria-label="Sumar una unidad de ' + escape(product.name) + '"' + (row.quantity >= C.MAX_QUANTITY ? " disabled" : "") + '>+</button></div><button class="remove-item" type="button" data-remove-key="' + escape(row.key) + '" aria-label="Quitar ' + escape(product.name) + '">Quitar</button></div>';
+    }).join("");
+    $("checkout-items").innerHTML = cart.map(row => { const product = C.findProduct(PRODUCTS,row.productId); return '<div class="checkout-item"><span class="checkout-item-visual">' + row.quantity + '</span><div><strong>' + escape(product.name) + '</strong><small>' + escape(row.weight) + " × " + row.quantity + '</small><small>' + product.availability + '</small></div><b>' + money(row.price * row.quantity) + '</b></div>'; }).join("");
+    $("recommendation-list").innerHTML = C.recommend(PRODUCTS,cart).map(product => {
+      const item = product.variants[0];
+      return '<article class="recommendation-item">' + photo(product) + '<div><strong>' + escape(product.name) + '</strong><span>' + product.availability + '</span><b>' + escape(item.label) + " · " + money(item.price) + '</b></div><button type="button" data-quick-add="' + product.id + '" data-weight="' + escape(item.label) + '" aria-label="Agregar ' + escape(product.name) + '">+</button></article>';
+    }).join("");
+    $("shipping-progress-bar").style.width = Math.min(100,total.subtotal / C.FREE_SHIPPING * 100) + "%";
+    $("shipping-progress-text").textContent = !total.remaining ? "Tu pedido ya tiene envío gratis." : "Te faltan " + money(total.remaining) + " para el envío gratis.";
+    $("checkout-preorder").hidden = !cart.some(row => C.findProduct(PRODUCTS,row.productId).availability === "Sobre pedido");
+    updateCheckoutTotals();
+  }
+  function openCart() {
+    if ($("product-dialog").open) $("product-dialog").close();
+    focusBeforeCart = document.activeElement; $("cart-drawer").inert = false;
+    $("cart-drawer").classList.add("open"); $("drawer-backdrop").classList.add("open"); $("cart-drawer").setAttribute("aria-hidden","false");
+    $("cart-trigger").setAttribute("aria-expanded","true"); document.body.style.overflow = "hidden"; setBackgroundInert(true); $("cart-close").focus();
+  }
+  function openDetails(id) {
+    const product = C.findProduct(PRODUCTS,id); if (!product) return; detailId = id;
+    const label = selections.get(id) || product.variants[0].label;
+    $("detail-photo").innerHTML = photo(product) + '<span class="image-caption">Imagen ilustrativa de la categoría</span>';
+    $("detail-type").textContent = product.type; $("detail-title").textContent = product.name;
+    $("detail-description").textContent = product.description; $("detail-use").textContent = product.use; $("detail-status").textContent = product.availability;
+    $("detail-preorder").hidden = product.availability !== "Sobre pedido"; $("detail-variant").innerHTML = options(product,label);
+    $("detail-variant").setAttribute("aria-label","Presentación de " + product.name); $("detail-price").textContent = money(C.variant(product,label).price);
+    $("detail-unit-price").textContent = per100(product,label); $("detail-quantity").value = 1; $("detail-bundle").hidden = !product.bundle;
+    $("detail-bundle-list").innerHTML = product.bundle ? product.bundle.map(item => "<li>" + item.quantity + " bolsa de " + escape(C.findProduct(PRODUCTS,item.id).name) + " · " + escape(item.label) + "</li>").join("") : "";
+    $("detail-contact").href = whatsappUrl("Hola, quisiera conocer los ingredientes y alérgenos de " + product.name + " antes de pedir.");
+    $("product-dialog").showModal(); document.body.style.overflow = "hidden";
+  }
+  function addressData(prefix) { return Object.fromEntries(["postcode","name","phone","email","state","street","neighborhood","city","references"].map(key => [key,$(prefix + "-" + key)?.value.trim() || ""])); }
+  function handoff(message,prefix) {
+    const link = $(prefix + "-whatsapp"); link.href = whatsappUrl(message); link.hidden = false;
+    $(prefix + "-status").textContent = "Resumen listo. Abre WhatsApp para revisarlo y enviarlo. Tu solicitud se confirma cuando te respondamos."; link.focus();
+  }
+  document.addEventListener("click",event => {
+    const button = event.target.closest("button"); if (!button) return;
+    if (button.dataset.viewLink) showView(button.dataset.viewLink);
+    if (button.dataset.shopCategory) { filters.category = button.dataset.shopCategory; renderCatalog(); showView("catalogo"); }
+    if (button.dataset.category) { filters.category = button.dataset.category; renderCatalog(); }
+    if (button.dataset.detail) openDetails(button.dataset.detail);
+    if (button.dataset.addProduct) addToCart(button.dataset.addProduct,button.closest(".product-card").querySelector(".weight-select").value);
+    if (button.dataset.quickAdd) addToCart(button.dataset.quickAdd,button.dataset.weight);
+    if (button.dataset.cartChange) {
+      const row = cart.find(item => item.key === button.dataset.key);
+      if (row) { row.quantity += Number(button.dataset.cartChange); saveCart();
+        const next = Array.from(document.querySelectorAll("[data-cart-change]")).find(item => item.dataset.key === button.dataset.key && item.dataset.cartChange === button.dataset.cartChange);
+        (next && !next.disabled ? next : $("cart-close")).focus();
+      }
+    }
+    if (button.dataset.removeKey) { cart = cart.filter(row => row.key !== button.dataset.removeKey); saveCart(); $("cart-close").focus(); }
   });
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const fee = shippingCost(subtotal, delivery);
-  const paymentLabel = { "mercado-pago": "Mercado Pago", "transferencia": "Transferencia", "contra-entrega": "Contra entrega" }[payment];
-  return [
-    "Hola Deshidrataditos, quiero realizar este pedido:",
-    "",
-    ...lines,
-    "",
-    `Subtotal: ${money(subtotal)}`,
-    fee === null ? "Entrega regional: costo por confirmar" : fee === 0 ? "Envío: gratis" : `Envío: ${money(fee)}`,
-    fee === null ? `Total provisional: ${money(subtotal)}` : `Total: ${money(subtotal + fee)}`,
-    `Tipo de entrega: ${delivery === "regional" ? "Zona regional: Ocotlán y Briseñas" : "Envío nacional"}`,
-    `Pago: ${paymentLabel}`,
-    "",
-    "Datos de envío:",
-    ...addressLines(address)
-  ].join("\n");
-}
-
-function checkout(event) {
-  event.preventDefault();
-  if (!cart.length) return;
-  const payment = document.querySelector('input[name="payment"]:checked').value;
-  const delivery = selectedDelivery("checkout");
-  const address = addressData("checkout");
-  if (payment === "contra-entrega" && delivery !== "regional") {
-    showToast("La contra entrega solo está disponible en la zona regional");
-    return;
-  }
-  if (payment === "mercado-pago" && MERCADO_PAGO_URL) {
-    window.location.href = MERCADO_PAGO_URL;
-    return;
-  }
-  if (payment === "mercado-pago") {
-    showToast("Mercado Pago se habilitará al conectar la cuenta comercial");
-  }
-  const message = encodeURIComponent(cartMessage(payment, delivery, address));
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener");
-}
-
-renderProducts();
-renderCart();
-document.getElementById("year").textContent = new Date().getFullYear();
-
-document.addEventListener("change", event => {
-  if (!event.target.matches(".weight-select")) return;
-  const card = event.target.closest(".product-card");
-  const product = PRODUCTS.find(item => item.id === card.dataset.productCard);
-  card.querySelector(".price").textContent = money(product.prices[event.target.value]);
-});
-
-document.addEventListener("click", event => {
-  const viewLink = event.target.closest("[data-view-link]");
-  if (viewLink) showView(viewLink.dataset.viewLink);
-
-  const addButton = event.target.closest("[data-add-product]");
-  if (addButton) {
-    const card = addButton.closest(".product-card");
-    addToCart(addButton.dataset.addProduct, card.querySelector(".weight-select").value);
-  }
-
-  const changeButton = event.target.closest("[data-cart-change]");
-  if (changeButton) updateItem(changeButton.dataset.key, Number(changeButton.dataset.cartChange));
-
-  const removeButton = event.target.closest("[data-remove-key]");
-  if (removeButton) removeItem(removeButton.dataset.removeKey);
-
-  const quickAddButton = event.target.closest("[data-quick-add]");
-  if (quickAddButton) addToCart(quickAddButton.dataset.quickAdd, quickAddButton.dataset.weight);
-});
-
-document.getElementById("menu-toggle").addEventListener("click", () => {
-  const nav = document.getElementById("main-nav");
-  const open = nav.classList.toggle("open");
-  document.getElementById("menu-toggle").setAttribute("aria-expanded", String(open));
-});
-document.getElementById("cart-trigger").addEventListener("click", openCart);
-document.getElementById("cart-close").addEventListener("click", closeCart);
-document.getElementById("drawer-backdrop").addEventListener("click", closeCart);
-document.getElementById("cart-checkout").addEventListener("submit", checkout);
-document.getElementById("go-to-checkout").addEventListener("click", () => showView("checkout"));
-document.getElementById("back-to-cart").addEventListener("click", openCart);
-document.querySelectorAll('input[name="checkout-delivery"]').forEach(input => input.addEventListener("change", updateCheckoutTotals));
-document.querySelectorAll('input[name="quote-delivery"]').forEach(input => input.addEventListener("change", updateQuoteShipping));
-document.addEventListener("keydown", event => { if (event.key === "Escape") closeCart(); });
-
-document.getElementById("quote-form").addEventListener("submit", event => {
-  event.preventDefault();
-  const delivery = selectedDelivery("quote");
-  const address = addressData("quote");
-  const price = delivery === "national" ? "$200" : "por confirmar según ubicación";
-  const message = encodeURIComponent([
-    "Hola Deshidrataditos, quiero registrar mis datos de envío:",
-    "",
-    `Tipo de entrega: ${delivery === "regional" ? "Zona regional" : "Envío nacional"}`,
-    `Costo de envío: ${price}`,
-    ...addressLines(address)
-  ].join("\n"));
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener");
-});
-
-const initialView = location.hash.replace("#", "") || "inicio";
-showView(initialView, false);
+  document.addEventListener("change",event => {
+    if (!event.target.matches(".weight-select")) return;
+    const product = C.findProduct(PRODUCTS,event.target.closest(".product-card").dataset.productCard);
+    selections.set(product.id,event.target.value);
+    document.querySelectorAll('[data-product-card="' + product.id + '"]').forEach(copy => { copy.querySelector(".weight-select").value = event.target.value; copy.querySelector(".price").textContent = money(C.variant(product,event.target.value).price); copy.querySelector(".unit-price").textContent = per100(product,event.target.value); });
+  });
+  $("catalog-search").addEventListener("input",event => { filters.search = event.target.value; renderCatalog(); });
+  $("catalog-occasion").addEventListener("change",event => { filters.occasion = event.target.value; renderCatalog(); });
+  $("catalog-sort").addEventListener("change",event => { filters.sort = event.target.value; renderCatalog(); });
+  $("catalog-new").addEventListener("change",event => { filters.onlyNew = event.target.checked; renderCatalog(); });
+  $("catalog-reset").addEventListener("click",resetFilters); $("empty-reset").addEventListener("click",resetFilters);
+  $("menu-toggle").addEventListener("click",() => { $("menu-toggle").setAttribute("aria-expanded",String($("main-nav").classList.toggle("open"))); });
+  $("cart-trigger").addEventListener("click",openCart); $("cart-close").addEventListener("click",() => closeCart());
+  $("drawer-backdrop").addEventListener("click",() => closeCart()); $("back-to-cart").addEventListener("click",openCart);
+  $("go-to-checkout").addEventListener("click",() => { if (cart.length) showView("checkout"); });
+  $("detail-close").addEventListener("click",() => $("product-dialog").close());
+  $("product-dialog").addEventListener("close",() => { document.body.style.overflow = ""; });
+  $("product-dialog").addEventListener("click",event => { if (event.target !== $("product-dialog")) return; const box = $("product-dialog").getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) $("product-dialog").close(); });
+  $("detail-variant").addEventListener("change",() => { const product = C.findProduct(PRODUCTS,detailId); $("detail-price").textContent = money(C.variant(product,$("detail-variant").value).price); $("detail-unit-price").textContent = per100(product,$("detail-variant").value); });
+  $("detail-form").addEventListener("submit",event => { event.preventDefault(); const quantity = Number($("detail-quantity").value); if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > C.MAX_QUANTITY) return; addToCart(detailId,$("detail-variant").value,quantity); $("product-dialog").close(); });
+  $("cart-checkout").addEventListener("submit",event => {
+    event.preventDefault(); if (!cart.length) { toast("Agrega un producto antes de preparar tu pedido."); return; } if (!$("cart-checkout").reportValidity()) return;
+    const delivery = deliveryFor("checkout"), payment = document.querySelector('input[name="payment"]:checked').value;
+    if (payment === "contra-entrega" && delivery !== "regional") return;
+    handoff(C.orderMessage({cart,products:PRODUCTS,address:addressData("checkout"),delivery,payment,notes:$("checkout-notes").value}),"checkout");
+  });
+  $("cart-checkout").addEventListener("input",() => invalidateHandoff("checkout"));
+  $("cart-checkout").addEventListener("change",() => invalidateHandoff("checkout"));
+  document.querySelectorAll('input[name="checkout-delivery"]').forEach(input => input.addEventListener("change",updateCheckoutTotals));
+  const updateQuote = () => { const national = deliveryFor("quote") === "national"; $("quote-shipping-label").textContent = national ? "Envío nacional" : "Entrega regional"; $("quote-shipping-price").textContent = national ? "$200" : "Por confirmar"; };
+  document.querySelectorAll('input[name="quote-delivery"]').forEach(input => input.addEventListener("change",updateQuote));
+  $("quote-form").addEventListener("input",() => invalidateHandoff("quote"));
+  $("quote-form").addEventListener("change",() => invalidateHandoff("quote"));
+  $("quote-form").addEventListener("submit",event => {
+    event.preventDefault(); const address = addressData("quote"), delivery = deliveryFor("quote");
+    handoff(["Hola, quisiera confirmar una entrega " + (delivery === "regional" ? "regional" : "nacional") + ".","Nombre: " + address.name,"Teléfono: " + address.phone,"C.P.: " + address.postcode,"Dirección: " + address.street + ", " + address.neighborhood + ", " + address.city + ", " + address.state,"Referencias: " + address.references,delivery === "national" ? "Tarifa de catálogo: $200; gratis desde $2,000 de compra." : "Por favor confirma cobertura y costo."].join("\n"),"quote");
+  });
+  $("business-form").addEventListener("input",() => invalidateHandoff("business"));
+  $("business-form").addEventListener("change",() => invalidateHandoff("business"));
+  $("business-form").addEventListener("submit",event => {
+    event.preventDefault();
+    handoff(["Hola Deshidrataditos, quisiera una cotización para mi negocio.","Negocio: " + $("business-name").value.trim(),"Giro: " + $("business-type").value,"Ciudad / C.P.: " + $("business-location").value.trim(),"Contacto: " + $("business-contact").value.trim(),"Productos de interés: " + $("business-products").value,"Cantidad y frecuencia: " + $("business-volume").value.trim(),"Comentarios: " + $("business-notes").value.trim(),"Por favor confirma presentaciones, precio por volumen y plazo de preparación."].join("\n"),"business");
+  });
+  document.addEventListener("keydown",event => {
+    if (event.key === "Escape") { if ($("cart-drawer").classList.contains("open")) closeCart(); if ($("main-nav").classList.contains("open")) { $("main-nav").classList.remove("open"); $("menu-toggle").setAttribute("aria-expanded","false"); $("menu-toggle").focus(); } }
+    if (event.key === "Tab" && $("cart-drawer").classList.contains("open")) {
+      const elements = Array.from($("cart-drawer").querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select')).filter(element => element.getClientRects().length);
+      const first = elements[0], last = elements.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
+  window.addEventListener("hashchange",() => showView(location.hash.slice(1),false));
+  window.addEventListener("storage",event => { if (event.key !== STORAGE_KEY && event.key !== null) return; try { cart = C.sanitizeCart(JSON.parse(event.newValue || "[]"),PRODUCTS); } catch { cart = []; } renderCart(); invalidateHandoff("checkout"); });
+  $("year").textContent = new Date().getFullYear();
+  renderProducts(); renderCart(); updateQuote(); showView(location.hash.slice(1) || "inicio",false,false);
+})();
