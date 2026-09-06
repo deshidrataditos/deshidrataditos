@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#542311">
+  <meta name="description" content="Deshidrataditos: jerky, frutas, vegetales, flores y tisanas deshidratadas elaboradas en La Barca, Jalisco. Envíos a todo México.">
+  <title>Deshidrataditos | Se encogen en tamaño, se expanden en sabor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <div class="announcement">
+    <span>Envío gratis a todo México en compras desde $2,000</span>
+    <span class="announcement-separator" aria-hidden="true">•</span>
+    <span>Entregas locales: lunes a sábado, 11:00 a.m.–8:00 p.m.</span>
+  </div>
+
+  <header class="site-header">
+    <button class="brand" type="button" data-view-link="inicio" aria-label="Ir al inicio">
+      <img src="assets/logo-deshidrataditos.jpg" alt="Deshidrataditos">
+    </button>
+
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Abrir menú</span>
+    </button>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+      <button type="button" data-view-link="inicio" class="active">Inicio</button>
+      <button type="button" data-view-link="cecina">Cecina jerky</button>
+      <button type="button" data-view-link="frutas">Frutas</button>
+      <button type="button" data-view-link="vegetales">Vegetales</button>
+      <button type="button" data-view-link="flores">Flores y tisanas</button>
+      <button type="button" data-view-link="nosotros">Nosotros</button>
+      <button type="button" data-view-link="envios">Envíos</button>
+    </nav>
+
+    <button class="cart-trigger" id="cart-trigger" type="button" aria-label="Abrir carrito">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h2l2.4 10.2a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 7H7M10 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>
+      <span>Carrito</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </header>
+
+  <main id="contenido">
+    <section class="view active" data-view="inicio">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Orgullosamente barquenses</span>
+          <h1>Pequeños en tamaño.<br><em>Enormes en sabor.</em></h1>
+          <p>Jerky artesanal, frutas, vegetales, flores y tisanas deshidratadas. Preparados en La Barca para disfrutarse en todo México.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" data-view-link="frutas">Explorar sabores</button>
+            <button class="button button-secondary" type="button" data-view-link="cecina">Conocer el jerky</button>
+          </div>
+          <div class="hero-facts" aria-label="Características principales">
+            <span>Sin conservadores añadidos</span>
+            <span>Sellado térmico y resellable</span>
+            <span>Picante bajo–intermedio</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Selección Deshidrataditos">
+          <div class="sun-disc"></div>
+          <div class="hero-bag hero-bag-one">
+            <span class="bag-kicker">Fruta</span>
+            <strong>Piña<br>con chile</strong>
+            <small>100 g</small>
+          </div>
+          <div class="hero-bag hero-bag-two">
+            <span class="bag-kicker">Jerky</span>
+            <strong>Res con<br>finas hierbas</strong>
+            <small>100 g</small>
+          </div>
+          <div class="flavor-stamp">Sabor<br>de Jalisco</div>
+        </div>
+      </div>
+
+      <div class="benefit-strip">
+        <article><span>01</span><strong>Elige tu antojo</strong><p>Carne, fruta, vegetales o infusiones.</p></article>
+        <article><span>02</span><strong>Escoge la cantidad</strong><p>De 50 g hasta 1 kg.</p></article>
+        <article><span>03</span><strong>Recíbelo donde estés</strong><p>Envíos a todo México.</p></article>
+      </div>
+
+      <section class="section-shell product-feature">
+        <div class="section-heading">
+          <div><span class="eyebrow">Los favoritos</span><h2>Una botana para cada momento</h2></div>
+          <button class="text-link" type="button" data-view-link="frutas">Ver toda la tienda <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+      </section>
+
+      <section class="origin-section">
+        <div>
+          <span class="eyebrow eyebrow-light">Hecho desde casa</span>
+          <h2>De La Barca<br>para todo México</h2>
+        </div>
+        <p>Transformamos ingredientes conocidos en botanas prácticas, intensas y llenas de sabor. Una propuesta orgullosamente barquense, elaborada en lotes pequeños y enviada con cuidado.</p>
+        <button class="button button-light" type="button" data-view-link="nosotros">Nuestra historia</button>
+      </section>
+    </section>
+
+    <section class="view catalog-view" data-view="cecina">
+      <div class="catalog-hero catalog-hero-meat">
+        <span class="eyebrow eyebrow-light">Proteína con carácter</span>
+        <h1>Cecina tipo jerky</h1>
+        <p>Res o conejo, sazonados con finas hierbas y sal ahumada. Intensidad de picante baja a intermedia.</p>
+      </div>
+      <div class="section-shell">
+        <div class="catalog-note"><strong>Vida de anaquel inicial:</strong> 30 días en empaque cerrado. Refrigerar después de abrir y consultar siempre la fecha del envase.</div>
+        <div class="product-grid" id="jerky-grid"></div>
+      </div>
+    </section>
+
+    <section class="view catalog-view" data-view="frutas">
+      <div class="catalog-hero catalog-hero-fruit">
+        <span class="eyebrow">Dulce, ácido y picosito</span>
+        <h1>Frutas deshidratadas</h1>
+        <p>Sabores concentrados, chile en polvo y sal en una bolsa lista para acompañarte.</p>
+      </div>
+      <div class="section-shell">
+        <div class="catalog-note"><strong>Vida de anaquel inicial:</strong> 4 meses en empaque cerrado, en un lugar fresco, seco y protegido del sol.</div>
+        <div class="product-grid" id="fruit-grid"></div>
+      </div>
+    </section>
+
+    <section class="view catalog-view" data-view="vegetales">
+      <div class="catalog-hero catalog-hero-veg">
+        <span class="eyebrow eyebrow-light">Crujientes y diferentes</span>
+        <h1>Chips de vegetales</h1>
+        <p>Betabel, jícama, pepino y más opciones con un picante amable que deja disfrutar cada ingrediente.</p>
+      </div>
+      <div class="section-shell">
+        <div class="catalog-note"><strong>Vida de anaquel inicial:</strong> 3 meses en empaque cerrado, lejos del calor y la humedad.</div>
+        <div class="product-grid" id="vegetable-grid"></div>
+      </div>
+    </section>
+
+    <section class="view catalog-view" data-view="flores">
+      <div class="catalog-hero catalog-hero-flowers">
+        <span class="eyebrow">Aromas para disfrutar despacio</span>
+        <h1>Flores y tisanas</h1>
+        <p>Flores deshidratadas y mezclas aromáticas para preparar bebidas calientes o frías en casa.</p>
+      </div>
+      <div class="section-shell">
+        <div class="catalog-note"><strong>Vida de anaquel inicial:</strong> 6 meses en empaque cerrado. Conservar en un lugar fresco, seco y protegido de la luz; después de abrir, mantener la bolsa bien resellada.</div>
+        <div class="product-grid" id="flower-grid"></div>
+      </div>
+    </section>
+
+    <section class="view" data-view="nosotros">
+      <div class="story-layout">
+        <div class="story-poster" role="img" aria-label="Estación de tren de La Barca, Jalisco, iluminada al atardecer">
+          <span>La Barca</span>
+          <strong>Jalisco</strong>
+          <small>Hecho con orgullo · C.P. 47910</small>
+        </div>
+        <div class="story-copy">
+          <span class="eyebrow">Nuestra historia</span>
+          <h1>Ingredientes conocidos,<br>una forma nueva de disfrutarlos</h1>
+      <p>Deshidrataditos nace en La Barca, Jalisco, con la intención de transformar frutas, vegetales, flores y carnes seleccionadas en productos prácticos, aromáticos y llenos de sabor.</p>
+          <p>Somos una empresa orgullosamente barquense que combina el cuidado artesanal con una presentación moderna, llevando nuestros productos desde nuestra tierra hasta distintos rincones de México.</p>
+          <blockquote>“Se encogen en tamaño,<br>se expanden en sabor.”</blockquote>
+          <div class="value-grid">
+            <div><strong>Lotes pequeños</strong><span>Elaboración cuidada desde el inicio.</span></div>
+            <div><strong>Empaque práctico</strong><span>Sellado térmico y opción resellable.</span></div>
+            <div><strong>Sabor honesto</strong><span>Sin conservadores añadidos.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="envios">
+      <div class="shipping-layout">
+        <div class="shipping-copy">
+          <span class="eyebrow">Desde el C.P. 47910</span>
+          <h1>Tu pedido,<br>más cerca</h1>
+          <p>Realizamos entregas preferentes en La Barca, Jamay, Ocotlán y zonas cercanas de Michoacán. Para el resto del país seleccionamos la paquetería disponible según el código postal.</p>
+          <div class="shipping-cards">
+            <article><strong>Zona preferente</strong><p>Lunes a sábado<br>11:00 a.m.–8:00 p.m.</p></article>
+            <article><strong>Resto de México</strong><p>Envío $200 · gratis<br>desde $2,000 MXN.</p></article>
+          </div>
+        </div>
+
+        <form class="quote-card" id="quote-form">
+          <span class="eyebrow">Datos de envío</span>
+          <h2>¿A dónde enviamos?</h2>
+          <label for="quote-postcode">Código postal</label>
+          <input id="quote-postcode" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Ej. 47910" required>
+
+          <fieldset class="delivery-options">
+            <legend>Tipo de entrega</legend>
+            <label class="delivery-choice">
+              <input type="radio" name="quote-delivery" value="national" checked>
+              <span><strong>Resto de México</strong><small>Paquetería nacional · $200</small></span>
+            </label>
+            <label class="delivery-choice">
+              <input type="radio" name="quote-delivery" value="regional">
+              <span><strong>Zona regional</strong><small>La Barca, Jamay, Ocotlán y Michoacán cercano</small></span>
+            </label>
+          </fieldset>
+
+          <div class="address-fields">
+            <label class="field-full">Nombre completo
+              <input id="quote-name" autocomplete="name" required>
+            </label>
+            <label>Teléfono
+              <input id="quote-phone" type="tel" autocomplete="tel" inputmode="tel" required>
+            </label>
+            <label>Estado
+              <input id="quote-state" autocomplete="address-level1" required>
+            </label>
+            <label class="field-full">Calle y número
+              <input id="quote-street" autocomplete="street-address" required>
+            </label>
+            <label>Colonia
+              <input id="quote-neighborhood" autocomplete="address-level3" required>
+            </label>
+            <label>Municipio o ciudad
+              <input id="quote-city" autocomplete="address-level2" required>
+            </label>
+            <label class="field-full">Referencias de entrega
+              <textarea id="quote-references" rows="3" placeholder="Entre calles, color de fachada u otra referencia"></textarea>
+            </label>
+          </div>
+
+          <div class="shipping-price-card">
+            <span id="quote-shipping-label">Envío al resto de México</span>
+            <strong id="quote-shipping-price">$200</strong>
+          </div>
+          <button class="button button-primary button-full" type="submit">Enviar datos por WhatsApp</button>
+          <p class="form-help">El envío al resto de México cuesta $200. Es gratis en compras desde $2,000. Las entregas regionales se confirman de acuerdo con la ubicación.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="view policy-view" data-view="politica">
+      <div class="policy-wrap">
+        <button class="back-link" type="button" data-view-link="inicio">← Volver al inicio</button>
+        <span class="eyebrow">Atención al cliente</span>
+        <h1>Política de productos dañados o incorrectos</h1>
+        <p class="policy-intro">Queremos que cada pedido llegue en las condiciones ofrecidas. Esta política no limita los derechos reconocidos por la Ley Federal de Protección al Consumidor.</p>
+
+        <h2>¿Cuándo procede una reclamación?</h2>
+        <p>Cuando el empaque llegue abierto, perforado o con el sello roto; el producto presente humedad, contaminación, mal olor o señales de deterioro; el contenido o peso sea menor al indicado; se entregue un artículo diferente al comprado; o el producto no corresponda con la calidad y características ofrecidas.</p>
+
+        <h2>Cómo reportarlo</h2>
+        <p>Escríbenos al WhatsApp 393 117 3611 con tu número de pedido, una descripción del problema y fotografías claras del producto, su empaque, sello, etiqueta de lote y guía de envío. Recomendamos hacerlo dentro de las primeras 48 horas para facilitar la investigación con la paquetería; este plazo no reduce los derechos ni los periodos legales aplicables.</p>
+
+        <h2>Soluciones disponibles</h2>
+        <p>Una vez revisado el caso, podrás elegir entre la reposición del producto sin costo o la devolución de la cantidad pagada contra la entrega del producto, cuando corresponda. Los reembolsos se efectuarán mediante la misma forma de pago, salvo que aceptes otra. Deshidrataditos cubrirá el envío necesario para cumplir la reposición o devolución cuando la causa sea atribuible al negocio o a la entrega.</p>
+
+        <h2>Alimentos abiertos</h2>
+        <p>Por seguridad e higiene no aceptamos cambios por gusto personal o por elección incorrecta cuando el empaque ya fue abierto. Esta condición no aplica si existe un defecto, daño, riesgo sanitario, error en el pedido o cualquier otro supuesto protegido por la legislación aplicable.</p>
+
+        <h2>Bonificación y plazo de atención</h2>
+        <p>Cuando legalmente proceda, se reconocerá la bonificación o compensación correspondiente. Las reclamaciones se atenderán y resolverán dentro de un plazo máximo de 15 días.</p>
+
+        <div class="policy-contact">
+          <strong>¿Tu pedido tuvo un problema?</strong>
+          <a href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20necesito%20reportar%20un%20problema%20con%20mi%20pedido." target="_blank" rel="noopener">Reportarlo por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo-deshidrataditos.jpg" alt="Deshidrataditos">
+      <p>Se encogen en tamaño,<br>se expanden en sabor.</p>
+    </div>
+    <div><strong>Compra</strong><button data-view-link="cecina">Cecina jerky</button><button data-view-link="frutas">Frutas</button><button data-view-link="vegetales">Vegetales</button><button data-view-link="flores">Flores y tisanas</button></div>
+    <div><strong>Ayuda</strong><button data-view-link="envios">Envíos y entregas</button><button data-view-link="politica">Productos dañados</button><a href="https://wa.me/523931173611" target="_blank" rel="noopener">WhatsApp</a></div>
+    <div><strong>Horario</strong><p>Lunes a sábado<br>11:00 a.m.–8:00 p.m.</p><p>La Barca, Jalisco</p></div>
+    <small>© <span id="year"></span> Deshidrataditos. Precios expresados en pesos mexicanos.</small>
+  </footer>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-label="Carrito de compras">
+    <div class="cart-header">
+      <div><span class="eyebrow">Tu selección</span><h2>Carrito</h2></div>
+      <button class="icon-button" id="cart-close" type="button" aria-label="Cerrar carrito">×</button>
+    </div>
+    <div class="shipping-progress-wrap">
+      <p id="shipping-progress-text">Agrega productos para comenzar</p>
+      <div class="shipping-progress"><span id="shipping-progress-bar"></span></div>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-empty" id="cart-empty">
+      <span>Tu próxima botana empieza aquí.</span>
+      <button class="button button-secondary" type="button" data-view-link="frutas">Ver productos</button>
+    </div>
+    <form class="cart-checkout" id="cart-checkout">
+      <label for="checkout-postcode">Código postal</label>
+      <input id="checkout-postcode" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Ej. 47910" autocomplete="postal-code" required>
+
+      <fieldset class="delivery-options compact-options">
+        <legend>Tipo de entrega</legend>
+        <label class="delivery-choice">
+          <input type="radio" name="checkout-delivery" value="national" checked>
+          <span><strong>Envíos a toda la República</strong><small>Paquetería nacional · $200</small></span>
+        </label>
+        <label class="delivery-choice">
+          <input type="radio" name="checkout-delivery" value="regional">
+          <span><strong>Zona regional</strong><small>Ocotlán y Briseñas</small></span>
+        </label>
+      </fieldset>
+
+      <div class="address-fields cart-address-fields">
+        <label class="field-full">Nombre completo
+          <input id="checkout-name" autocomplete="name" required>
+        </label>
+        <label>Teléfono
+          <input id="checkout-phone" type="tel" autocomplete="tel" inputmode="tel" required>
+        </label>
+        <label>Estado
+          <input id="checkout-state" autocomplete="address-level1" required>
+        </label>
+        <label class="field-full">Calle y número
+          <input id="checkout-street" autocomplete="street-address" required>
+        </label>
+        <label>Colonia
+          <input id="checkout-neighborhood" autocomplete="address-level3" required>
+        </label>
+        <label>Municipio o ciudad
+          <input id="checkout-city" autocomplete="address-level2" required>
+        </label>
+        <label class="field-full">Referencias
+          <textarea id="checkout-references" rows="2" placeholder="Datos para encontrar el domicilio"></textarea>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Método de pago</legend>
+        <label><input type="radio" name="payment" value="mercado-pago" checked> Mercado Pago</label>
+        <label><input type="radio" name="payment" value="transferencia"> Transferencia</label>
+        <label><input type="radio" name="payment" value="contra-entrega"> Contra entrega <small>solo zona preferente</small></label>
+      </fieldset>
+      <div class="cart-total cart-total-line"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div>
+      <div class="cart-total cart-total-line"><span>Envío</span><strong id="cart-shipping">$200</strong></div>
+      <div class="cart-total grand-total"><span>Total</span><strong id="cart-grand-total">$0</strong></div>
+      <p class="shipping-summary" id="shipping-summary">Envíos a toda la República: $200.</p>
+      <button class="button button-primary button-full" id="checkout-button" type="submit">Continuar pedido</button>
+      <p class="checkout-note">Mercado Pago se activará al conectar la cuenta comercial. Transferencia y contra entrega se confirman por WhatsApp.</p>
+    </form>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <a class="whatsapp-float" href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos." target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>

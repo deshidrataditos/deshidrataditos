@@ -2,6 +2,8 @@
 
 Tienda web estática para Deshidrataditos, negocio de alimentos deshidratados de La Barca, Jalisco.
 
+La versión para GitHub Pages se publica desde `/docs`; los archivos de trabajo originales permanecen en `/dist`.
+
 ## Contenido
 
 - Catálogo de jerky, frutas, vegetales, flores y tisanas.
