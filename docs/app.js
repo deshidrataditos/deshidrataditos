@@ -280,18 +280,6 @@ function removeItem(key) {
   saveCart();
 }
 
-function renderRecommendationDetails(recommendations) {
-  document.getElementById("recommendation-list").innerHTML = recommendations.map(product => {
-    const [weight, price] = Object.entries(product.prices)[0];
-    const photo = PRODUCT_PHOTOS[product.id];
-    return `<article class="recommendation-item">
-      <img src="${photo.src}" alt="${product.name}" loading="lazy" style="--rec-position:${photo.position}">
-      <div><strong>${product.name}</strong><span>${product.type}</span><b>${weight} · ${money(price)}</b></div>
-      <button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button>
-    </article>`;
-  }).join("");
-}
-
 function renderCart() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -328,7 +316,6 @@ function renderCart() {
     const [weight, price] = Object.entries(product.prices)[0];
     return `<article class="recommendation-item"><div style="--rec-bg:${product.bg}"><strong>${product.name}</strong><span>${weight} · ${money(price)}</span></div><button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button></article>`;
   }).join("");
-  renderRecommendationDetails(recommendations);
 
   const percentage = Math.min(100, subtotal / FREE_SHIPPING * 100);
   document.getElementById("shipping-progress-bar").style.width = `${percentage}%`;
@@ -513,6 +500,7 @@ document.getElementById("cart-trigger").addEventListener("click", openCart);
 document.getElementById("cart-close").addEventListener("click", closeCart);
 document.getElementById("drawer-backdrop").addEventListener("click", closeCart);
 document.getElementById("cart-checkout").addEventListener("submit", checkout);
+document.getElementById("go-to-checkout").addEventListener("click", () => showView("checkout"));
 document.getElementById("back-to-cart").addEventListener("click", openCart);
 document.querySelectorAll('input[name="checkout-delivery"]').forEach(input => input.addEventListener("change", updateCheckoutTotals));
 document.querySelectorAll('input[name="quote-delivery"]').forEach(input => input.addEventListener("change", updateQuoteShipping));
