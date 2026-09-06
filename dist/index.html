@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260906-2">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -52,7 +52,7 @@
       <div class="hero">
         <div class="hero-copy">
           <span class="eyebrow">Orgullosamente barquenses</span>
-          <h1>Pequeños en tamaño.<br><em>Enormes en sabor.</em></h1>
+          <h1>Se encogen en tamaño,<br><em>se expanden en sabor.</em></h1>
           <p>Jerky artesanal, frutas, vegetales, flores y tisanas deshidratadas. Preparados en La Barca para disfrutarse en todo México.</p>
           <div class="hero-actions">
             <button class="button button-primary" type="button" data-view-link="frutas">Explorar sabores</button>
@@ -183,7 +183,7 @@
           <p>Realizamos entregas preferentes en La Barca, Jamay, Ocotlán y zonas cercanas de Michoacán. Para el resto del país seleccionamos la paquetería disponible según el código postal.</p>
           <div class="shipping-cards">
             <article><strong>Zona preferente</strong><p>Lunes a sábado<br>11:00 a.m.–8:00 p.m.</p></article>
-            <article><strong>Resto de México</strong><p>Envío $200 · gratis<br>desde $2,000 MXN.</p></article>
+            <article><strong>Envío nacional</strong><p>Envío $200 · gratis<br>desde $2,000 MXN.</p></article>
           </div>
         </div>
 
@@ -197,7 +197,7 @@
             <legend>Tipo de entrega</legend>
             <label class="delivery-choice">
               <input type="radio" name="quote-delivery" value="national" checked>
-              <span><strong>Resto de México</strong><small>Paquetería nacional · $200</small></span>
+              <span><strong>Envío nacional</strong><small>Paquetería a todo México · $200</small></span>
             </label>
             <label class="delivery-choice">
               <input type="radio" name="quote-delivery" value="regional">
@@ -230,12 +230,50 @@
           </div>
 
           <div class="shipping-price-card">
-            <span id="quote-shipping-label">Envío al resto de México</span>
+            <span id="quote-shipping-label">Envío nacional</span>
             <strong id="quote-shipping-price">$200</strong>
           </div>
           <button class="button button-primary button-full" type="submit">Enviar datos por WhatsApp</button>
-          <p class="form-help">El envío al resto de México cuesta $200. Es gratis en compras desde $2,000. Las entregas regionales se confirman de acuerdo con la ubicación.</p>
+          <p class="form-help">El envío nacional cuesta $200. Es gratis en compras desde $2,000. Las entregas regionales se confirman de acuerdo con la ubicación.</p>
         </form>
+      </div>
+    </section>
+
+    <section class="view checkout-view" data-view="checkout">
+      <div class="checkout-page">
+        <form class="checkout-form" id="cart-checkout">
+          <button class="back-link" type="button" id="back-to-cart">← Volver al carrito</button>
+          <span class="eyebrow">Finaliza tu pedido</span>
+          <h1>Datos de envío</h1>
+          <div class="address-fields checkout-address-fields">
+            <label>Correo electrónico<input id="checkout-email" type="email" autocomplete="email" required></label>
+            <label>Teléfono<input id="checkout-phone" type="tel" autocomplete="tel" required></label>
+            <label>Nombre completo<input id="checkout-name" autocomplete="name" required></label>
+            <label>País / Región<input value="México" readonly></label>
+            <label class="field-full">Calle y número<input id="checkout-street" autocomplete="street-address" required></label>
+            <label>Colonia<input id="checkout-neighborhood" autocomplete="address-level3" required></label>
+            <label>Código postal<input id="checkout-postcode" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" required></label>
+            <label>Municipio o ciudad<input id="checkout-city" autocomplete="address-level2" required></label>
+            <label>Estado<input id="checkout-state" autocomplete="address-level1" required></label>
+            <label class="field-full">Referencias<textarea id="checkout-references" rows="3" placeholder="Entre calles, color de fachada u otra referencia"></textarea></label>
+          </div>
+          <fieldset class="delivery-options">
+            <legend>Método de envío</legend>
+            <label class="delivery-choice"><input type="radio" name="checkout-delivery" value="national" checked><span><strong>Envío nacional</strong><small>Paquetería a todo México · $200</small></span></label>
+            <label class="delivery-choice"><input type="radio" name="checkout-delivery" value="regional"><span><strong>Entrega regional</strong><small>La Barca, Jamay, Ocotlán y Michoacán cercano</small></span></label>
+          </fieldset>
+          <fieldset class="payment-options"><legend>Método de pago</legend><label><input type="radio" name="payment" value="mercado-pago" checked> Mercado Pago</label><label><input type="radio" name="payment" value="transferencia"> Transferencia</label><label><input type="radio" name="payment" value="contra-entrega"> Contra entrega <small>solo zona preferente</small></label></fieldset>
+          <button class="button button-primary button-full" type="submit">Confirmar pedido</button>
+          <p class="checkout-note">Mercado Pago se activará al conectar la cuenta comercial. Transferencia y contra entrega se confirman por WhatsApp.</p>
+        </form>
+        <aside class="order-summary" aria-label="Resumen del pedido">
+          <h2>Resumen de tu pedido</h2><div id="checkout-items"></div>
+          <div class="discount-row"><input aria-label="Código de descuento" placeholder="Código de descuento"><button type="button" disabled>Aplicar</button></div>
+          <div class="cart-total cart-total-line"><span>Subtotal</span><strong id="checkout-subtotal">$0</strong></div>
+          <div class="cart-total cart-total-line"><span>Envío</span><strong id="cart-shipping">$200</strong></div>
+          <div class="cart-total grand-total"><span>Total</span><strong id="cart-grand-total">$0</strong></div>
+          <p class="shipping-summary" id="shipping-summary">Envío nacional: $200.</p>
+        </aside>
       </div>
     </section>
 
@@ -275,7 +313,7 @@
       <p>Se encogen en tamaño,<br>se expanden en sabor.</p>
     </div>
     <div><strong>Compra</strong><button data-view-link="cecina">Cecina jerky</button><button data-view-link="frutas">Frutas</button><button data-view-link="vegetales">Vegetales</button><button data-view-link="flores">Flores y tisanas</button></div>
-    <div><strong>Ayuda</strong><button data-view-link="envios">Envíos y entregas</button><button data-view-link="politica">Productos dañados</button><a href="https://wa.me/523931173611" target="_blank" rel="noopener">WhatsApp</a></div>
+    <div><strong>Ayuda</strong><button data-view-link="envios">Envíos y entregas</button><button data-view-link="politica">Productos dañados</button><a href="https://wa.me/523931173611" target="_blank" rel="noopener">WhatsApp</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61593866530397" target="_blank" rel="noopener" aria-label="Visitar Deshidrataditos en Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.24 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.24 0-1.63.77-1.63 1.56v1.9h2.77l-.44 2.91h-2.33V22C18.34 21.24 22 17.08 22 12.06Z"/></svg><span>Facebook</span></a></div>
     <div><strong>Horario</strong><p>Lunes a sábado<br>11:00 a.m.–8:00 p.m.</p><p>La Barca, Jalisco</p></div>
     <small>© <span id="year"></span> Deshidrataditos. Precios expresados en pesos mexicanos.</small>
   </footer>
@@ -295,59 +333,15 @@
       <span>Tu próxima botana empieza aquí.</span>
       <button class="button button-secondary" type="button" data-view-link="frutas">Ver productos</button>
     </div>
-    <form class="cart-checkout" id="cart-checkout">
-      <label for="checkout-postcode">Código postal</label>
-      <input id="checkout-postcode" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Ej. 47910" autocomplete="postal-code" required>
-
-      <fieldset class="delivery-options compact-options">
-        <legend>Tipo de entrega</legend>
-        <label class="delivery-choice">
-          <input type="radio" name="checkout-delivery" value="national" checked>
-          <span><strong>Envíos a toda la República</strong><small>Paquetería nacional · $200</small></span>
-        </label>
-        <label class="delivery-choice">
-          <input type="radio" name="checkout-delivery" value="regional">
-          <span><strong>Zona regional</strong><small>Ocotlán y Briseñas</small></span>
-        </label>
-      </fieldset>
-
-      <div class="address-fields cart-address-fields">
-        <label class="field-full">Nombre completo
-          <input id="checkout-name" autocomplete="name" required>
-        </label>
-        <label>Teléfono
-          <input id="checkout-phone" type="tel" autocomplete="tel" inputmode="tel" required>
-        </label>
-        <label>Estado
-          <input id="checkout-state" autocomplete="address-level1" required>
-        </label>
-        <label class="field-full">Calle y número
-          <input id="checkout-street" autocomplete="street-address" required>
-        </label>
-        <label>Colonia
-          <input id="checkout-neighborhood" autocomplete="address-level3" required>
-        </label>
-        <label>Municipio o ciudad
-          <input id="checkout-city" autocomplete="address-level2" required>
-        </label>
-        <label class="field-full">Referencias
-          <textarea id="checkout-references" rows="2" placeholder="Datos para encontrar el domicilio"></textarea>
-        </label>
-      </div>
-
-      <fieldset>
-        <legend>Método de pago</legend>
-        <label><input type="radio" name="payment" value="mercado-pago" checked> Mercado Pago</label>
-        <label><input type="radio" name="payment" value="transferencia"> Transferencia</label>
-        <label><input type="radio" name="payment" value="contra-entrega"> Contra entrega <small>solo zona preferente</small></label>
-      </fieldset>
-      <div class="cart-total cart-total-line"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div>
-      <div class="cart-total cart-total-line"><span>Envío</span><strong id="cart-shipping">$200</strong></div>
-      <div class="cart-total grand-total"><span>Total</span><strong id="cart-grand-total">$0</strong></div>
-      <p class="shipping-summary" id="shipping-summary">Envíos a toda la República: $200.</p>
-      <button class="button button-primary button-full" id="checkout-button" type="submit">Continuar pedido</button>
-      <p class="checkout-note">Mercado Pago se activará al conectar la cuenta comercial. Transferencia y contra entrega se confirman por WhatsApp.</p>
-    </form>
+    <section class="cart-recommendations" id="cart-recommendations" aria-labelledby="recommendations-title">
+      <div class="cart-section-heading"><h3 id="recommendations-title">Quizás también te interese</h3><span>Complementa tu antojo</span></div>
+      <div class="recommendation-list" id="recommendation-list"></div>
+    </section>
+    <div class="cart-footer" id="cart-footer">
+      <div class="cart-total grand-total"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div>
+      <p>El envío se calcula con tus datos en el siguiente paso.</p>
+      <button class="button button-primary button-full" id="go-to-checkout" type="button" data-view-link="checkout">Ir al checkout</button>
+    </div>
   </aside>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -356,6 +350,6 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
   </a>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20260906-2"></script>
 </body>
 </html>

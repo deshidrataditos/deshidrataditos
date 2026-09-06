@@ -286,7 +286,8 @@ function renderCart() {
   document.getElementById("cart-count").textContent = count;
   document.getElementById("cart-subtotal").textContent = money(subtotal);
   document.getElementById("cart-empty").classList.toggle("visible", cart.length === 0);
-  document.getElementById("cart-checkout").style.display = cart.length ? "block" : "none";
+  document.getElementById("cart-recommendations").style.display = cart.length ? "block" : "none";
+  document.getElementById("cart-footer").style.display = cart.length ? "block" : "none";
 
   document.getElementById("cart-items").innerHTML = cart.map(item => {
     const product = PRODUCTS.find(entry => entry.id === item.productId);
@@ -301,6 +302,28 @@ function renderCart() {
         </div>
         <button class="remove-item" type="button" data-remove-key="${item.key}">Quitar</button>
       </div>`;
+  }).join("");
+
+  document.getElementById("checkout-items").innerHTML = cart.map(item => {
+    const product = PRODUCTS.find(entry => entry.id === item.productId);
+    return `<div class="checkout-item"><span class="checkout-item-visual" style="--item-bg:${product.bg}">${item.quantity}</span><div><strong>${product.name}</strong><small>${item.weight} × ${item.quantity}</small></div><b>${money(item.price * item.quantity)}</b></div>`;
+  }).join("");
+  document.getElementById("checkout-subtotal").textContent = money(subtotal);
+
+  const selectedIds = new Set(cart.map(item => item.productId));
+  const selectedCategories = new Set(cart.map(item => PRODUCTS.find(product => product.id === item.productId)?.category));
+  const availableProducts = PRODUCTS.filter(product => !selectedIds.has(product.id));
+  const recommendations = availableProducts
+    .sort((a, b) => Number(selectedCategories.has(b.category)) - Number(selectedCategories.has(a.category)))
+    .slice(0, 3);
+  document.getElementById("recommendation-list").innerHTML = recommendations.map(product => {
+    const [weight, price] = Object.entries(product.prices)[0];
+    const photo = PRODUCT_PHOTOS[product.id];
+    return `<article class="recommendation-item">
+      <img src="${photo.src}" alt="${product.name}" loading="lazy" style="--rec-position:${photo.position};--rec-scale:${photo.scale}">
+      <div><strong>${product.name}</strong><span>${product.type}</span><b>${weight} · ${money(price)}</b></div>
+      <button type="button" data-quick-add="${product.id}" data-weight="${weight}" aria-label="Agregar ${product.name} al carrito">+</button>
+    </article>`;
   }).join("");
 
   const percentage = Math.min(100, subtotal / FREE_SHIPPING * 100);
@@ -340,14 +363,14 @@ function updateCheckoutTotals() {
     totalElement.textContent = money(subtotal + fee);
     summaryElement.textContent = fee === 0
       ? "Envío gratis aplicado por compra desde $2,000."
-      : "Envíos a toda la República: $200.";
+      : "Envío nacional: $200.";
   }
 }
 
 function updateQuoteShipping() {
   const delivery = selectedDelivery("quote");
   document.getElementById("quote-shipping-label").textContent = delivery === "national"
-    ? "Envío al resto de México"
+    ? "Envío nacional"
     : "Entrega en zona regional";
   document.getElementById("quote-shipping-price").textContent = delivery === "national" ? "$200" : "Por confirmar";
 }
@@ -417,7 +440,7 @@ function cartMessage(payment, delivery, address) {
     `Subtotal: ${money(subtotal)}`,
     fee === null ? "Entrega regional: costo por confirmar" : fee === 0 ? "Envío: gratis" : `Envío: ${money(fee)}`,
     fee === null ? `Total provisional: ${money(subtotal)}` : `Total: ${money(subtotal + fee)}`,
-    `Tipo de entrega: ${delivery === "regional" ? "Zona regional: Ocotlán y Briseñas" : "Envíos a toda la República"}`,
+    `Tipo de entrega: ${delivery === "regional" ? "Zona regional: Ocotlán y Briseñas" : "Envío nacional"}`,
     `Pago: ${paymentLabel}`,
     "",
     "Datos de envío:",
@@ -472,6 +495,9 @@ document.addEventListener("click", event => {
 
   const removeButton = event.target.closest("[data-remove-key]");
   if (removeButton) removeItem(removeButton.dataset.removeKey);
+
+  const quickAddButton = event.target.closest("[data-quick-add]");
+  if (quickAddButton) addToCart(quickAddButton.dataset.quickAdd, quickAddButton.dataset.weight);
 });
 
 document.getElementById("menu-toggle").addEventListener("click", () => {
@@ -483,6 +509,7 @@ document.getElementById("cart-trigger").addEventListener("click", openCart);
 document.getElementById("cart-close").addEventListener("click", closeCart);
 document.getElementById("drawer-backdrop").addEventListener("click", closeCart);
 document.getElementById("cart-checkout").addEventListener("submit", checkout);
+document.getElementById("back-to-cart").addEventListener("click", openCart);
 document.querySelectorAll('input[name="checkout-delivery"]').forEach(input => input.addEventListener("change", updateCheckoutTotals));
 document.querySelectorAll('input[name="quote-delivery"]').forEach(input => input.addEventListener("change", updateQuoteShipping));
 document.addEventListener("keydown", event => { if (event.key === "Escape") closeCart(); });
@@ -495,7 +522,7 @@ document.getElementById("quote-form").addEventListener("submit", event => {
   const message = encodeURIComponent([
     "Hola Deshidrataditos, quiero registrar mis datos de envío:",
     "",
-    `Tipo de entrega: ${delivery === "regional" ? "Zona regional" : "Resto de México"}`,
+    `Tipo de entrega: ${delivery === "regional" ? "Zona regional" : "Envío nacional"}`,
     `Costo de envío: ${price}`,
     ...addressLines(address)
   ].join("\n"));
