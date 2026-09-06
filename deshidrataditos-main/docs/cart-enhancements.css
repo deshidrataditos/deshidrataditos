@@ -1,5 +1,0 @@
-.recommendation-item { min-height: 94px; padding: 10px; }
-.recommendation-item > img { width: 76px; height: 76px; flex: 0 0 auto; border-radius: 10px; object-fit: cover; object-position: var(--rec-position, center); }
-.recommendation-item div { min-width: 0; }
-.recommendation-item span { overflow: hidden; font-size: .66rem; text-overflow: ellipsis; white-space: nowrap; }
-.recommendation-item b { color: var(--cocoa); font-size: .74rem; }

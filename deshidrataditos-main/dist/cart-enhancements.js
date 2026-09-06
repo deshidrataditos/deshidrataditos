@@ -1,1 +1,0 @@
-/* Compatibility file retained for cached pages. Recommendations and checkout now live in app.js. */
