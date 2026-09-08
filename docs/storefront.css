@@ -80,6 +80,9 @@ a.button { display:inline-flex; align-items:center; justify-content:center; text
 .price-block { align-self:end; padding-bottom:2px; text-align:right; }
 .price { font-size:1.45rem; line-height:1.25; }
 .unit-price { display:block; margin-top:4px; font-size:.75rem; color:var(--muted); white-space:nowrap; }
+.quote-controls { grid-template-columns:1fr; }
+.quote-controls .price-block { text-align:left; }
+.quote-controls .unit-price { white-space:normal; }
 .product-body .bundle-saving { min-height:0; margin:0 0 18px; color:var(--green-deep); font-size:.875rem; font-weight:600; }
 .product-detail-link { min-height:44px; padding:10px 0 0; border:0; background:none; color:var(--green-deep); font-weight:700; font-size:.875rem; cursor:pointer; }
 .collection-hero { display:grid; grid-template-columns:1fr 1fr; align-items:stretch; background:#f9ca71; }
