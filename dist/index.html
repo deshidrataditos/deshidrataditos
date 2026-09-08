@@ -14,9 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260906">
-  <link rel="stylesheet" href="cart-enhancements.css?v=20260906">
-  <link rel="stylesheet" href="storefront.css?v=20260906">
+  <link rel="stylesheet" href="styles.css?v=20260908">
+  <link rel="stylesheet" href="cart-enhancements.css?v=20260908">
+  <link rel="stylesheet" href="storefront.css?v=20260908">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -96,9 +96,9 @@
       <section class="section-shell discovery-section" aria-labelledby="discovery-title">
         <div class="section-heading"><div><span class="eyebrow">Encuentra tu momento</span><h2 id="discovery-title">Más formas de disfrutarlo</h2></div></div>
         <div class="discovery-grid">
-          <button type="button" data-shop-category="fruit"><span>01 / Tu pausa</span><strong>Frutas y rollitos</strong><small>Dulces, tropicales y con chile ↗</small></button>
+          <button type="button" data-shop-category="fruit"><span>01 / Tu pausa</span><strong>Frutas de temporada y favoritos</strong><small>La cosecha cambia, el antojo se queda ↗</small></button>
           <button type="button" data-view-link="citricos"><span>02 / Tu bebida</span><strong>Cítricos y aromas</strong><small>Para casa, cafeterías y barras ↗</small></button>
-          <button type="button" data-view-link="cocina"><span>03 / Tu cocina</span><strong>Sazona a tu gusto</strong><small>Hierbas, chile y jitomate ↗</small></button>
+          <button type="button" data-view-link="cocina"><span>03 / Tu cocina</span><strong>Sazona a tu gusto</strong><small>Cherry, ajo y sazonadores ↗</small></button>
         </div>
       </section>
       <section class="section-shell new-section" aria-labelledby="new-title">
@@ -125,13 +125,13 @@
       </div>
       <div class="section-shell catalog-shell">
         <div class="catalog-toolbar" role="search" aria-label="Buscar y filtrar productos">
-          <label class="search-field" for="catalog-search"><span>¿Qué se te antoja?</span><input id="catalog-search" type="search" placeholder="Prueba con mango, cítricos o canela…" maxlength="100" autocomplete="off"></label>
+          <label class="search-field" for="catalog-search"><span>¿Qué se te antoja?</span><input id="catalog-search" type="search" placeholder="Prueba con plátano macho, cherry o canela…" maxlength="100" autocomplete="off"></label>
           <label for="catalog-occasion">Lo quiero para<select id="catalog-occasion"><option value="all">Cualquier ocasión</option><option value="snack">Una botana</option><option value="bebidas">Preparar bebidas</option><option value="cocina">Cocinar</option><option value="regalo">Regalar</option></select></label>
           <label for="catalog-sort">Ordenar por<select id="catalog-sort"><option value="recommended">Nuestra selección</option><option value="new">Novedades primero</option><option value="price-asc">Menor precio inicial</option><option value="unit-price">Menor precio por 100 g</option><option value="name">Nombre: A–Z</option></select></label>
         </div>
         <div class="category-filters" role="group" aria-label="Categoría">
           <button type="button" data-category="all" aria-pressed="true" class="selected">Todo</button>
-          <button type="button" data-category="fruit" aria-pressed="false">Frutas y rollitos</button>
+          <button type="button" data-category="fruit" aria-pressed="false">Frutas de temporada y favoritos</button>
           <button type="button" data-category="jerky" aria-pressed="false">Cecina jerky</button>
           <button type="button" data-category="vegetable" aria-pressed="false">Vegetales</button>
           <button type="button" data-category="citrus" aria-pressed="false">Cítricos</button>
@@ -142,7 +142,7 @@
         <div class="catalog-results"><span id="catalog-count" role="status" aria-live="polite"></span><label class="checkbox-label"><input id="catalog-new" type="checkbox">Solo novedades</label><button type="button" class="text-link" id="catalog-reset" hidden>Limpiar filtros</button></div>
         <div class="product-grid" id="catalog-grid"></div>
         <div class="empty-state" id="catalog-empty" hidden><h2>No encontramos esa combinación</h2><p>Prueba otra palabra o elimina los filtros para ver más sabores.</p><button type="button" class="button button-secondary" id="empty-reset">Ver todos los productos</button></div>
-        <p class="catalog-footnote">Precios en MXN. El precio por 100 g permite comparar presentaciones; el orden por precio usa la presentación inicial de cada producto. Las imágenes son ilustrativas.</p>
+        <p class="catalog-footnote">Precios en MXN. El precio por 100 g permite comparar presentaciones; el orden por precio usa la presentación inicial de cada producto. Las opciones por cotizar aparecen al final al ordenar por precio. Las imágenes son ilustrativas.</p>
       </div>
     </section>
 
@@ -152,7 +152,7 @@
     </section>
 
     <section class="view catalog-view" data-view="cocina">
-      <div class="collection-hero pantry-collection"><div><span class="eyebrow">Pequeñas cantidades, mucho sabor</span><h1>Tu cocina,<br>bien sazonada.</h1><p>Mezclas de hierbas, chile y cítricos, y jitomate deshidratado para tus recetas.</p></div><figure><img src="assets/sazonadores-editorial.jpg" alt="Selección ilustrativa de jitomate deshidratado y sazonadores" loading="lazy" width="1000" height="1000"><figcaption>Imagen ilustrativa</figcaption></figure></div>
+      <div class="collection-hero pantry-collection"><div><span class="eyebrow">Pequeñas cantidades, mucho sabor</span><h1>Tu cocina,<br>bien sazonada.</h1><p>Sazonadores, tomate cherry natural o con finas hierbas, y ajo en hojuelas para darle sabor a tus recetas.</p></div><figure><img src="assets/sazonadores-editorial.jpg" alt="Selección ilustrativa de jitomate deshidratado y sazonadores" loading="lazy" width="1000" height="1000"><figcaption>Imagen ilustrativa</figcaption></figure></div>
       <div class="section-shell"><div class="catalog-note"><strong>Elige, prueba y ajusta.</strong> Consulta los usos de cada producto. Confirmamos ingredientes y disponibilidad al preparar tu pedido.</div><div class="product-grid" id="pantry-grid"></div></div>
     </section>
 
@@ -164,7 +164,7 @@
     <section class="view" data-view="negocios">
       <div class="business-layout section-shell">
         <div class="business-copy"><span class="eyebrow">Cafeterías · Bares · Restaurantes · Tiendas</span><h1>Hagamos espacio<br>en tu menú.</h1><p>Cítricos para tu barra, tisanas para tu cafetería y botanas para tu tienda. Cuéntanos qué necesitas para preparar una propuesta a tu medida.</p>
-          <div class="business-benefits"><article><strong>Para servir</strong><p>Cítricos y tisanas para bebidas frías o calientes.</p></article><article><strong>Para cocinar</strong><p>Jitomate y sazonadores para acompañar tus recetas.</p></article><article><strong>Para vender</strong><p>Presentaciones de botanas y paquetes para tus clientes.</p></article></div>
+          <div class="business-benefits"><article><strong>Para servir</strong><p>Cítricos y tisanas para bebidas frías o calientes.</p></article><article><strong>Para cocinar</strong><p>Tomate cherry, ajo y sazonadores para acompañar tus recetas.</p></article><article><strong>Para vender</strong><p>Presentaciones de botanas y paquetes para tus clientes.</p></article></div>
           <p class="catalog-note">El precio por volumen, la presentación y el plazo de preparación se cotizan según el producto y la cantidad. No se aplica un descuento automático.</p>
         </div>
         <form id="business-form" class="quote-card business-form">
@@ -173,7 +173,7 @@
           <label for="business-type">Tipo de negocio<select id="business-type" required><option value="">Selecciona una opción</option><option>Cafetería</option><option>Bar o eventos</option><option>Restaurante</option><option>Tienda o distribuidor</option><option>Otro negocio</option></select></label>
           <label for="business-location">Ciudad y código postal<input id="business-location" placeholder="Ej. Ocotlán, 47800" maxlength="100" required></label>
           <label for="business-contact">Nombre y teléfono de contacto<input id="business-contact" maxlength="120" required></label>
-          <label for="business-products">Productos de interés<select id="business-products"><option>Cítricos para bebidas</option><option>Tisanas y flores</option><option>Sazonadores y jitomate</option><option>Botanas y rollitos</option><option>Jerky</option><option>Paquetes o varios productos</option></select></label>
+          <label for="business-products">Productos de interés<select id="business-products"><option>Cítricos para bebidas</option><option>Tisanas y flores</option><option>Sazonadores, cherry y ajo</option><option>Botanas y rollitos</option><option>Jerky</option><option>Paquetes o varios productos</option></select></label>
           <label for="business-volume">Cantidad aproximada y frecuencia<input id="business-volume" maxlength="150" placeholder="Ej. 10 bolsas de 100 g por semana" required></label>
           <label for="business-notes">Comentarios (opcional)<textarea id="business-notes" rows="3" maxlength="500" placeholder="Presentación, fecha o uso que tienes en mente"></textarea></label>
           <button type="submit" class="button button-primary">Preparar solicitud de cotización</button>
@@ -198,8 +198,8 @@
     <section class="view catalog-view" data-view="frutas">
       <div class="catalog-hero catalog-hero-fruit">
         <span class="eyebrow">Dulce, ácido y picosito</span>
-        <h1>Frutas deshidratadas</h1>
-        <p>Sabores concentrados, chile en polvo y sal en una bolsa lista para acompañarte.</p>
+        <h1>Frutas de temporada<br> y tus favoritos</h1>
+        <p>La selección cambia con la cosecha. La fresa con chile y el plátano macho siguen siendo parte de nuestros favoritos.</p>
       </div>
       <div class="section-shell">
         <div class="catalog-note"><strong>Cuida su sabor:</strong> consulta la fecha y las indicaciones de conservación del envase. En productos sobre pedido, confirmamos disponibilidad y preparación antes del pago.</div>
@@ -437,7 +437,8 @@
         <h3>Cómo disfrutarlo</h3><p id="detail-use"></p>
         <div id="detail-bundle" hidden><h3>Contenido del paquete</h3><ul id="detail-bundle-list"></ul></div>
         <p id="detail-preorder" class="catalog-note" hidden>Se prepara sobre pedido. Confirmamos disponibilidad y fecha de preparación antes del pago.</p>
-        <form id="detail-form"><div class="detail-controls"><label>Presentación<select id="detail-variant"></select></label><label>Cantidad<input id="detail-quantity" type="number" min="1" max="99" step="1" value="1" inputmode="numeric" required></label></div><div class="detail-price-line"><strong class="price" id="detail-price"></strong><small id="detail-unit-price"></small></div><button type="submit" class="button button-primary button-full">Agregar al carrito</button></form>
+        <form id="detail-form"><div class="detail-controls"><label><span id="detail-option-label">Presentación</span><select id="detail-variant"></select></label><label id="detail-quantity-label">Cantidad<input id="detail-quantity" type="number" min="1" max="99" step="1" value="1" inputmode="numeric" required></label></div><div class="detail-price-line"><strong class="price" id="detail-price"></strong><small id="detail-unit-price"></small></div><button id="detail-add" type="submit" class="button button-primary button-full">Agregar al carrito</button></form>
+        <a id="detail-quote" class="button button-primary button-full" target="_blank" rel="noopener" hidden>Consultar disponibilidad por WhatsApp ↗</a>
         <details class="ingredient-details"><summary>Ingredientes y conservación</summary><p>Consulta la lista de ingredientes, alérgenos, fecha e indicaciones de conservación del envase. Si necesitas confirmar algún ingrediente antes de comprar, escríbenos.</p><a id="detail-contact" target="_blank" rel="noopener">Consultar ingredientes por WhatsApp ↗</a></details>
       </div>
     </div>
@@ -448,8 +449,8 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
   </a>
 
-  <script src="catalog.js?v=20260906"></script>
-  <script src="commerce.js?v=20260906"></script>
-  <script src="app.js?v=20260906"></script>
+  <script src="catalog.js?v=20260908"></script>
+  <script src="commerce.js?v=20260908"></script>
+  <script src="app.js?v=20260908"></script>
 </body>
 </html>

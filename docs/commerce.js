@@ -15,7 +15,7 @@
       if (!row || typeof row !== "object") continue;
       const product = findProduct(products, row.productId);
       const selected = variant(product, row.weight);
-      if (!selected || product.availability === "Agotado" || !Number.isSafeInteger(row.quantity) || row.quantity < 1) continue;
+      if (!selected || product.quoteOnly || !Number.isFinite(selected.price) || selected.price <= 0 || product.availability === "Agotado" || !Number.isSafeInteger(row.quantity) || row.quantity < 1) continue;
       const key = `${product.id}-${selected.label}`;
       const quantity = Math.min(MAX_QUANTITY, row.quantity + (entries.get(key)?.quantity || 0));
       entries.set(key, {key, productId:product.id, weight:selected.label, price:selected.price, quantity});
@@ -38,15 +38,26 @@
   function filterProducts(products, filters = {}) {
     const words = normalize(filters.search).split(/\s+/).filter(Boolean);
     const result = products.filter(product => {
-      const text = normalize([product.name, product.type, product.description, ...(product.tags || [])].join(" "));
+      const text = normalize([product.name, product.type, product.description, ...(product.tags || []), ...product.variants.map(item => item.label)].join(" "));
       return words.every(word => text.includes(word))
         && (!filters.category || filters.category === "all" || product.category === filters.category)
         && (!filters.occasion || filters.occasion === "all" || product.occasions.includes(filters.occasion))
         && (!filters.onlyNew || product.isNew);
     });
-    const per100 = product => product.variants[0].price / product.variants[0].grams * 100;
-    if (filters.sort === "price-asc") result.sort((a,b) => a.variants[0].price - b.variants[0].price);
-    else if (filters.sort === "unit-price") result.sort((a,b) => per100(a) - per100(b));
+    const startingPrice = product => {
+      const price = product.variants[0]?.price;
+      return !product.quoteOnly && Number.isFinite(price) && price > 0 ? price : Infinity;
+    };
+    const per100 = product => {
+      const grams = product.variants[0]?.grams;
+      return Number.isFinite(grams) && grams > 0 ? startingPrice(product) / grams * 100 : Infinity;
+    };
+    const byValue = value => (a,b) => {
+      const first = value(a), second = value(b);
+      return first === second ? a.rank - b.rank : first < second ? -1 : 1;
+    };
+    if (filters.sort === "price-asc") result.sort(byValue(startingPrice));
+    else if (filters.sort === "unit-price") result.sort(byValue(per100));
     else if (filters.sort === "name") result.sort((a,b) => a.name.localeCompare(b.name, "es"));
     else if (filters.sort === "new") result.sort((a,b) => Number(b.isNew) - Number(a.isNew) || a.rank - b.rank);
     else result.sort((a,b) => a.rank - b.rank);
@@ -60,7 +71,7 @@
     const categories = new Set(selected.map(product => product.category));
     const score = product => product.occasions.filter(occasion => occasions.has(occasion)).length * 5
       + (categories.has(product.category) ? 1 : 2) + (product.isNew ? 1 : 0);
-    return products.filter(product => !ids.has(product.id) && product.availability !== "Agotado")
+    return products.filter(product => !ids.has(product.id) && !product.quoteOnly && product.availability !== "Agotado")
       .sort((a,b) => score(b) - score(a) || a.rank - b.rank).slice(0, limit);
   }
 
@@ -68,6 +79,16 @@
     if (!product.bundle) return null;
     const regular = product.bundle.reduce((sum, item) => sum + variant(findProduct(products,item.id),item.label).price * item.quantity, 0);
     return {regular, saving:Math.max(0, regular - product.variants[0].price)};
+  }
+
+  function quoteMessage(product, label) {
+    const selected = variant(product, label);
+    if (!product?.quoteOnly || !selected) return "";
+    return ["Hola Deshidrataditos, quiero consultar este producto:", "",
+      `Producto: ${product.name}`, `Opción: ${selected.label}`, "",
+      "¿Me confirmas la disponibilidad, las presentaciones y el precio de esta opción?",
+      "También quisiera conocer la fecha estimada de preparación y entrega."
+    ].join("\n");
   }
 
   function orderMessage({cart, products, address, delivery, payment, notes = ""}) {
@@ -95,5 +116,5 @@
       "Por favor confirma disponibilidad, ingredientes y fecha de preparación/entrega antes del pago."
     ].filter(line => line !== null).join("\n");
   }
-  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, orderMessage};
+  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, quoteMessage, orderMessage};
 })();

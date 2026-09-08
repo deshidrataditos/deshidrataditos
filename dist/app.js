@@ -11,14 +11,15 @@
   const selections = new Map();
   let cart = [], timer, focusBeforeCart, detailId;
   try { cart = C.sanitizeCart(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"),PRODUCTS); } catch { cart = []; }
-  const options = (product,selected) => product.variants.map(item => '<option value="' + escape(item.label) + '"' + (selected === item.label ? " selected" : "") + ">" + escape(item.label) + " · " + money(item.price) + "</option>").join("");
+  const options = (product,selected) => product.variants.map(item => '<option value="' + escape(item.label) + '"' + (selected === item.label ? " selected" : "") + ">" + escape(item.label) + (product.quoteOnly ? "" : " · " + money(item.price)) + "</option>").join("");
   const photo = product => '<img src="' + product.photo.src + '" alt="' + escape(product.photo.alt) + '" loading="lazy" width="1000" height="1000" style="object-position:' + product.photo.position + '">';
-  const per100 = (product,label) => { const item = C.variant(product,label); return money(item.price / item.grams * 100) + " / 100 g"; };
+  const priceLabel = (product,label) => product.quoteOnly ? "Por cotizar" : money(C.variant(product,label).price);
+  const per100 = (product,label) => { if (product.quoteOnly) return "Precio y presentación por confirmar"; const item = C.variant(product,label); return money(item.price / item.grams * 100) + " / 100 g"; };
   const whatsappUrl = message => "https://wa.me/523931173611?text=" + encodeURIComponent(message);
   const deliveryFor = prefix => document.querySelector('input[name="' + prefix + '-delivery"]:checked')?.value || "national";
   function card(product) {
     const label = selections.get(product.id) || product.variants[0].label;
-    const item = C.variant(product,label), bundle = C.bundleValue(product,PRODUCTS);
+    const bundle = C.bundleValue(product,PRODUCTS);
     return '<article class="product-card" data-product-card="' + product.id + '">' +
       '<button type="button" class="product-photo-button" data-detail="' + product.id + '" aria-label="Ver detalles de ' + escape(product.name) + '"><span class="product-image-placeholder" style="--product-bg:' + product.bg + '">' + photo(product) +
       (product.isNew ? '<span class="new-badge">Nuevo</span>' : "") + '<span class="image-caption">Imagen ilustrativa</span></span></button>' +
@@ -26,8 +27,8 @@
       '<h3><button type="button" data-detail="' + product.id + '">' + escape(product.name) + '</button></h3><p>' + escape(product.description) + '</p>' +
       '<div class="product-tags">' + product.tags.slice(0,2).map(tag => "<span>" + escape(tag) + "</span>").join("") + '</div>' +
       (bundle?.saving ? '<p class="bundle-saving">Ahorras ' + money(bundle.saving) + ' frente a las tres bolsas por separado.</p>' : "") +
-      '<div class="product-controls"><label>Presentación<select class="weight-select" aria-label="Presentación de ' + escape(product.name) + '">' + options(product,label) + '</select></label><div class="price-block"><span class="price">' + money(item.price) + '</span><small class="unit-price">' + per100(product,label) + '</small></div></div>' +
-      '<button class="button button-primary add-button" type="button" data-add-product="' + product.id + '">Agregar al carrito</button><button class="product-detail-link" type="button" data-detail="' + product.id + '">Usos y detalles ↗</button></div></article>';
+      '<div class="product-controls' + (product.quoteOnly ? ' quote-controls' : '') + '"><label>' + (product.quoteOnly ? 'Opción' : 'Presentación') + '<select class="weight-select" aria-label="' + (product.quoteOnly ? 'Opción' : 'Presentación') + ' de ' + escape(product.name) + '">' + options(product,label) + '</select></label><div class="price-block"><span class="price">' + priceLabel(product,label) + '</span><small class="unit-price">' + per100(product,label) + '</small></div></div>' +
+      (product.quoteOnly ? '<a class="button button-primary add-button product-quote" target="_blank" rel="noopener" href="' + whatsappUrl(C.quoteMessage(product,label)) + '">Consultar disponibilidad ↗</a>' : '<button class="button button-primary add-button" type="button" data-add-product="' + product.id + '">Agregar al carrito</button>') + '<button class="product-detail-link" type="button" data-detail="' + product.id + '">Usos y detalles ↗</button></div></article>';
   }
   function renderCatalog() {
     const result = C.filterProducts(PRODUCTS,filters);
@@ -39,8 +40,8 @@
   }
   function renderProducts() {
     Object.entries({"jerky-grid":"jerky","fruit-grid":"fruit","vegetable-grid":"vegetable","flower-grid":"flower","citrus-grid":"citrus","pantry-grid":"pantry","bundle-grid":"bundle"}).forEach(([id,category]) => { $(id).innerHTML = C.filterProducts(PRODUCTS,{category}).map(card).join(""); });
-    $("featured-grid").innerHTML = ["pina-chile","jerky-res","pack-degustacion"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
-    $("new-grid").innerHTML = ["naranja-rodajas","tisana-jamaica-pina","mix-tropical"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
+    $("featured-grid").innerHTML = ["fruta-temporada","fresa-chile","platano-macho"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
+    $("new-grid").innerHTML = ["tomate-cherry","ajo-hojuelas","naranja-rodajas"].map(id => card(C.findProduct(PRODUCTS,id))).join("");
     renderCatalog();
   }
   function resetFilters() {
@@ -81,7 +82,7 @@
   }
   function addToCart(id,label,quantity = 1) {
     const product = C.findProduct(PRODUCTS,id);
-    if (!C.variant(product,label)) return;
+    if (!C.variant(product,label) || product.quoteOnly) return;
     const current = cart.find(row => row.productId === id && row.weight === label);
     if ((current?.quantity || 0) + quantity > C.MAX_QUANTITY) { toast("Para más de 99 unidades, solicita una cotización para tu negocio."); return; }
     cart = C.addItem(cart,PRODUCTS,id,label,quantity);
@@ -125,11 +126,15 @@
   function openDetails(id) {
     const product = C.findProduct(PRODUCTS,id); if (!product) return; detailId = id;
     const label = selections.get(id) || product.variants[0].label;
-    $("detail-photo").innerHTML = photo(product) + '<span class="image-caption">Imagen ilustrativa de la categoría</span>';
+    $("detail-photo").innerHTML = photo(product) + '<span class="image-caption">Imagen ilustrativa</span>';
     $("detail-type").textContent = product.type; $("detail-title").textContent = product.name;
     $("detail-description").textContent = product.description; $("detail-use").textContent = product.use; $("detail-status").textContent = product.availability;
     $("detail-preorder").hidden = product.availability !== "Sobre pedido"; $("detail-variant").innerHTML = options(product,label);
-    $("detail-variant").setAttribute("aria-label","Presentación de " + product.name); $("detail-price").textContent = money(C.variant(product,label).price);
+    $("detail-option-label").textContent = product.quoteOnly ? "Opción" : "Presentación";
+    $("detail-variant").setAttribute("aria-label",(product.quoteOnly ? "Opción de " : "Presentación de ") + product.name); $("detail-price").textContent = priceLabel(product,label);
+    $("detail-quantity-label").hidden = Boolean(product.quoteOnly); $("detail-add").hidden = Boolean(product.quoteOnly);
+    $("detail-quote").hidden = !product.quoteOnly;
+    if (product.quoteOnly) $("detail-quote").href = whatsappUrl(C.quoteMessage(product,label)); else $("detail-quote").removeAttribute("href");
     $("detail-unit-price").textContent = per100(product,label); $("detail-quantity").value = 1; $("detail-bundle").hidden = !product.bundle;
     $("detail-bundle-list").innerHTML = product.bundle ? product.bundle.map(item => "<li>" + item.quantity + " bolsa de " + escape(C.findProduct(PRODUCTS,item.id).name) + " · " + escape(item.label) + "</li>").join("") : "";
     $("detail-contact").href = whatsappUrl("Hola, quisiera conocer los ingredientes y alérgenos de " + product.name + " antes de pedir.");
@@ -161,7 +166,7 @@
     if (!event.target.matches(".weight-select")) return;
     const product = C.findProduct(PRODUCTS,event.target.closest(".product-card").dataset.productCard);
     selections.set(product.id,event.target.value);
-    document.querySelectorAll('[data-product-card="' + product.id + '"]').forEach(copy => { copy.querySelector(".weight-select").value = event.target.value; copy.querySelector(".price").textContent = money(C.variant(product,event.target.value).price); copy.querySelector(".unit-price").textContent = per100(product,event.target.value); });
+    document.querySelectorAll('[data-product-card="' + product.id + '"]').forEach(copy => { copy.querySelector(".weight-select").value = event.target.value; copy.querySelector(".price").textContent = priceLabel(product,event.target.value); copy.querySelector(".unit-price").textContent = per100(product,event.target.value); if (product.quoteOnly) copy.querySelector(".product-quote").href = whatsappUrl(C.quoteMessage(product,event.target.value)); });
   });
   $("catalog-search").addEventListener("input",event => { filters.search = event.target.value; renderCatalog(); });
   $("catalog-occasion").addEventListener("change",event => { filters.occasion = event.target.value; renderCatalog(); });
@@ -175,8 +180,8 @@
   $("detail-close").addEventListener("click",() => $("product-dialog").close());
   $("product-dialog").addEventListener("close",() => { document.body.style.overflow = ""; });
   $("product-dialog").addEventListener("click",event => { if (event.target !== $("product-dialog")) return; const box = $("product-dialog").getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) $("product-dialog").close(); });
-  $("detail-variant").addEventListener("change",() => { const product = C.findProduct(PRODUCTS,detailId); $("detail-price").textContent = money(C.variant(product,$("detail-variant").value).price); $("detail-unit-price").textContent = per100(product,$("detail-variant").value); });
-  $("detail-form").addEventListener("submit",event => { event.preventDefault(); const quantity = Number($("detail-quantity").value); if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > C.MAX_QUANTITY) return; addToCart(detailId,$("detail-variant").value,quantity); $("product-dialog").close(); });
+  $("detail-variant").addEventListener("change",() => { const product = C.findProduct(PRODUCTS,detailId), label = $("detail-variant").value; $("detail-price").textContent = priceLabel(product,label); $("detail-unit-price").textContent = per100(product,label); if (product.quoteOnly) $("detail-quote").href = whatsappUrl(C.quoteMessage(product,label)); });
+  $("detail-form").addEventListener("submit",event => { event.preventDefault(); if (C.findProduct(PRODUCTS,detailId)?.quoteOnly) return; const quantity = Number($("detail-quantity").value); if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > C.MAX_QUANTITY) return; addToCart(detailId,$("detail-variant").value,quantity); $("product-dialog").close(); });
   $("cart-checkout").addEventListener("submit",event => {
     event.preventDefault(); if (!cart.length) { toast("Agrega un producto antes de preparar tu pedido."); return; } if (!$("cart-checkout").reportValidity()) return;
     const delivery = deliveryFor("checkout"), payment = document.querySelector('input[name="payment"]:checked').value;
