@@ -59,7 +59,15 @@ a.button { display:inline-flex; align-items:center; justify-content:center; text
 .catalog-footnote { margin-top:32px; max-width:900px; font-size:.875rem; color:var(--muted); }
 .product-card { display:flex; flex-direction:column; border-radius:18px; box-shadow:0 6px 22px #482c280a; }
 .product-photo-button { width:100%; padding:0; display:block; border:0; cursor:pointer; background:transparent; text-align:left; }
-.product-image-placeholder { display:block; min-height:0; aspect-ratio:4/3; }
+.product-image-placeholder { display:block; min-height:0; aspect-ratio:4/3; background:var(--cream); }
+img.photo-center { object-position:center; }
+img.photo-left-center { object-position:left center; }
+img.photo-right-center { object-position:right center; }
+img.photo-left-top { object-position:left top; }
+img.photo-center-top { object-position:center top; }
+img.photo-right-top { object-position:right top; }
+img.photo-left-bottom { object-position:left bottom; }
+img.photo-right-bottom { object-position:right bottom; }
 .product-image-placeholder img { transform:none; }
 .new-badge { position:absolute; top:14px; left:14px; padding:5px 12px; border-radius:100px; background:var(--cocoa-deep); color:white; font-size:.875rem; font-weight:700; }
 .image-caption { position:absolute; bottom:9px; right:9px; padding:2px 7px; border-radius:4px; background:rgba(255,253,248,.93); color:var(--cocoa); font-size:.75rem; line-height:1.5; }

@@ -7,6 +7,13 @@
   const normalize = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
   const variant = (product, label) => product?.variants.find(item => item.label === label);
   const findProduct = (products, id) => products.find(product => product.id === id);
+  // Contact text is untrusted; keep it within its own line in a reviewed message.
+  const cleanText = (value,limit) => typeof value === "string" ? value.replace(/[\u0000-\u0020\u007f-\u009f\u2028\u2029]/g," ").replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g,"").replace(/\s+/g," ").trim().slice(0,limit) : "";
+
+  function readCart(raw, products) {
+    if (typeof raw !== "string" || raw.length > 100000) return [];
+    try { return sanitizeCart(JSON.parse(raw),products); } catch { return []; }
+  }
 
   function sanitizeCart(input, products) {
     if (!Array.isArray(input)) return [];
@@ -91,10 +98,22 @@
     ].join("\n");
   }
 
-  function orderMessage({cart, products, address, delivery, payment, notes = ""}) {
+  function deliveryMessage({postcode,city,state,delivery} = {}) {
+    const destination = {postcode:cleanText(postcode,10),city:cleanText(city,120),state:cleanText(state,120)};
+    if (!/^[0-9]{5}$/.test(destination.postcode) || !destination.city || !destination.state) return "";
+    return ["Hola, quisiera confirmar una entrega " + (delivery === "regional" ? "regional" : "nacional") + ".",
+      "C.P.: " + destination.postcode, "Municipio/ciudad: " + destination.city, "Estado: " + destination.state,
+      delivery === "regional" ? "Por favor confirma cobertura y costo." : "Tarifa de catálogo: $200; gratis desde $2,000 de compra."
+    ].join("\n");
+  }
+
+  function orderMessage({cart, products, address = {}, delivery, payment, notes = ""}) {
     const clean = sanitizeCart(cart, products);
     const total = totals(clean, delivery);
     if (!clean.length) return "";
+    const fieldLimits = {name:120,phone:20,email:120,postcode:5,street:120,neighborhood:120,city:120,state:120,references:300};
+    const contact = Object.fromEntries(Object.entries(fieldLimits).map(([field,limit]) => [field,cleanText(address?.[field],limit)]));
+    const comment = cleanText(notes,500);
     const lines = clean.flatMap(row => {
       const product = findProduct(products, row.productId);
       const result = [`• ${product.name} | ${row.weight} × ${row.quantity} | $${row.price * row.quantity} MXN | ${product.availability}`];
@@ -107,14 +126,14 @@
       `${total.shipping === null ? "Total sin entrega regional" : "Total de catálogo"}: $${total.total} MXN`,
       `Entrega: ${delivery === "regional" ? "Regional (cobertura por confirmar)" : "Nacional"}`,
       `Preferencia de pago: ${payment === "contra-entrega" ? "Contra entrega (sujeto a cobertura regional)" : "Transferencia"}`,
-      "", "Datos de envío:", `Nombre: ${address.name}`, `Teléfono: ${address.phone}`,
-      address.email ? `Correo: ${address.email}` : null, `C.P.: ${address.postcode}`,
-      `Dirección: ${address.street}`, `Colonia: ${address.neighborhood}`,
-      `Municipio/ciudad: ${address.city}`, `Estado: ${address.state}`,
-      address.references ? `Referencias: ${address.references}` : null,
-      notes.trim() ? `Notas del pedido: ${notes.trim()}` : null, "",
+      "", "Datos de envío:", `Nombre: ${contact.name}`, `Teléfono: ${contact.phone}`,
+      contact.email ? `Correo: ${contact.email}` : null, `C.P.: ${contact.postcode}`,
+      `Dirección: ${contact.street}`, `Colonia: ${contact.neighborhood}`,
+      `Municipio/ciudad: ${contact.city}`, `Estado: ${contact.state}`,
+      contact.references ? `Referencias: ${contact.references}` : null,
+      comment ? `Notas del pedido: ${comment}` : null, "",
       "Por favor confirma disponibilidad, ingredientes y fecha de preparación/entrega antes del pago."
     ].filter(line => line !== null).join("\n");
   }
-  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, quoteMessage, orderMessage};
+  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, cleanText, readCart, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, quoteMessage, deliveryMessage, orderMessage};
 })();

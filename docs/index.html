@@ -2,6 +2,8 @@
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#542311">
   <meta name="description" content="Compra jerky, frutas, rollitos, cítricos para bebidas, tisanas y sazonadores de Deshidrataditos. Desde La Barca, Jalisco, a todo México. Pedidos y cotizaciones por WhatsApp.">
@@ -14,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260908">
-  <link rel="stylesheet" href="cart-enhancements.css?v=20260908">
-  <link rel="stylesheet" href="storefront.css?v=20260908">
+  <link rel="stylesheet" href="styles.css?v=20260909">
+  <link rel="stylesheet" href="cart-enhancements.css?v=20260909">
+  <link rel="stylesheet" href="storefront.css?v=20260909">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -172,13 +174,13 @@
           <label for="business-name">Nombre del negocio<input id="business-name" autocomplete="organization" maxlength="100" required></label>
           <label for="business-type">Tipo de negocio<select id="business-type" required><option value="">Selecciona una opción</option><option>Cafetería</option><option>Bar o eventos</option><option>Restaurante</option><option>Tienda o distribuidor</option><option>Otro negocio</option></select></label>
           <label for="business-location">Ciudad y código postal<input id="business-location" placeholder="Ej. Ocotlán, 47800" maxlength="100" required></label>
-          <label for="business-contact">Nombre y teléfono de contacto<input id="business-contact" maxlength="120" required></label>
+          <label for="business-contact">Nombre de contacto (opcional)<input id="business-contact" maxlength="120" autocomplete="given-name"></label>
           <label for="business-products">Productos de interés<select id="business-products"><option>Cítricos para bebidas</option><option>Tisanas y flores</option><option>Sazonadores, cherry y ajo</option><option>Botanas y rollitos</option><option>Jerky</option><option>Paquetes o varios productos</option></select></label>
           <label for="business-volume">Cantidad aproximada y frecuencia<input id="business-volume" maxlength="150" placeholder="Ej. 10 bolsas de 100 g por semana" required></label>
           <label for="business-notes">Comentarios (opcional)<textarea id="business-notes" rows="3" maxlength="500" placeholder="Presentación, fecha o uso que tienes en mente"></textarea></label>
           <button type="submit" class="button button-primary">Preparar solicitud de cotización</button>
-          <a id="business-whatsapp" class="button button-primary whatsapp-handoff" target="_blank" rel="noopener" hidden>Abrir WhatsApp con mi solicitud ↗</a><p id="business-status" class="handoff-status" role="status"></p>
-          <p class="form-help">Revisa y envía la solicitud por WhatsApp. Te responderemos para confirmar opciones, disponibilidad y precio.</p>
+          <a id="business-whatsapp" class="button button-primary whatsapp-handoff" target="_blank" rel="noopener noreferrer" hidden>Abrir WhatsApp con mi solicitud ↗</a><p id="business-status" class="handoff-status" role="status"></p>
+          <p class="form-help">Revisa y envía la solicitud por WhatsApp. Al abrirlo, compartirás con ese servicio los datos incluidos en el enlace. Te responderemos para confirmar opciones, disponibilidad y precio.</p>
         </form>
       </div>
     </section>
@@ -266,8 +268,8 @@
         </div>
 
         <form class="quote-card" id="quote-form">
-          <span class="eyebrow">Datos de envío</span>
-          <h2>¿A dónde enviamos?</h2>
+          <span class="eyebrow">Consulta de cobertura</span>
+          <h2>¿En qué ciudad estás?</h2>
           <label for="quote-postcode">Código postal</label>
           <input id="quote-postcode" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Ej. 47910" required>
 
@@ -284,26 +286,11 @@
           </fieldset>
 
           <div class="address-fields">
-            <label class="field-full">Nombre completo
-              <input id="quote-name" maxlength="120" autocomplete="name" required>
-            </label>
-            <label>Teléfono
-              <input id="quote-phone" type="tel" autocomplete="tel" inputmode="tel" required>
-            </label>
             <label>Estado
               <input id="quote-state" maxlength="120" autocomplete="address-level1" required>
             </label>
-            <label class="field-full">Calle y número
-              <input id="quote-street" maxlength="120" autocomplete="street-address" required>
-            </label>
-            <label>Colonia
-              <input id="quote-neighborhood" maxlength="120" autocomplete="address-level3" required>
-            </label>
             <label>Municipio o ciudad
               <input id="quote-city" maxlength="120" autocomplete="address-level2" required>
-            </label>
-            <label class="field-full">Referencias de entrega
-              <textarea id="quote-references" maxlength="300" rows="3" placeholder="Entre calles, color de fachada u otra referencia"></textarea>
             </label>
           </div>
 
@@ -312,9 +299,9 @@
             <strong id="quote-shipping-price">$200</strong>
           </div>
           <button class="button button-primary button-full" type="submit">Preparar consulta de entrega</button>
-          <a class="button button-primary button-full whatsapp-handoff" id="quote-whatsapp" target="_blank" rel="noopener" hidden>Abrir WhatsApp con mis datos ↗</a>
+          <a class="button button-primary button-full whatsapp-handoff" id="quote-whatsapp" target="_blank" rel="noopener noreferrer" hidden>Abrir WhatsApp con mi consulta ↗</a>
           <p id="quote-status" class="handoff-status" role="status"></p>
-          <p class="form-help">El envío nacional cuesta $200. Es gratis en compras desde $2,000. Las entregas regionales se confirman de acuerdo con la ubicación.</p>
+          <p class="form-help">Para consultar cobertura solo necesitamos ciudad, estado y código postal. Al abrir WhatsApp, esos datos se comparten con ese servicio mediante el enlace. Pediremos tu domicilio al preparar el pedido. El envío nacional cuesta $200 y es gratis desde $2,000; confirmamos la cobertura regional contigo.</p>
         </form>
       </div>
     </section>
@@ -347,9 +334,9 @@
           <label class="notes-label" for="checkout-notes">Notas del pedido (opcional)</label><textarea id="checkout-notes" maxlength="500" rows="3" placeholder="Cuéntanos si necesitas confirmar algún ingrediente o detalle."></textarea>
           <p class="catalog-note" id="checkout-preorder" hidden>Tu selección incluye productos sobre pedido. Confirmaremos disponibilidad y fecha de preparación antes del pago.</p>
           <button class="button button-primary button-full" id="checkout-submit" type="submit">Preparar pedido para WhatsApp</button>
-          <a class="button button-primary button-full whatsapp-handoff" id="checkout-whatsapp" target="_blank" rel="noopener" hidden>Abrir WhatsApp con mi pedido ↗</a>
+          <a class="button button-primary button-full whatsapp-handoff" id="checkout-whatsapp" target="_blank" rel="noopener noreferrer" hidden>Abrir WhatsApp con mi pedido ↗</a>
           <p id="checkout-status" class="handoff-status" role="status"></p>
-          <p class="checkout-note">Revisa el resumen y envíalo por WhatsApp. Confirmaremos existencias, entrega y pago contigo. Tus datos se incluyen en ese mensaje; no se guardan en el carrito.</p>
+          <p class="checkout-note">Al abrir WhatsApp, compartirás con ese servicio los datos de tu pedido mediante el enlace. Revisa el mensaje antes de enviarlo. Tus datos de contacto no se guardan en el carrito. Espera nuestra confirmación de productos, importe y entrega antes de pagar; nunca te pediremos contraseñas ni códigos bancarios.</p>
         </form>
         <aside class="order-summary" aria-label="Resumen del pedido">
           <h2>Resumen de tu pedido</h2><div id="checkout-items"></div>
@@ -386,7 +373,7 @@
 
         <div class="policy-contact">
           <strong>¿Tu pedido tuvo un problema?</strong>
-          <a href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20necesito%20reportar%20un%20problema%20con%20mi%20pedido." target="_blank" rel="noopener">Reportarlo por WhatsApp</a>
+          <a href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20necesito%20reportar%20un%20problema%20con%20mi%20pedido." target="_blank" rel="noopener noreferrer">Reportarlo por WhatsApp</a>
         </div>
       </div>
     </section>
@@ -398,7 +385,7 @@
       <p>Se encogen en tamaño,<br>se expanden en sabor.</p>
     </div>
     <div><strong>Compra</strong><button data-view-link="catalogo">Toda la tienda</button><button data-view-link="citricos">Cítricos para bebidas</button><button data-view-link="cocina">Sazonadores y cocina</button><button data-view-link="paquetes">Paquetes</button><button data-view-link="cecina">Cecina jerky</button><button data-view-link="frutas">Frutas</button><button data-view-link="vegetales">Vegetales</button><button data-view-link="flores">Flores y tisanas</button></div>
-    <div><strong>Ayuda</strong><button data-view-link="negocios">Cotizaciones para negocios</button><button data-view-link="envios">Envíos y entregas</button><button data-view-link="politica">Productos dañados</button><a href="https://wa.me/523931173611" target="_blank" rel="noopener">WhatsApp</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61593866530397" target="_blank" rel="noopener" aria-label="Visitar Deshidrataditos en Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.24 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.24 0-1.63.77-1.63 1.56v1.9h2.77l-.44 2.91h-2.33V22C18.34 21.24 22 17.08 22 12.06Z"/></svg><span>Facebook</span></a></div>
+    <div><strong>Ayuda</strong><button data-view-link="negocios">Cotizaciones para negocios</button><button data-view-link="envios">Envíos y entregas</button><button data-view-link="politica">Productos dañados</button><a href="https://wa.me/523931173611" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61593866530397" target="_blank" rel="noopener noreferrer" aria-label="Visitar Deshidrataditos en Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.24 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.24 0-1.63.77-1.63 1.56v1.9h2.77l-.44 2.91h-2.33V22C18.34 21.24 22 17.08 22 12.06Z"/></svg><span>Facebook</span></a></div>
     <div><strong>Horario</strong><p>Lunes a sábado<br>11:00 a.m.–8:00 p.m.</p><p>La Barca, Jalisco</p></div>
     <small>© <span id="year"></span> Deshidrataditos. Precios expresados en pesos mexicanos.</small>
   </footer>
@@ -438,19 +425,19 @@
         <div id="detail-bundle" hidden><h3>Contenido del paquete</h3><ul id="detail-bundle-list"></ul></div>
         <p id="detail-preorder" class="catalog-note" hidden>Se prepara sobre pedido. Confirmamos disponibilidad y fecha de preparación antes del pago.</p>
         <form id="detail-form"><div class="detail-controls"><label><span id="detail-option-label">Presentación</span><select id="detail-variant"></select></label><label id="detail-quantity-label">Cantidad<input id="detail-quantity" type="number" min="1" max="99" step="1" value="1" inputmode="numeric" required></label></div><div class="detail-price-line"><strong class="price" id="detail-price"></strong><small id="detail-unit-price"></small></div><button id="detail-add" type="submit" class="button button-primary button-full">Agregar al carrito</button></form>
-        <a id="detail-quote" class="button button-primary button-full" target="_blank" rel="noopener" hidden>Consultar disponibilidad por WhatsApp ↗</a>
-        <details class="ingredient-details"><summary>Ingredientes y conservación</summary><p>Consulta la lista de ingredientes, alérgenos, fecha e indicaciones de conservación del envase. Si necesitas confirmar algún ingrediente antes de comprar, escríbenos.</p><a id="detail-contact" target="_blank" rel="noopener">Consultar ingredientes por WhatsApp ↗</a></details>
+        <a id="detail-quote" class="button button-primary button-full" target="_blank" rel="noopener noreferrer" hidden>Consultar disponibilidad por WhatsApp ↗</a>
+        <details class="ingredient-details"><summary>Ingredientes y conservación</summary><p>Consulta la lista de ingredientes, alérgenos, fecha e indicaciones de conservación del envase. Si necesitas confirmar algún ingrediente antes de comprar, escríbenos.</p><a id="detail-contact" target="_blank" rel="noopener noreferrer">Consultar ingredientes por WhatsApp ↗</a></details>
       </div>
     </div>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <a class="whatsapp-float" href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos." target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <a class="whatsapp-float" href="https://wa.me/523931173611?text=Hola%20Deshidrataditos%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
   </a>
 
-  <script src="catalog.js?v=20260908"></script>
-  <script src="commerce.js?v=20260908"></script>
-  <script src="app.js?v=20260908"></script>
+  <script src="catalog.js?v=20260909"></script>
+  <script src="commerce.js?v=20260909"></script>
+  <script src="app.js?v=20260909"></script>
 </body>
 </html>
