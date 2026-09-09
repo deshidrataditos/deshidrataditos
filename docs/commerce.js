@@ -8,7 +8,20 @@
   const variant = (product, label) => product?.variants.find(item => item.label === label);
   const findProduct = (products, id) => products.find(product => product.id === id);
   // Contact text is untrusted; keep it within its own line in a reviewed message.
-  const cleanText = (value,limit) => typeof value === "string" ? value.replace(/[\u0000-\u0020\u007f-\u009f\u2028\u2029]/g," ").replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g,"").replace(/\s+/g," ").trim().slice(0,limit) : "";
+  function cleanText(value,limit) {
+    if (typeof value !== "string") return "";
+    const text = value.replace(/[\u0000-\u0020\u007f-\u009f\u2028\u2029]/g," ").replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g,"").replace(/\s+/g," ").trim();
+    let result = "";
+    // HTML maxlength counts UTF-16 units. Preserve whole code points so a
+    // boundary emoji or malformed surrogate cannot break encodeURIComponent.
+    for (const character of text) {
+      const code = character.charCodeAt(0);
+      const valid = character.length === 1 && code >= 0xd800 && code <= 0xdfff ? "\ufffd" : character;
+      if (result.length + valid.length > limit) break;
+      result += valid;
+    }
+    return result;
+  }
 
   function readCart(raw, products) {
     if (typeof raw !== "string" || raw.length > 100000) return [];

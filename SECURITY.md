@@ -13,7 +13,7 @@ Contacta al negocio mediante [su WhatsApp oficial](https://wa.me/523931173611) c
 - Política de referente `no-referrer` y enlaces externos con `noopener noreferrer`. Los enlaces de WhatsApp siguen compartiendo el texto que contienen con WhatsApp al abrirlos; estas medidas no ocultan ese texto al destinatario.
 - Cotizaciones de cobertura con código postal, ciudad y estado. Los datos de contacto no se guardan en el carrito. Los enlaces preparados se invalidan al editar formularios, restablecerlos o abandonar la página.
 - Lectura acotada del carrito persistido, precios reconstruidos desde el catálogo y cantidades limitadas. Texto de contacto acotado y sin separadores o controles que aparenten líneas independientes del resumen.
-- Pruebas de seguridad y comercio en GitHub, análisis CodeQL y propuestas de actualización de acciones. Consulta [la configuración y sus requisitos](notes/seguridad-github.md).
+- Pruebas de seguridad y comercio en GitHub, análisis CodeQL con bloqueo explícito ante hallazgos o resultados incompletos y propuestas de actualización de acciones y herramientas de pruebas. El HTML se inspecciona con un parser HTML5; los límites de contacto conservan Unicode válido. Consulta [la configuración](notes/seguridad-github.md) y [la auditoría de corrección](notes/auditoria-seguridad-20260909.md).
 
 ## Límites operativos
 

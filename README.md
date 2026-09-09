@@ -17,9 +17,10 @@ Tienda estática de alimentos deshidratados de La Barca, Jalisco. GitHub Pages p
 
 ## Editar y comprobar
 
-Requiere Node.js 20 o posterior. No hay dependencias que instalar.
+Requiere Node.js 20.19 o posterior; se recomienda Node.js 24 LTS. Las pruebas usan parse5 como herramienta de desarrollo, fijada en el archivo de bloqueo. No se carga en la tienda ni se publica en `docs`.
 
 ```sh
+npm ci --ignore-scripts
 node scripts/build.mjs
 node scripts/check.mjs
 node scripts/preview.mjs
@@ -39,9 +40,9 @@ La ficha `fruta-temporada` mantiene la oferta abierta a la cosecha y disponibili
 
 ## Validación incluida
 
-`node scripts/check.mjs` comprueba sintaxis, 17 casos de comercio, 10 casos de seguridad, referencias HTML, navegación, presencia de recursos y correspondencia exacta entre docs y dist. Las pruebas cubren límites de envío, precios alterados en almacenamiento, duplicados, variantes, recomendaciones, paquetes, productos retirados, consultas sin precio y contenido del mensaje; además, límites del carrito, texto de contacto, minimización de datos, CSP y enlaces externos.
+`node scripts/check.mjs` comprueba sintaxis, 17 casos de comercio, 13 casos de seguridad y 6 grupos de comprobaciones del bloqueo de CodeQL; también referencias HTML, navegación, recursos y correspondencia exacta entre docs y dist. Se cubren precios alterados, límites, consultas, Unicode, privacidad, CSP, enlaces y las variantes de HTML mal formado que originaron las alertas anteriores. El HTML se interpreta con parse5 sin eliminar comentarios ni usar expresiones regulares para reconocer scripts.
 
-El workflow de GitHub revisa los archivos entregados antes de ejecutar el build, y después comprueba que el build no modifica la publicación. CodeQL analiza JavaScript en otro trabajo con permisos limitados. Dependabot propone actualizaciones de acciones. Los controles no impiden por sí solos publicar: hay que exigirlos en la protección de `main`, que requiere acceso de administrador. Detalles y límites en [SECURITY.md](SECURITY.md) y [Seguridad en GitHub](notes/seguridad-github.md).
+El workflow de GitHub revisa los archivos entregados antes de ejecutar el build y después comprueba que el build no modifica la publicación. CodeQL analiza JavaScript en otro trabajo con permisos limitados. El trabajo falla si su salida SARIF contiene cualquier hallazgo o no puede verificarse; terminar de ejecutar CodeQL no basta para aprobar. Dependabot propone actualizaciones de acciones y herramientas npm. Para impedir una fusión hay que exigir ambos trabajos en la protección de `main`, que requiere acceso de administrador. Detalles en [SECURITY.md](SECURITY.md), [Seguridad en GitHub](notes/seguridad-github.md) y [Auditoría de corrección](notes/auditoria-seguridad-20260909.md).
 
 Se verificaron en navegador la ficha e imagen de plátano macho, la compra de dos bolsas de 100 g (subtotal $98), las opciones de cherry y sus enlaces de consulta tanto en tarjeta como en ficha, y la ficha de cherry a 390 px de ancho. Las comprobaciones de WhatsApp revisan el enlace preparado; no envían mensajes.
 
@@ -65,4 +66,4 @@ El plátano macho usa `dist/assets/platano-macho-editorial.jpg`, generado con Im
 
 ## Pull request
 
-El resumen de la entrega de seguridad está en `PR_DESCRIPTION.md`; su rama es `seguridad-tienda-20260909`. La actualización del catálogo ya está integrada en `main`. La carpeta local se recibió sin `.git`; las ramas se gestionan mediante la conexión de GitHub.
+El resumen de la corrección y nueva auditoría está en `PR_DESCRIPTION.md`; su rama es `corregir-alertas-auditoria-20260909`. La actualización del catálogo y la primera entrega de seguridad ya están integradas en `main`. La carpeta local se recibió sin `.git`; las ramas se gestionan mediante la conexión de GitHub.
