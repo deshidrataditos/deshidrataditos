@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {readFile} from "node:fs/promises";
+import {inspectHTML} from "./helpers/html.mjs";
 import "../dist/catalog.js";
 import "../dist/commerce.js";
 
@@ -87,14 +88,13 @@ check("Pedido: todos los campos de contacto y notas respetan límites individual
 
 // These checks audit authored markup and policy configuration. Browser enforcement
 // and interactive behavior must also be verified in a real browser.
-function attributes(source) {
-  const result = new Map();
-  const pattern = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
-  for (const match of source.matchAll(pattern)) result.set(match[1].toLowerCase(),match[2] ?? match[3] ?? match[4] ?? "");
-  return result;
+const tags = inspectHTML(html);
+function assertScriptPolicy(source) {
+  const scripts = inspectHTML(source).filter(tag => tag.name === "script");
+  assert.equal(scripts.length,3,"Deben existir exactamente los tres scripts locales previstos");
+  assert.deepEqual(scripts.map(tag => tag.attrs.get("src")?.split("?")[0]),["catalog.js","commerce.js","app.js"]);
+  assert.ok(scripts.every(tag => tag.text.trim() === ""),"No se admite contenido inline de scripts");
 }
-const markup = html.replace(/<!--[\s\S]*?-->/g,"");
-const tags = [...markup.matchAll(/<([a-z][a-z0-9:-]*)\b((?:[^<>"']|"[^"]*"|'[^']*')*)>/gi)].map(match => ({name:match[1].toLowerCase(),attrs:attributes(match[2]),index:match.index}));
 
 check("CSP temprana: recursos permitidos explícitos y sin ejecución o estilos inline",() => {
   const metas = tags.filter(tag => tag.name === "meta" && tag.attrs.get("http-equiv")?.toLowerCase() === "content-security-policy");
@@ -123,10 +123,7 @@ check("CSP temprana: recursos permitidos explícitos y sin ejecución o estilos 
 });
 
 check("HTML: tres scripts locales, sin código ni estilos inline",() => {
-  const scripts = [...markup.matchAll(/<script\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/script\s*>/gi)];
-  assert.equal(scripts.length,3);
-  assert.deepEqual(scripts.map(match => attributes(match[1]).get("src")?.split("?")[0]),["catalog.js","commerce.js","app.js"]);
-  assert.ok(scripts.every(match => match[2].trim() === ""),"No se admite contenido inline de scripts");
+  assertScriptPolicy(html);
   assert.ok(!tags.some(tag => tag.name === "style"),"Los estilos deben cargarse desde archivos locales");
   for (const tag of tags) {
     assert.ok(!tag.attrs.has("style"),"Estilo inline en " + tag.name);
@@ -139,7 +136,7 @@ check("HTML: tres scripts locales, sin código ni estilos inline",() => {
 });
 
 check("Enlaces en nueva pestaña aíslan la página y omiten el referente",() => {
-  const dynamicAnchors = [...app.matchAll(/<a\b([^>]+)>/gi)].map(match => ({name:"a",attrs:attributes(match[1])}));
+  const dynamicAnchors = [...app.matchAll(/<a\b[^>]*>/gi)].flatMap(match => inspectHTML(match[0]).filter(tag => tag.name === "a"));
   const external = [...tags,...dynamicAnchors].filter(tag => tag.name === "a" && tag.attrs.get("target")?.toLowerCase() === "_blank");
   assert.ok(external.length > 0);
   for (const tag of external) {
@@ -150,13 +147,46 @@ check("Enlaces en nueva pestaña aíslan la página y omiten el referente",() =>
 });
 
 check("Formulario de cobertura: únicamente código postal, ciudad, estado y entrega",() => {
-  const form = [...markup.matchAll(/<form\b((?:[^>"']|"[^"]*"|'[^']*')*)>([\s\S]*?)<\/form\s*>/gi)].find(match => attributes(match[1]).get("id") === "quote-form");
+  const form = tags.find(tag => tag.name === "form" && tag.attrs.get("id") === "quote-form");
   assert.ok(form);
-  const fields = [...form[2].matchAll(/<(input|select|textarea)\b((?:[^>"']|"[^"]*"|'[^']*')*)>/gi)].map(match => attributes(match[2]));
+  const belongsToForm = node => { for(let parent = node.parentNode; parent; parent = parent.parentNode) { if(parent === form.node) return true; } return false; };
+  const fields = tags.filter(tag => ["input","select","textarea"].includes(tag.name) && belongsToForm(tag.node)).map(tag => tag.attrs);
   assert.deepEqual(fields.filter(field => field.get("type") !== "radio").map(field => field.get("id")).sort(),["quote-city","quote-postcode","quote-state"]);
   const radios = fields.filter(field => field.get("type") === "radio");
   assert.deepEqual(radios.map(field => field.get("value")).sort(),["national","regional"]);
   assert.ok(radios.every(field => field.get("name") === "quote-delivery"));
+});
+
+check("Contacto: emojis al límite y Unicode incompleto permiten preparar el enlace",() => {
+  for (const limit of [5,20,100,120,150,300,500]) {
+    const fits = "A".repeat(limit - 2) + "🍌";
+    assert.equal(C.cleanText(fits,limit),fits);
+    assert.equal(C.cleanText("A".repeat(limit - 1) + "🍌",limit),"A".repeat(limit - 1));
+    assert.doesNotThrow(() => encodeURIComponent(C.cleanText("A".repeat(limit - 1) + "🍌",limit)));
+  }
+  assert.equal(C.cleanText("Antes\ud800Después\udc00",120),"Antes�Después�");
+  assert.doesNotThrow(() => encodeURIComponent(makeOrder({address:{...address,name:"A".repeat(119) + "🍌"},notes:"N".repeat(499) + "🍌"})));
+});
+
+check("HTML5: cierres script no convencionales no ocultan código inline",() => {
+  const trusted = '<script src="catalog.js"></script><script src="commerce.js"></script><script src="app.js"></script>';
+  assert.doesNotThrow(() => assertScriptPolicy(trusted));
+  for(const ending of ['</script\t\n bar>','</ScRiPt foo="bar">','</script/>']) {
+    assert.throws(() => assertScriptPolicy(trusted + '<script>window.unexpected = true;' + ending));
+  }
+  assert.throws(() => assertScriptPolicy('<script src="catalog.js">window.unexpected = true;</script\t\n bar><script src="commerce.js"></script><script src="app.js"></script>'),/inline/);
+});
+
+check("HTML5: comentarios se interpretan sin eliminar ni reconstruir texto",() => {
+  const trusted = '<script src="catalog.js"></script><script src="commerce.js"></script><script src="app.js"></script>';
+  assert.doesNotThrow(() => assertScriptPolicy('<!-- <script>comentario</script> -->' + trusted));
+  for(const comment of ['<!-- comentario --!>','<!-- <!-- comentario -->','<!-->']) {
+    assert.throws(() => assertScriptPolicy(comment + trusted + '<script>window.unexpected = true;</script>'));
+  }
+  assert.equal(inspectHTML('<!--<!-- -->').filter(tag => tag.name === "script").length,0);
+  const encoded = inspectHTML('<a target="&#95;blank" rel="noopener noreferrer" href="java&#115;cript:example">x</a>').find(tag => tag.name === "a");
+  assert.equal(encoded.attrs.get("target"),"_blank");
+  assert.equal(encoded.attrs.get("href"),"javascript:example");
 });
 
 console.log(passed + " pruebas de seguridad aprobadas (reglas de comercio y configuración estática).");

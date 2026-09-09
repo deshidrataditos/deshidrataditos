@@ -8,5 +8,6 @@
     "test": "node scripts/check.mjs",
     "preview": "node scripts/preview.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": { "node": ">=20.19.0" },
+  "devDependencies": { "parse5": "8.0.1" }
 }

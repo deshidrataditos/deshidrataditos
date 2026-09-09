@@ -1,21 +1,17 @@
-# Reforzar seguridad del catálogo y reducir datos de cotización
+# Corregir alertas de CodeQL y exigir resultados sin hallazgos
 
-La tienda limitaba cantidades y reconstruía precios, pero no tenía una política de contenido y pedía el domicilio completo para consultar cobertura. Esta entrega añade CSP antes de cargar recursos y reduce esa consulta a ciudad, estado y código postal. Mantiene el pedido revisable por WhatsApp.
+La primera entrega terminó su análisis en verde aunque CodeQL señaló dos problemas en las pruebas de HTML: cierres de script no reconocidos y eliminación incompleta de comentarios. Esta corrección analiza el documento original con parse5 y comprueba variantes mal formadas que los navegadores aceptan. No desactiva reglas ni excluye las pruebas del análisis.
 
-Los scripts se limitan al propio sitio, sin ejecución inline ni eval. Se bloquean conexiones de scripts, objetos, frames, workers y envíos nativos de formularios; fuentes y estilos externos se restringen a Google Fonts. Las fotos usan clases de posición y rutas de assets verificadas. Los enlaces externos no conservan acceso a la ventana de origen ni transmiten el referente.
+Se añade un bloqueo explícito después de CodeQL. Revisa el SARIF y hace fallar el trabajo ante cualquier hallazgo o salida ausente, inválida o incompleta. El resumen indica regla, archivo, nivel y severidad; terminar la acción de análisis ya no basta para aprobar el trabajo. Para impedir una fusión se deben exigir los dos trabajos en la protección de main, que requiere administración.
 
-La lectura del carrito limita tamaño y tolera contenido inválido. Los campos del mensaje limitan longitud y eliminan controles y saltos que puedan aparentar líneas de importes. Los enlaces preparados se invalidan al editar, restablecer o abandonar la página. Se aclara cuándo se comparten datos con WhatsApp y que el negocio confirma importes y pago.
+La nueva auditoría detectó además un recorte de emojis que podía provocar URIError al preparar WhatsApp. Los límites ahora conservan Unicode válido. La herramienta HTML solo se instala para verificar el proyecto, con versiones e integridad en el lockfile y sin ejecutar scripts de instalación; no forma parte de la tienda publicada. Se actualizan las versiones de recursos y la copia exacta dist/docs.
 
 ## Validación
 
-- 17 pruebas de comercio y 10 de seguridad, sintaxis y sincronización exacta de dist/docs.
-- Navegador: 6 comprobaciones de CSP aprobadas (script local permitido; scripts inline, manejadores HTML, eval, Function y conexiones de scripts bloqueados).
-- Consulta de cobertura limitada a ciudad, estado y C.P.; sus enlaces y los del pedido se descartan al editar. Carrito y pedido de 2 presentaciones de plátano macho de 100 g: subtotal $98 y total nacional $298. Texto especial codificado, fotos cargadas con sus encuadres y consola sin errores. No se enviaron mensajes.
-- Workflow validado con actionlint. Verificar tienda comprueba los archivos entregados antes del build y exige que la preparación no cambie la publicación.
-- CodeQL para JavaScript separado del trabajo de pruebas; acciones oficiales fijadas a SHA y con permisos mínimos. Dependabot propone actualizaciones de acciones.
+- 17 pruebas de comercio, 13 de seguridad y 6 grupos de comprobaciones SARIF aprobados; sintaxis, referencias y publicación sincronizada.
+- Casos que reproducen las dos alertas; casos de emojis y unidades Unicode sueltas; pruebas del bloqueo con cero/un hallazgo, salida ausente o inválida y ejecución fallida.
+- 6 comprobaciones CSP aprobadas en navegador, con eventos reales de bloqueo. Carrito, total nacional, texto especial, límites de notas y privacidad de cobertura revisados sin enviar mensajes. Consola de la tienda sin errores.
+- npm audit: cero vulnerabilidades conocidas en las dos dependencias de desarrollo. Workflow validado con actionlint.
+- Se comprobará el resultado real de CodeQL en esta propuesta: el bloqueo exige análisis completo y cero hallazgos.
 
-## Alcance
-
-Los controles se entregan en una rama y no modifican la configuración de cuentas, DNS o publicación. La conexión de GitHub carece de acceso administrativo para verificar o exigir protección de main. El administrador debe exigir Verificar tienda y revisar CodeQL, doble autenticación, dominio y detección de secretos.
-
-El HTML no puede activar frame-ancestors, X-Frame-Options, HSTS o nosniff: requieren cabeceras reales en la capa de publicación. No se añaden etiquetas meta o archivos que aparenten activar esos controles. Los importes del navegador siguen siendo orientativos; la confirmación manual del negocio continúa siendo necesaria.
+Informe y límites: [auditoría de corrección](notes/auditoria-seguridad-20260909.md). La configuración administrativa de cuentas, protección de ramas y cabeceras del alojamiento sigue pendiente; esta propuesta no modifica DNS ni fusiona cambios automáticamente.
