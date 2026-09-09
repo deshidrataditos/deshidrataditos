@@ -39,7 +39,9 @@ La ficha `fruta-temporada` mantiene la oferta abierta a la cosecha y disponibili
 
 ## Validación incluida
 
-`node scripts/check.mjs` comprueba sintaxis, 17 casos de comercio, referencias HTML, navegación, presencia de recursos y correspondencia exacta entre docs y dist. Las pruebas cubren límites de envío, precios alterados en almacenamiento, duplicados, variantes, recomendaciones, paquetes, productos retirados, consultas sin precio y contenido del mensaje.
+`node scripts/check.mjs` comprueba sintaxis, 17 casos de comercio, 10 casos de seguridad, referencias HTML, navegación, presencia de recursos y correspondencia exacta entre docs y dist. Las pruebas cubren límites de envío, precios alterados en almacenamiento, duplicados, variantes, recomendaciones, paquetes, productos retirados, consultas sin precio y contenido del mensaje; además, límites del carrito, texto de contacto, minimización de datos, CSP y enlaces externos.
+
+El workflow de GitHub revisa los archivos entregados antes de ejecutar el build, y después comprueba que el build no modifica la publicación. CodeQL analiza JavaScript en otro trabajo con permisos limitados. Dependabot propone actualizaciones de acciones. Los controles no impiden por sí solos publicar: hay que exigirlos en la protección de `main`, que requiere acceso de administrador. Detalles y límites en [SECURITY.md](SECURITY.md) y [Seguridad en GitHub](notes/seguridad-github.md).
 
 Se verificaron en navegador la ficha e imagen de plátano macho, la compra de dos bolsas de 100 g (subtotal $98), las opciones de cherry y sus enlaces de consulta tanto en tarjeta como en ficha, y la ficha de cherry a 390 px de ancho. Las comprobaciones de WhatsApp revisan el enlace preparado; no envían mensajes.
 
@@ -53,6 +55,8 @@ La página no afirma vidas de anaquel, ingredientes completos, propiedades de sa
 
 Mercado Pago y el campo de cupones sin funcionalidad se retiraron del flujo visible. Transferencia y contra entrega regional se acuerdan al confirmar la solicitud. El carrito solo guarda identificadores, variantes, cantidades y precios de catálogo; los datos de contacto no se guardan en localStorage.
 
+Las consultas de cobertura solicitan únicamente ciudad, estado y código postal. Para un pedido se solicita el domicilio necesario para la entrega; al abrir WhatsApp, los datos se comparten con ese servicio mediante el enlace preparado. El negocio debe verificar importes y pagos por su cuenta: los cálculos del navegador no autentican pedidos.
+
 ## Imágenes
 
 Se conservan los assets originales. Se agregaron tres imágenes editoriales generadas con IA para cítricos, sazonadores y rollitos, optimizadas a JPEG de 1,000 × 1,000 px. Las imágenes del catálogo se identifican como ilustrativas y no sustituyen fotografías del producto final.
@@ -61,4 +65,4 @@ El plátano macho usa `dist/assets/platano-macho-editorial.jpg`, generado con Im
 
 ## Pull request
 
-El resumen de cambios está en `PR_DESCRIPTION.md`. La entrega se prepara en la rama `catalogo-temporada-platano-macho-20260908`, sin integrar cambios a `main`. La carpeta local se recibió sin `.git`; la rama se crea mediante la conexión de GitHub.
+El resumen de la entrega de seguridad está en `PR_DESCRIPTION.md`; su rama es `seguridad-tienda-20260909`. La actualización del catálogo ya está integrada en `main`. La carpeta local se recibió sin `.git`; las ramas se gestionan mediante la conexión de GitHub.

@@ -1,0 +1,71 @@
+name: Seguridad y calidad
+
+on:
+  push:
+    branches-ignore:
+      # Dependabot se analiza en pull_request, con el permiso de subida de CodeQL para PR.
+      - 'dependabot/**'
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verificar tienda
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar Node.js LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24.x'
+          check-latest: true
+          package-manager-cache: false
+      # Primero se comprueba lo que realmente se enviaría a Pages. Compilar antes
+      # ocultaría una carpeta docs desactualizada dentro del PR.
+      - name: Revisar seguridad, carrito y archivos de publicación
+        run: node scripts/check.mjs
+      - name: Comprobar la preparación del sitio
+        run: node scripts/build.mjs
+      - name: Comprobar que la preparación no cambia la publicación
+        run: git diff --exit-code -- dist docs
+
+  codeql:
+    name: Analizar JavaScript con CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar el análisis de seguridad
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          queries: security-extended
+          config: |
+            paths:
+              - dist
+              - scripts
+              - tests
+      - name: Analizar y registrar los resultados
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          category: /language:javascript-typescript

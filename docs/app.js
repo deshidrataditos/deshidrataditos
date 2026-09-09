@@ -10,9 +10,13 @@
   const filters = {search:"",category:"all",occasion:"all",sort:"recommended",onlyNew:false};
   const selections = new Map();
   let cart = [], timer, focusBeforeCart, detailId;
-  try { cart = C.sanitizeCart(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"),PRODUCTS); } catch { cart = []; }
+  try { cart = C.readCart(localStorage.getItem(STORAGE_KEY),PRODUCTS); } catch { cart = []; }
   const options = (product,selected) => product.variants.map(item => '<option value="' + escape(item.label) + '"' + (selected === item.label ? " selected" : "") + ">" + escape(item.label) + (product.quoteOnly ? "" : " · " + money(item.price)) + "</option>").join("");
-  const photo = product => '<img src="' + product.photo.src + '" alt="' + escape(product.photo.alt) + '" loading="lazy" width="1000" height="1000" style="object-position:' + product.photo.position + '">';
+  const photo = product => {
+    const src = /^assets\/[a-z0-9][a-z0-9.-]*\.(?:jpg|png|webp)$/.test(product.photo.src) ? product.photo.src : "assets/logo-deshidrataditos.jpg";
+    const position = ["center","left center","right center","left top","center top","right top","left bottom","right bottom"].includes(product.photo.position) ? product.photo.position : "center";
+    return '<img src="' + escape(src) + '" alt="' + escape(product.photo.alt) + '" class="photo-' + position.replaceAll(" ","-") + '" loading="lazy" width="1000" height="1000">';
+  };
   const priceLabel = (product,label) => product.quoteOnly ? "Por cotizar" : money(C.variant(product,label).price);
   const per100 = (product,label) => { if (product.quoteOnly) return "Precio y presentación por confirmar"; const item = C.variant(product,label); return money(item.price / item.grams * 100) + " / 100 g"; };
   const whatsappUrl = message => "https://wa.me/523931173611?text=" + encodeURIComponent(message);
@@ -20,15 +24,15 @@
   function card(product) {
     const label = selections.get(product.id) || product.variants[0].label;
     const bundle = C.bundleValue(product,PRODUCTS);
-    return '<article class="product-card" data-product-card="' + product.id + '">' +
-      '<button type="button" class="product-photo-button" data-detail="' + product.id + '" aria-label="Ver detalles de ' + escape(product.name) + '"><span class="product-image-placeholder" style="--product-bg:' + product.bg + '">' + photo(product) +
+    return '<article class="product-card" data-product-card="' + escape(product.id) + '">' +
+      '<button type="button" class="product-photo-button" data-detail="' + escape(product.id) + '" aria-label="Ver detalles de ' + escape(product.name) + '"><span class="product-image-placeholder">' + photo(product) +
       (product.isNew ? '<span class="new-badge">Nuevo</span>' : "") + '<span class="image-caption">Imagen ilustrativa</span></span></button>' +
-      '<div class="product-body"><div class="product-meta"><span class="product-type">' + escape(product.type) + '</span><span class="availability ' + (product.availability === "Sobre pedido" ? "preorder" : "") + '">' + product.availability + '</span></div>' +
-      '<h3><button type="button" data-detail="' + product.id + '">' + escape(product.name) + '</button></h3><p>' + escape(product.description) + '</p>' +
+      '<div class="product-body"><div class="product-meta"><span class="product-type">' + escape(product.type) + '</span><span class="availability ' + (product.availability === "Sobre pedido" ? "preorder" : "") + '">' + escape(product.availability) + '</span></div>' +
+      '<h3><button type="button" data-detail="' + escape(product.id) + '">' + escape(product.name) + '</button></h3><p>' + escape(product.description) + '</p>' +
       '<div class="product-tags">' + product.tags.slice(0,2).map(tag => "<span>" + escape(tag) + "</span>").join("") + '</div>' +
       (bundle?.saving ? '<p class="bundle-saving">Ahorras ' + money(bundle.saving) + ' frente a las tres bolsas por separado.</p>' : "") +
       '<div class="product-controls' + (product.quoteOnly ? ' quote-controls' : '') + '"><label>' + (product.quoteOnly ? 'Opción' : 'Presentación') + '<select class="weight-select" aria-label="' + (product.quoteOnly ? 'Opción' : 'Presentación') + ' de ' + escape(product.name) + '">' + options(product,label) + '</select></label><div class="price-block"><span class="price">' + priceLabel(product,label) + '</span><small class="unit-price">' + per100(product,label) + '</small></div></div>' +
-      (product.quoteOnly ? '<a class="button button-primary add-button product-quote" target="_blank" rel="noopener" href="' + whatsappUrl(C.quoteMessage(product,label)) + '">Consultar disponibilidad ↗</a>' : '<button class="button button-primary add-button" type="button" data-add-product="' + product.id + '">Agregar al carrito</button>') + '<button class="product-detail-link" type="button" data-detail="' + product.id + '">Usos y detalles ↗</button></div></article>';
+      (product.quoteOnly ? '<a class="button button-primary add-button product-quote" target="_blank" rel="noopener noreferrer" href="' + whatsappUrl(C.quoteMessage(product,label)) + '">Consultar disponibilidad ↗</a>' : '<button class="button button-primary add-button" type="button" data-add-product="' + escape(product.id) + '">Agregar al carrito</button>') + '<button class="product-detail-link" type="button" data-detail="' + escape(product.id) + '">Usos y detalles ↗</button></div></article>';
   }
   function renderCatalog() {
     const result = C.filterProducts(PRODUCTS,filters);
@@ -105,12 +109,12 @@
     $("checkout-submit").disabled = !cart.length; $("checkout-empty").hidden = Boolean(cart.length); $("checkout-content").hidden = !cart.length;
     $("cart-items").innerHTML = cart.map(row => {
       const product = C.findProduct(PRODUCTS,row.productId);
-      return '<div class="cart-item"><div><strong>' + escape(product.name) + '</strong><p>' + escape(row.weight) + " · " + product.availability + '</p></div><div class="cart-item-price">' + money(row.price * row.quantity) + '</div><div class="cart-item-actions"><button type="button" data-cart-change="-1" data-key="' + escape(row.key) + '" aria-label="Restar una unidad de ' + escape(product.name) + '">−</button><span>' + row.quantity + '</span><button type="button" data-cart-change="1" data-key="' + escape(row.key) + '" aria-label="Sumar una unidad de ' + escape(product.name) + '"' + (row.quantity >= C.MAX_QUANTITY ? " disabled" : "") + '>+</button></div><button class="remove-item" type="button" data-remove-key="' + escape(row.key) + '" aria-label="Quitar ' + escape(product.name) + '">Quitar</button></div>';
+      return '<div class="cart-item"><div><strong>' + escape(product.name) + '</strong><p>' + escape(row.weight) + " · " + escape(product.availability) + '</p></div><div class="cart-item-price">' + money(row.price * row.quantity) + '</div><div class="cart-item-actions"><button type="button" data-cart-change="-1" data-key="' + escape(row.key) + '" aria-label="Restar una unidad de ' + escape(product.name) + '">−</button><span>' + row.quantity + '</span><button type="button" data-cart-change="1" data-key="' + escape(row.key) + '" aria-label="Sumar una unidad de ' + escape(product.name) + '"' + (row.quantity >= C.MAX_QUANTITY ? " disabled" : "") + '>+</button></div><button class="remove-item" type="button" data-remove-key="' + escape(row.key) + '" aria-label="Quitar ' + escape(product.name) + '">Quitar</button></div>';
     }).join("");
-    $("checkout-items").innerHTML = cart.map(row => { const product = C.findProduct(PRODUCTS,row.productId); return '<div class="checkout-item"><span class="checkout-item-visual">' + row.quantity + '</span><div><strong>' + escape(product.name) + '</strong><small>' + escape(row.weight) + " × " + row.quantity + '</small><small>' + product.availability + '</small></div><b>' + money(row.price * row.quantity) + '</b></div>'; }).join("");
+    $("checkout-items").innerHTML = cart.map(row => { const product = C.findProduct(PRODUCTS,row.productId); return '<div class="checkout-item"><span class="checkout-item-visual">' + row.quantity + '</span><div><strong>' + escape(product.name) + '</strong><small>' + escape(row.weight) + " × " + row.quantity + '</small><small>' + escape(product.availability) + '</small></div><b>' + money(row.price * row.quantity) + '</b></div>'; }).join("");
     $("recommendation-list").innerHTML = C.recommend(PRODUCTS,cart).map(product => {
       const item = product.variants[0];
-      return '<article class="recommendation-item">' + photo(product) + '<div><strong>' + escape(product.name) + '</strong><span>' + product.availability + '</span><b>' + escape(item.label) + " · " + money(item.price) + '</b></div><button type="button" data-quick-add="' + product.id + '" data-weight="' + escape(item.label) + '" aria-label="Agregar ' + escape(product.name) + '">+</button></article>';
+      return '<article class="recommendation-item">' + photo(product) + '<div><strong>' + escape(product.name) + '</strong><span>' + escape(product.availability) + '</span><b>' + escape(item.label) + " · " + money(item.price) + '</b></div><button type="button" data-quick-add="' + escape(product.id) + '" data-weight="' + escape(item.label) + '" aria-label="Agregar ' + escape(product.name) + '">+</button></article>';
     }).join("");
     $("shipping-progress-bar").style.width = Math.min(100,total.subtotal / C.FREE_SHIPPING * 100) + "%";
     $("shipping-progress-text").textContent = !total.remaining ? "Tu pedido ya tiene envío gratis." : "Te faltan " + money(total.remaining) + " para el envío gratis.";
@@ -166,7 +170,7 @@
     if (!event.target.matches(".weight-select")) return;
     const product = C.findProduct(PRODUCTS,event.target.closest(".product-card").dataset.productCard);
     selections.set(product.id,event.target.value);
-    document.querySelectorAll('[data-product-card="' + product.id + '"]').forEach(copy => { copy.querySelector(".weight-select").value = event.target.value; copy.querySelector(".price").textContent = priceLabel(product,event.target.value); copy.querySelector(".unit-price").textContent = per100(product,event.target.value); if (product.quoteOnly) copy.querySelector(".product-quote").href = whatsappUrl(C.quoteMessage(product,event.target.value)); });
+    document.querySelectorAll('[data-product-card="' + CSS.escape(product.id) + '"]').forEach(copy => { copy.querySelector(".weight-select").value = event.target.value; copy.querySelector(".price").textContent = priceLabel(product,event.target.value); copy.querySelector(".unit-price").textContent = per100(product,event.target.value); if (product.quoteOnly) copy.querySelector(".product-quote").href = whatsappUrl(C.quoteMessage(product,event.target.value)); });
   });
   $("catalog-search").addEventListener("input",event => { filters.search = event.target.value; renderCatalog(); });
   $("catalog-occasion").addEventListener("change",event => { filters.occasion = event.target.value; renderCatalog(); });
@@ -196,14 +200,17 @@
   $("quote-form").addEventListener("input",() => invalidateHandoff("quote"));
   $("quote-form").addEventListener("change",() => invalidateHandoff("quote"));
   $("quote-form").addEventListener("submit",event => {
-    event.preventDefault(); const address = addressData("quote"), delivery = deliveryFor("quote");
-    handoff(["Hola, quisiera confirmar una entrega " + (delivery === "regional" ? "regional" : "nacional") + ".","Nombre: " + address.name,"Teléfono: " + address.phone,"C.P.: " + address.postcode,"Dirección: " + address.street + ", " + address.neighborhood + ", " + address.city + ", " + address.state,"Referencias: " + address.references,delivery === "national" ? "Tarifa de catálogo: $200; gratis desde $2,000 de compra." : "Por favor confirma cobertura y costo."].join("\n"),"quote");
+    event.preventDefault();
+    const message = C.deliveryMessage({postcode:$("quote-postcode").value,city:$("quote-city").value,state:$("quote-state").value,delivery:deliveryFor("quote")});
+    if (!message) { toast("Escribe tu código postal, ciudad y estado para consultar la entrega."); return; }
+    handoff(message,"quote");
   });
   $("business-form").addEventListener("input",() => invalidateHandoff("business"));
   $("business-form").addEventListener("change",() => invalidateHandoff("business"));
   $("business-form").addEventListener("submit",event => {
     event.preventDefault();
-    handoff(["Hola Deshidrataditos, quisiera una cotización para mi negocio.","Negocio: " + $("business-name").value.trim(),"Giro: " + $("business-type").value,"Ciudad / C.P.: " + $("business-location").value.trim(),"Contacto: " + $("business-contact").value.trim(),"Productos de interés: " + $("business-products").value,"Cantidad y frecuencia: " + $("business-volume").value.trim(),"Comentarios: " + $("business-notes").value.trim(),"Por favor confirma presentaciones, precio por volumen y plazo de preparación."].join("\n"),"business");
+    const field = (id,limit) => C.cleanText($(id).value,limit);
+    handoff(["Hola Deshidrataditos, quisiera una cotización para mi negocio.","Negocio: " + field("business-name",100),"Giro: " + field("business-type",100),"Ciudad / C.P.: " + field("business-location",100),"Contacto: " + field("business-contact",120),"Productos de interés: " + field("business-products",100),"Cantidad y frecuencia: " + field("business-volume",150),"Comentarios: " + field("business-notes",500),"Por favor confirma presentaciones, precio por volumen y plazo de preparación."].join("\n"),"business");
   });
   document.addEventListener("keydown",event => {
     if (event.key === "Escape") { if ($("cart-drawer").classList.contains("open")) closeCart(); if ($("main-nav").classList.contains("open")) { $("main-nav").classList.remove("open"); $("menu-toggle").setAttribute("aria-expanded","false"); $("menu-toggle").focus(); } }
@@ -214,7 +221,10 @@
     }
   });
   window.addEventListener("hashchange",() => showView(location.hash.slice(1),false));
-  window.addEventListener("storage",event => { if (event.key !== STORAGE_KEY && event.key !== null) return; try { cart = C.sanitizeCart(JSON.parse(event.newValue || "[]"),PRODUCTS); } catch { cart = []; } renderCart(); invalidateHandoff("checkout"); });
+  window.addEventListener("storage",event => { if (event.key !== STORAGE_KEY && event.key !== null) return; cart = C.readCart(event.newValue,PRODUCTS); renderCart(); invalidateHandoff("checkout"); });
+  // Do not retain a prepared link containing contact details after leaving the page.
+  window.addEventListener("pagehide",() => ["checkout","quote","business"].forEach(invalidateHandoff));
+  [["cart-checkout","checkout"],["quote-form","quote"],["business-form","business"]].forEach(([id,prefix]) => $(id).addEventListener("reset",() => invalidateHandoff(prefix)));
   $("year").textContent = new Date().getFullYear();
   renderProducts(); renderCart(); updateQuote(); showView(location.hash.slice(1) || "inicio",false,false);
 })();
