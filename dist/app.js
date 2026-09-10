@@ -12,10 +12,13 @@
   let cart = [], timer, focusBeforeCart, detailId;
   try { cart = C.readCart(localStorage.getItem(STORAGE_KEY),PRODUCTS); } catch { cart = []; }
   const options = (product,selected) => product.variants.map(item => '<option value="' + escape(item.label) + '"' + (selected === item.label ? " selected" : "") + ">" + escape(item.label) + (product.quoteOnly ? "" : " · " + money(item.price)) + "</option>").join("");
-  const photo = product => {
-    const src = /^assets\/[a-z0-9][a-z0-9.-]*\.(?:jpg|png|webp)$/.test(product.photo.src) ? product.photo.src : "assets/logo-deshidrataditos.jpg";
+  const photo = (product,display = "card") => {
+    const localImage = /^assets\/(?:products\/)?[a-z0-9][a-z0-9.-]*\.(?:jpg|png|webp)$/;
+    const src = localImage.test(product.photo.src) ? product.photo.src : "assets/logo-deshidrataditos.jpg";
+    const thumbnail = localImage.test(product.photo.thumbnail || "") ? product.photo.thumbnail : src;
     const position = ["center","left center","right center","left top","center top","right top","left bottom","right bottom"].includes(product.photo.position) ? product.photo.position : "center";
-    return '<img src="' + escape(src) + '" alt="' + escape(product.photo.alt) + '" class="photo-' + position.replaceAll(" ","-") + '" loading="lazy" width="1000" height="1000">';
+    const sizes = display === "detail" ? "(max-width: 800px) calc(100vw - 32px), 450px" : display === "small" ? "64px" : "(max-width: 600px) calc(100vw - 40px), (max-width: 960px) 45vw, 380px";
+    return '<img src="' + escape(src) + '" srcset="' + escape(thumbnail) + ' 480w, ' + escape(src) + ' 1000w" sizes="' + sizes + '" alt="' + escape(product.photo.alt) + '" class="photo-' + position.replaceAll(" ","-") + '" loading="' + (display === "detail" ? "eager" : "lazy") + '" decoding="async" width="1000" height="1000">';
   };
   const priceLabel = (product,label) => product.quoteOnly ? "Por cotizar" : money(C.variant(product,label).price);
   const per100 = (product,label) => { if (product.quoteOnly) return "Precio y presentación por confirmar"; const item = C.variant(product,label); return money(item.price / item.grams * 100) + " / 100 g"; };
@@ -32,7 +35,7 @@
       '<div class="product-tags">' + product.tags.slice(0,2).map(tag => "<span>" + escape(tag) + "</span>").join("") + '</div>' +
       (bundle?.saving ? '<p class="bundle-saving">Ahorras ' + money(bundle.saving) + ' frente a las tres bolsas por separado.</p>' : "") +
       '<div class="product-controls' + (product.quoteOnly ? ' quote-controls' : '') + '"><label>' + (product.quoteOnly ? 'Opción' : 'Presentación') + '<select class="weight-select" aria-label="' + (product.quoteOnly ? 'Opción' : 'Presentación') + ' de ' + escape(product.name) + '">' + options(product,label) + '</select></label><div class="price-block"><span class="price">' + priceLabel(product,label) + '</span><small class="unit-price">' + per100(product,label) + '</small></div></div>' +
-      (product.quoteOnly ? '<a class="button button-primary add-button product-quote" target="_blank" rel="noopener noreferrer" href="' + whatsappUrl(C.quoteMessage(product,label)) + '">Consultar disponibilidad ↗</a>' : '<button class="button button-primary add-button" type="button" data-add-product="' + escape(product.id) + '">Agregar al carrito</button>') + '<button class="product-detail-link" type="button" data-detail="' + escape(product.id) + '">Usos y detalles ↗</button></div></article>';
+      (product.quoteOnly ? '<a class="button button-primary add-button product-quote" target="_blank" rel="noopener noreferrer" href="' + whatsappUrl(C.quoteMessage(product,label)) + '">Consultar disponibilidad ↗</a>' : '<button class="button button-primary add-button" type="button" data-add-product="' + escape(product.id) + '">Agregar al carrito</button>') + '<button class="product-detail-link" type="button" data-detail="' + escape(product.id) + '">Ingredientes y conservación ↗</button></div></article>';
   }
   function renderCatalog() {
     const result = C.filterProducts(PRODUCTS,filters);
@@ -114,7 +117,7 @@
     $("checkout-items").innerHTML = cart.map(row => { const product = C.findProduct(PRODUCTS,row.productId); return '<div class="checkout-item"><span class="checkout-item-visual">' + row.quantity + '</span><div><strong>' + escape(product.name) + '</strong><small>' + escape(row.weight) + " × " + row.quantity + '</small><small>' + escape(product.availability) + '</small></div><b>' + money(row.price * row.quantity) + '</b></div>'; }).join("");
     $("recommendation-list").innerHTML = C.recommend(PRODUCTS,cart).map(product => {
       const item = product.variants[0];
-      return '<article class="recommendation-item">' + photo(product) + '<div><strong>' + escape(product.name) + '</strong><span>' + escape(product.availability) + '</span><b>' + escape(item.label) + " · " + money(item.price) + '</b></div><button type="button" data-quick-add="' + escape(product.id) + '" data-weight="' + escape(item.label) + '" aria-label="Agregar ' + escape(product.name) + '">+</button></article>';
+      return '<article class="recommendation-item">' + photo(product,"small") + '<div><strong>' + escape(product.name) + '</strong><span>' + escape(product.availability) + '</span><b>' + escape(item.label) + " · " + money(item.price) + '</b></div><button type="button" data-quick-add="' + escape(product.id) + '" data-weight="' + escape(item.label) + '" aria-label="Agregar ' + escape(product.name) + '">+</button></article>';
     }).join("");
     $("shipping-progress-bar").style.width = Math.min(100,total.subtotal / C.FREE_SHIPPING * 100) + "%";
     $("shipping-progress-text").textContent = !total.remaining ? "Tu pedido ya tiene envío gratis." : "Te faltan " + money(total.remaining) + " para el envío gratis.";
@@ -127,10 +130,21 @@
     $("cart-drawer").classList.add("open"); $("drawer-backdrop").classList.add("open"); $("cart-drawer").setAttribute("aria-hidden","false");
     $("cart-trigger").setAttribute("aria-expanded","true"); document.body.style.overflow = "hidden"; setBackgroundInert(true); $("cart-close").focus();
   }
+  function renderFoodDetails(product,label) {
+    const details = product.foodDetails.variants?.[label] || product.foodDetails;
+    $("detail-ingredients").innerHTML = details.ingredients.map(ingredient => '<li>' + escape(ingredient) + '</li>').join("");
+    $("detail-ingredient-note").textContent = details.note;
+    $("detail-ingredient-note").hidden = !details.note;
+    $("detail-ingredient-variant").textContent = product.foodDetails.variants ? " · " + label : "";
+    $("detail-storage").textContent = product.storage.closed;
+    $("detail-opened").textContent = product.storage.opened;
+    $("detail-contact").href = whatsappUrl("Hola, quisiera confirmar los ingredientes completos, alérgenos e indicaciones de conservación de " + product.name + " (" + label + ") antes de pedir.");
+  }
   function openDetails(id) {
     const product = C.findProduct(PRODUCTS,id); if (!product) return; detailId = id;
     const label = selections.get(id) || product.variants[0].label;
-    $("detail-photo").innerHTML = photo(product) + '<span class="image-caption">Imagen ilustrativa</span>';
+    const imageCaption = product.id === "tomate-cherry" ? "Opción natural · imagen ilustrativa con IA" : "Imagen ilustrativa generada con IA";
+    $("detail-photo").innerHTML = photo(product,"detail") + '<span class="image-caption">' + escape(imageCaption) + '</span>';
     $("detail-type").textContent = product.type; $("detail-title").textContent = product.name;
     $("detail-description").textContent = product.description; $("detail-use").textContent = product.use; $("detail-status").textContent = product.availability;
     $("detail-preorder").hidden = product.availability !== "Sobre pedido"; $("detail-variant").innerHTML = options(product,label);
@@ -141,8 +155,9 @@
     if (product.quoteOnly) $("detail-quote").href = whatsappUrl(C.quoteMessage(product,label)); else $("detail-quote").removeAttribute("href");
     $("detail-unit-price").textContent = per100(product,label); $("detail-quantity").value = 1; $("detail-bundle").hidden = !product.bundle;
     $("detail-bundle-list").innerHTML = product.bundle ? product.bundle.map(item => "<li>" + item.quantity + " bolsa de " + escape(C.findProduct(PRODUCTS,item.id).name) + " · " + escape(item.label) + "</li>").join("") : "";
-    $("detail-contact").href = whatsappUrl("Hola, quisiera conocer los ingredientes y alérgenos de " + product.name + " antes de pedir.");
-    $("product-dialog").showModal(); document.body.style.overflow = "hidden";
+    renderFoodDetails(product,label);
+    $("detail-care").open = true;
+    $("product-dialog").showModal(); $("product-dialog").scrollTop = 0; document.body.style.overflow = "hidden";
   }
   function addressData(prefix) { return Object.fromEntries(["postcode","name","phone","email","state","street","neighborhood","city","references"].map(key => [key,$(prefix + "-" + key)?.value.trim() || ""])); }
   function handoff(message,prefix) {
@@ -184,7 +199,7 @@
   $("detail-close").addEventListener("click",() => $("product-dialog").close());
   $("product-dialog").addEventListener("close",() => { document.body.style.overflow = ""; });
   $("product-dialog").addEventListener("click",event => { if (event.target !== $("product-dialog")) return; const box = $("product-dialog").getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) $("product-dialog").close(); });
-  $("detail-variant").addEventListener("change",() => { const product = C.findProduct(PRODUCTS,detailId), label = $("detail-variant").value; $("detail-price").textContent = priceLabel(product,label); $("detail-unit-price").textContent = per100(product,label); if (product.quoteOnly) $("detail-quote").href = whatsappUrl(C.quoteMessage(product,label)); });
+  $("detail-variant").addEventListener("change",() => { const product = C.findProduct(PRODUCTS,detailId), label = $("detail-variant").value; $("detail-price").textContent = priceLabel(product,label); $("detail-unit-price").textContent = per100(product,label); renderFoodDetails(product,label); if (product.quoteOnly) $("detail-quote").href = whatsappUrl(C.quoteMessage(product,label)); });
   $("detail-form").addEventListener("submit",event => { event.preventDefault(); if (C.findProduct(PRODUCTS,detailId)?.quoteOnly) return; const quantity = Number($("detail-quantity").value); if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > C.MAX_QUANTITY) return; addToCart(detailId,$("detail-variant").value,quantity); $("product-dialog").close(); });
   $("cart-checkout").addEventListener("submit",event => {
     event.preventDefault(); if (!cart.length) { toast("Agrega un producto antes de preparar tu pedido."); return; } if (!$("cart-checkout").reportValidity()) return;

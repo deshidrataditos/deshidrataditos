@@ -1,0 +1,595 @@
+{
+  "catalog": "Deshidrataditos",
+  "date": "2026-09-10",
+  "count": 27,
+  "method": "built-in image_gen; one generation per product; no CLI fallback",
+  "disclosure": "Imágenes ilustrativas generadas con IA. Representan el producto descrito; no documentan una sesión fotográfica de unidades reales ni acreditan la composición de un lote.",
+  "optimization": {
+    "tool": "Sharp",
+    "image": {
+      "format": "webp",
+      "maxWidth": 1000,
+      "maxHeight": 1000,
+      "fit": "inside",
+      "withoutEnlargement": true,
+      "quality": 85,
+      "effort": 6
+    },
+    "thumbnail": {
+      "format": "webp",
+      "width": 480,
+      "height": 480,
+      "fit": "inside",
+      "quality": 82,
+      "effort": 6
+    }
+  },
+  "ingredientScope": "Ingredientes de referencia extraídos del catálogo existente. No se facilitaron recetas ni etiquetas; no es una lista validada, no establece orden por cantidad ni comprueba alérgenos o vida útil.",
+  "validationScope": "Los registros de revisión visual proceden de los agentes generadores. Este manifiesto no certifica pruebas funcionales del sitio; la verificación de integración se realiza por separado.",
+  "generalReferences": [
+    {
+      "title": "Packaging and Storing Dried Foods — National Center for Home Food Preservation",
+      "url": "https://nchfp.uga.edu/how/dry/drying-general/packaging-and-storing-dried-foods/",
+      "scope": "Guía general de envases limpios y secos, cierre y protección frente a humedad, calor y luz; no determina la vida útil comercial del catálogo."
+    },
+    {
+      "title": "Jerky and Food Safety — USDA FSIS",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/meat-fish/jerky",
+      "scope": "Referencia general sobre seguridad del jerky. No valida el proceso propio de res o conejo ni permite asignarles una vida útil comercial."
+    }
+  ],
+  "products": [
+    {
+      "id": "jerky-res",
+      "name": "Jerky de res",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate a square 1024x1024 photorealistic professional studio photograph of cured dried beef jerky: a modest heap of thin irregular narrow beef strips, deep mahogany brown with clearly visible longitudinal meat fibers and dry edges, sparsely seasoned with very fine dry herbs and smoked salt. This must read unmistakably as dehydrated jerky, not cooked steak.\nArrange this single food product in one shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background. Camera 45 degrees overhead, centered composition, dish and food occupy 65–75% of frame, whole dish visible with generous clean breathing room. Large softbox upper left, soft contact shadow, premium realistic food photography, sharp tactile natural imperfect dehydrated textures, restrained natural colors.\nNo text, logos, packaging, utensils, fresh fruit, garnish props, extra food types, collage, watermark, plastic, 3D illustration, oily gloss, cooked steak, wet sauce.",
+      "finalImagePath": "dist/assets/products/jerky-res-studio.webp",
+      "thumbnailPath": "dist/assets/products/jerky-res-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Carne de res",
+        "Finas hierbas",
+        "Sal ahumada"
+      ],
+      "ingredientsNote": "Confirma la mezcla de hierbas y los condimentos del marinado, incluido el picante, antes de pedir.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Sigue la temperatura de conservación indicada en la etiqueta del lote. Si requiere refrigeración, mantenla también durante el traslado.",
+        "opened": "Vuelve a cerrar el empaque y respeta la indicación de refrigeración y el plazo de consumo de la etiqueta. Si falta esta información, consúltanos antes de consumir."
+      }
+    },
+    {
+      "id": "jerky-conejo",
+      "name": "Jerky de conejo",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog photograph for Deshidrataditos.\nCreate a square 1024x1024 photorealistic professional studio photograph of dried rabbit jerky, an appetizing modest pile of thin tan-brown narrow irregular lean meat strips with distinctly fine parallel meat fibers, dry curled edges and a restrained dusting of dried herbs and smoked salt. Naturally lighter tan-brown than beef jerky. Must clearly be thin dehydrated jerky, not cooked meat.\nArrange the single product in a shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition, the fully visible dish occupies 70% frame. Large softbox upper left, gentle contact shadows, sharp natural imperfect detailed food textures, realistic restrained colors.\nNo text, logo, watermark, packaging, utensils, props, rabbit animal imagery, fresh ingredients, other foods, collage, illustration, 3D, plastic, oily gloss or wet sauce.",
+      "finalImagePath": "dist/assets/products/jerky-conejo-studio.webp",
+      "thumbnailPath": "dist/assets/products/jerky-conejo-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Carne de conejo",
+        "Finas hierbas",
+        "Sal ahumada"
+      ],
+      "ingredientsNote": "Confirma la mezcla de hierbas y los demás condimentos del marinado antes de pedir.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Sigue la temperatura de conservación indicada en la etiqueta del lote. Si requiere refrigeración, mantenla también durante el traslado.",
+        "opened": "Vuelve a cerrar el empaque y respeta la indicación de refrigeración y el plazo de consumo de la etiqueta. Si falta esta información, consúltanos antes de consumir."
+      }
+    },
+    {
+      "id": "fruta-temporada",
+      "name": "Frutas de temporada",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: illustrative seasonal dried fruit assortment of crimson shriveled strawberry slices with seeds, golden beige dried apple rings with subtle red peel, and matte amber tan dehydrated ripe plantain rounds with dark seed centers. Natural loosely arranged varied mix, visible wrinkles and curled dry edges; exact seasonal mixture varies and this is illustrative.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/fruta-temporada-studio.webp",
+      "thumbnailPath": "dist/assets/products/fruta-temporada-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Fruta deshidratada de temporada"
+      ],
+      "ingredientsNote": "La fruta, los condimentos y la presentación se confirman según la cosecha y el lote disponible. La imagen muestra una selección de referencia.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén el empaque bien cerrado en un lugar fresco, seco y protegido de la luz directa.",
+        "opened": "Cierra la bolsa después de cada porción. Si no es resellable, utiliza un recipiente limpio, seco y hermético para proteger la textura."
+      }
+    },
+    {
+      "id": "fresa-chile",
+      "name": "Fresa con chile",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dried sliced strawberries seasoned lightly with chili powder and salt. Recognizable red to dark crimson flat shrunken strawberry slices with small yellow seeds, curled dry edges, leathery dehydrated interiors. Fine reddish chili dust and sparse tiny salt crystals, appetizing real dried fruit.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/fresa-chile-studio.webp",
+      "thumbnailPath": "dist/assets/products/fresa-chile-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Fresa deshidratada",
+        "Chile en polvo",
+        "Sal"
+      ],
+      "ingredientsNote": "Consulta la composición del chile utilizado en el lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén el empaque bien cerrado en un lugar fresco, seco y protegido de la luz directa.",
+        "opened": "Cierra la bolsa después de cada porción. Si no es resellable, utiliza un recipiente limpio, seco y hermético para proteger la textura."
+      }
+    },
+    {
+      "id": "manzana-canela",
+      "name": "Manzana con canela",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dehydrated apple rings with cinnamon, muted golden beige round irregular apple cross-sections with natural central seed holes and some muted red skin at the outer edge. Distinct wrinkled dry flesh, curled edges, visible light cinnamon dust; they are truly dried flexible apple rings, not fresh apple.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/manzana-canela-studio.webp",
+      "thumbnailPath": "dist/assets/products/manzana-canela-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Manzana deshidratada",
+        "Canela"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén el empaque bien cerrado en un lugar fresco, seco y protegido de la luz directa.",
+        "opened": "Cierra la bolsa después de cada porción. Si no es resellable, utiliza un recipiente limpio, seco y hermético para proteger la textura."
+      }
+    },
+    {
+      "id": "platano-macho",
+      "name": "Plátano macho deshidratado",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dehydrated ripe plantain rounds, irregular oval amber tan slices with subtly dark natural seed centers and distinctly matte leathery dehydrated texture. These are dehydrated ripe plantains, not fried banana chips; uneven natural thickness, gently curled edges, no oil.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/platano-macho-studio.webp",
+      "thumbnailPath": "dist/assets/products/platano-macho-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Plátano macho maduro deshidratado"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén el empaque bien cerrado en un lugar fresco, seco y protegido de la luz directa.",
+        "opened": "Cierra la bolsa después de cada porción. Si no es resellable, utiliza un recipiente limpio, seco y hermético para proteger la textura."
+      }
+    },
+    {
+      "id": "betabel",
+      "name": "Chips de betabel",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dehydrated beetroot thin curled irregular slices, naturally burgundy and dark reddish purple with faint concentric beet rings, wrinkled almost translucent thin areas. Light chili powder and tiny salt crystals, clearly genuinely dehydrated root vegetable slices.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/betabel-studio.webp",
+      "thumbnailPath": "dist/assets/products/betabel-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Betabel deshidratado",
+        "Chile en polvo",
+        "Sal"
+      ],
+      "ingredientsNote": "Consulta la composición del chile utilizado en el lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+        "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+      }
+    },
+    {
+      "id": "jicama",
+      "name": "Jícama deshidratada",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dehydrated jicama thin irregular slices, small ivory cream translucent pieces with shrunken wrinkled edges and a dry fibrous root texture. Light chili and salt dusting. Mostly pale ivory slices with faint reddish seasoning flecks, distinctly dehydrated jicama, not fresh white cubes and not potato chips.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/jicama-studio.webp",
+      "thumbnailPath": "dist/assets/products/jicama-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Jícama deshidratada",
+        "Chile en polvo",
+        "Sal"
+      ],
+      "ingredientsNote": "Consulta la composición del chile utilizado en el lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+        "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+      }
+    },
+    {
+      "id": "pepino",
+      "name": "Pepino deshidratado",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: genuinely dehydrated cucumber round slices, visibly shrunken and thin, translucent wrinkled pale yellow-green centers with dried seed patterns and narrow muted olive green peel, warped curled edges, light chili and salt dusting. Strongly dehydrated dry texture, absolutely not fresh cucumber, not juicy, not bright wet green.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/pepino-studio.webp",
+      "thumbnailPath": "dist/assets/products/pepino-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Pepino deshidratado",
+        "Chile en polvo",
+        "Sal"
+      ],
+      "ingredientsNote": "Consulta la composición del chile utilizado en el lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+        "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+      }
+    },
+    {
+      "id": "camote",
+      "name": "Chips de camote",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: dehydrated orange sweet potato thin irregular round and oval slices, naturally muted burnt orange and golden orange, curled edges and wrinkled dry fibrous surfaces, thin pale brown peel on some edges. Light chili and salt dusting, visibly dehydrated, no oil or frying.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/camote-studio.webp",
+      "thumbnailPath": "dist/assets/products/camote-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Camote deshidratado",
+        "Chile en polvo",
+        "Sal"
+      ],
+      "ingredientsNote": "Consulta la composición del chile utilizado en el lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+        "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+      }
+    },
+    {
+      "id": "mix-vegetales",
+      "name": "Mix de vegetales",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: professional ecommerce product catalog food photo, square 1024x1024.\nScene/backdrop: warm pale ivory seamless studio surface and backdrop, one shallow off-white handmade ceramic dish.\nSubject: illustrative assortment of dehydrated vegetable slices including burgundy curled beetroot, pale ivory thin irregular jicama, shrunken pale yellow-green cucumber rounds with narrow muted olive peel, and thin muted orange sweet potato rounds, lightly seasoned with chili and salt. Natural loose varied mix, distinct genuinely dried textures; exact mixture varies and this is an illustrative assortment.\nStyle/medium: exceptionally realistic professional food photograph, natural realistic colors, true dehydrated textures with subtle natural imperfections, crisp fine detail. Composition: camera 45 degrees overhead, single dish centered taking 65-75% of square frame, balanced negative space. Lighting: soft large window or softbox from upper left, gentle realistic contact shadows. Constraints: only the stated dried food in the dish; no text, logo, packaging, fresh fruit props, garnish, other objects or collage. Avoid glossy plastic appearance, deep-fried oily chips, oversaturated colors, 3D rendering or fantasy.",
+      "finalImagePath": "dist/assets/products/mix-vegetales-studio.webp",
+      "thumbnailPath": "dist/assets/products/mix-vegetales-studio-480.webp",
+      "sourceManifest": "prompts-fruit-vegetables.json",
+      "sourceVisualReview": "Inspected returned image: product identifiable, natural dehydrated texture, professional studio lighting, square framing, no text or extraneous props.",
+      "ingredientsReference": [
+        "Mezcla de vegetales deshidratados"
+      ],
+      "ingredientsNote": "Los vegetales y condimentos de la mezcla se confirman por lote. La imagen es una sugerencia de variedad; no define el contenido de tu bolsa.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+        "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+      }
+    },
+    {
+      "id": "tisana-floral",
+      "name": "Tisana floral",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: A loose DRIED floral infusion mixture: a modest heap of burgundy petals, cream dried flower heads, faded dusty pink petals. Clearly dry botanicals, NOT fresh flowers.",
+      "finalImagePath": "dist/assets/products/tisana-floral-studio.webp",
+      "thumbnailPath": "dist/assets/products/tisana-floral-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Mezcla de flores deshidratadas para infusión"
+      ],
+      "ingredientsNote": "Confirma las flores que componen la mezcla del lote antes de pedir. La imagen representa una mezcla floral de referencia.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "flor-jamaica",
+      "name": "Flor de jamaica",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: A heap of dried hibiscus calyces (Mexican flor de Jamaica), deep burgundy wrinkled angular cup-like curls, naturally irregular pointed sepals and fibrous crisp edges.",
+      "finalImagePath": "dist/assets/products/flor-jamaica-studio.webp",
+      "thumbnailPath": "dist/assets/products/flor-jamaica-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Flor de jamaica deshidratada"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "manzanilla",
+      "name": "Manzanilla",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: A modest heap of DRIED chamomile flower heads, faded ivory curled petals around golden centers and short dry stems; clearly desiccated herbal tea botanicals, NOT fresh daisies.",
+      "finalImagePath": "dist/assets/products/manzanilla-studio.webp",
+      "thumbnailPath": "dist/assets/products/manzanilla-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Flores de manzanilla deshidratadas"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "petalos-rosa",
+      "name": "Pétalos de rosa",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: A modest heap of loose DRIED rose petals, dusty rose and burgundy colors, thin curled parchment-like edges, natural brittle wrinkled texture.",
+      "finalImagePath": "dist/assets/products/petalos-rosa-studio.webp",
+      "thumbnailPath": "dist/assets/products/petalos-rosa-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Pétalos de rosa deshidratados"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "naranja-rodajas",
+      "name": "Naranja en rodajas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: Dehydrated orange wheels, a small natural overlapping arrangement of thin round slices with amber translucent dry pulp and rich orange peel, authentic uneven dehydration.",
+      "finalImagePath": "dist/assets/products/naranja-rodajas-studio.webp",
+      "thumbnailPath": "dist/assets/products/naranja-rodajas-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Naranja deshidratada en rodajas, con cáscara"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén las rodajas en su empaque cerrado, en un lugar fresco, seco y sin exposición directa al sol.",
+        "opened": "Saca únicamente las rodajas que utilizarás y cierra bien. Evita el vapor de las bebidas y no devuelvas rodajas húmedas a la bolsa."
+      }
+    },
+    {
+      "id": "limon-rodajas",
+      "name": "Limón en rodajas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: Dehydrated MEXICAN GREEN LIME thin wheels, pale golden translucent dehydrated pulp, muted olive GREEN rind, small round overlapping slices. It is lime, NOT yellow lemon.",
+      "finalImagePath": "dist/assets/products/limon-rodajas-studio.webp",
+      "thumbnailPath": "dist/assets/products/limon-rodajas-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Limón deshidratado en rodajas, con cáscara"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén las rodajas en su empaque cerrado, en un lugar fresco, seco y sin exposición directa al sol.",
+        "opened": "Saca únicamente las rodajas que utilizarás y cierra bien. Evita el vapor de las bebidas y no devuelvas rodajas húmedas a la bolsa."
+      }
+    },
+    {
+      "id": "toronja-rodajas",
+      "name": "Toronja en rodajas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: Dehydrated PINK GRAPEFRUIT wheels, broad large round slices with muted ruby and amber translucent dry segments and thick pale cream pith, natural overlapping arrangement.",
+      "finalImagePath": "dist/assets/products/toronja-rodajas-studio.webp",
+      "thumbnailPath": "dist/assets/products/toronja-rodajas-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Toronja deshidratada en rodajas, con cáscara"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén las rodajas en su empaque cerrado, en un lugar fresco, seco y sin exposición directa al sol.",
+        "opened": "Saca únicamente las rodajas que utilizarás y cierra bien. Evita el vapor de las bebidas y no devuelvas rodajas húmedas a la bolsa."
+      }
+    },
+    {
+      "id": "tisana-jamaica-pina",
+      "name": "Tisana jamaica y piña",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: Loose DRIED hibiscus calyces and small irregular DRIED golden pineapple pieces for a herbal infusion, a balanced dry mixture, no liquid, deep burgundy curls and fibrous golden fruit chunks.",
+      "finalImagePath": "dist/assets/products/tisana-jamaica-pina-studio.webp",
+      "thumbnailPath": "dist/assets/products/tisana-jamaica-pina-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Flor de jamaica deshidratada",
+        "Piña deshidratada"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "tisana-manzana-naranja",
+      "name": "Tisana manzana, canela y naranja",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup\nAsset type: dedicated square premium food catalog product photograph, 1024x1024\nPrimary request: Create ONE photorealistic studio photograph of the subject below.\nScene/backdrop: shallow off-white handmade ceramic dish on a warm pale ivory seamless studio background.\nStyle/medium: photoreal premium catalog food photography, real edible botanicals or dehydrated fruit, restrained real colors.\nComposition/framing: camera at 45-degree overhead; single centered composition occupying 65–75% of frame, enough breathing room around the entire dish.\nLighting: soft large softbox from upper left, gentle realistic contact shadows.\nMaterials/textures: crisp highly detailed naturally dehydrated texture, authentic wrinkles, uneven edges and imperfections.\nConstraints: no text, logo, watermark, packaging, fresh props, collage, liquid, synthetic gloss, plastic look, or 3D rendering.\nSubject: Loose DRIED apple pieces, DRIED orange pieces, and broken cinnamon sticks for an herbal infusion, balanced dry mixture, no liquid, naturally wrinkled apple, amber-orange peel pieces, woody brown cinnamon.",
+      "finalImagePath": "dist/assets/products/tisana-manzana-naranja-studio.webp",
+      "thumbnailPath": "dist/assets/products/tisana-manzana-naranja-studio-480.webp",
+      "sourceManifest": "prompts-flowers-citrus.json",
+      "sourceVisualReview": "visually_verified",
+      "ingredientsReference": [
+        "Manzana deshidratada",
+        "Canela",
+        "Naranja deshidratada"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+        "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+      }
+    },
+    {
+      "id": "sazonador-hierbas",
+      "name": "Sazonador ajo, cebolla y hierbas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of a dry garlic, onion and herb seasoning blend: a small neat mound of minced dehydrated garlic and onion, ivory and light beige flakes and granules interspersed with tiny muted green dried herb fragments. Fine irregular natural textures, completely dry, no intact garlic cloves or onion pieces.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition with the whole dish visible and clean breathing room, dish and product occupying 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh ingredients, props, utensils, other products, collage, plastic, illustration, 3D, glossy or wet appearance.",
+      "finalImagePath": "dist/assets/products/sazonador-hierbas-studio.webp",
+      "thumbnailPath": "dist/assets/products/sazonador-hierbas-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Ajo deshidratado",
+        "Cebolla deshidratada",
+        "Hierbas"
+      ],
+      "ingredientsNote": "La selección de hierbas y la presencia de sal u otros condimentos se confirman por lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Almacena en un lugar fresco, seco y protegido de la luz, lejos de la estufa y de fuentes de vapor.",
+        "opened": "Extrae la porción con un utensilio limpio y seco; cierra de inmediato. No espolvorees directamente sobre una olla humeante."
+      }
+    },
+    {
+      "id": "sazonador-chile-citricos",
+      "name": "Sazonador chile y cítricos",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of a dry chili and citrus seasoning: a modest mound of fine rusty red chili powder with fine dried yellow-orange citrus zest flecks mixed evenly throughout. The primary visual texture is fine powder with subtle natural small grain-size variation, matte and completely dry.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition with the whole dish visible and clean breathing room, dish and product occupying 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh ingredients, citrus slices, chili peppers, utensils, props, other products, collage, plastic, illustration, 3D, glossy or wet appearance.",
+      "finalImagePath": "dist/assets/products/sazonador-chile-citricos-studio.webp",
+      "thumbnailPath": "dist/assets/products/sazonador-chile-citricos-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Chile",
+        "Cítricos deshidratados"
+      ],
+      "ingredientsNote": "Consulta los tipos de chile y cítricos, así como la presencia de sal u otros condimentos del lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Almacena en un lugar fresco, seco y protegido de la luz, lejos de la estufa y de fuentes de vapor.",
+        "opened": "Extrae la porción con un utensilio limpio y seco; cierra de inmediato. No espolvorees directamente sobre una olla humeante."
+      }
+    },
+    {
+      "id": "rollito-guayaba",
+      "name": "Rollito de guayaba con canela",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of guava fruit leather: four short loose spiral rolls made of thin pliable naturally dehydrated guava sheet, naturally amber-rose/light reddish-brown in color, tiny cinnamon flecks in its fruit surface. Clearly show the thin rolled sheet layers and slightly uneven organic edges, naturally matte with subtle translucency. A real homemade dried-fruit sheet, no sugar crystals or candy coating.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Arrange four rolls with their spiral ends visible, one gently unfurling to show the thin fruit sheet. Camera 45-degree overhead, centered composition, entire dish visible with breathing room, subject occupies 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh fruit, cinnamon sticks, utensils, props, extra food types, collage, plastic, illustration, 3D, candies, sugar crystals, glossy gelatin.",
+      "finalImagePath": "dist/assets/products/rollito-guayaba-studio.webp",
+      "thumbnailPath": "dist/assets/products/rollito-guayaba-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Guayaba",
+        "Canela"
+      ],
+      "ingredientsNote": "Confirma la formulación del rollito si necesitas conocer endulzantes u otros ingredientes.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Mantén el rollito en su empaque cerrado, en un lugar fresco y seco, protegido del sol y del calor.",
+        "opened": "Vuelve a envolver la porción restante y guárdala en un recipiente limpio, seco y hermético. Evita la humedad y sigue las indicaciones de su etiqueta."
+      }
+    },
+    {
+      "id": "jitomate-hierbas",
+      "name": "Jitomate deshidratado con hierbas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of dehydrated Roma tomato halves seasoned with herbs. Modest heap of larger elongated sun-dried tomato halves, dark terracotta red, deeply wrinkled fleshy lobes and shrunken exposed seed chambers, restrained visible dry oregano-like herb fragments adhered to the tomato surface. Must clearly be dehydrated tomatoes with matte dry texture, absolutely NO oil.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition with the whole dish visible and clean breathing room, dish and product occupying 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh tomatoes, fresh ingredients, garnish props, utensils, other products, collage, plastic, illustration, 3D, oil, shiny wet sauce, char or grill marks.",
+      "finalImagePath": "dist/assets/products/jitomate-hierbas-studio.webp",
+      "thumbnailPath": "dist/assets/products/jitomate-hierbas-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Jitomate deshidratado",
+        "Hierbas"
+      ],
+      "ingredientsNote": "Presentación seca. Confirma la mezcla de hierbas, la sal y los demás condimentos del lote.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva el jitomate seco en su bolsa cerrada, protegido de la luz, el calor y la humedad.",
+        "opened": "Cierra bien después de servir. Rehidrata solo la porción que vayas a cocinar; guarda el producto restante seco y separado de los alimentos ya preparados."
+      }
+    },
+    {
+      "id": "pack-degustacion",
+      "name": "Paquete descubre Deshidrataditos",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium catalog product photograph of a three-flavor dried fruit tasting pack for Deshidrataditos.\nCreate one square 1024x1024 photorealistic professional studio photograph, one real unified scene containing exactly THREE separate small shallow off-white handmade ceramic dishes in a compact balanced triangle, all three fully visible with space around them.\nDish one: thin dehydrated strawberry slices dusted sparsely with fine rusty red chili powder, deep reddish natural strawberry flesh with visible tiny seeds and dry puckered edges.\nDish two: ripe dehydrated plantain rounds, naturally golden tan with brown central seed patterns, chewy-looking dried wrinkled flesh, NOT fried crisp yellow chips.\nDish three: pale golden beige dehydrated apple rings with small hollow central holes, thin red peel rims and restrained cinnamon dusting, naturally wrinkled matte surface.\nWarm pale ivory seamless studio background, large softbox upper left, soft contact shadows, camera 45-degree overhead, centered grouped composition occupying 65–75% frame. Premium realistic food photography, natural imperfect detailed visibly dehydrated textures, restrained colors. All three flavors remain separate in their own dishes.\nNo text, logo, packaging, fresh fruit props, utensils, extra dishes, extra flavors, mango, nuts, collage borders, plastic, 3D, illustration, artificial glossy surface.",
+      "finalImagePath": "dist/assets/products/pack-degustacion-studio.webp",
+      "thumbnailPath": "dist/assets/products/pack-degustacion-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Fresa con chile: Fresa deshidratada, Chile en polvo, Sal.",
+        "Plátano macho deshidratado: Plátano macho maduro deshidratado.",
+        "Manzana con canela: Manzana deshidratada, Canela."
+      ],
+      "ingredientsNote": "Las tres bolsas se entregan por separado. Revisa la etiqueta de cada sabor para conocer su formulación completa.",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva las tres bolsas cerradas en un lugar fresco, seco y protegido de la luz directa.",
+        "opened": "Abre cada sabor por separado y vuelve a cerrar su bolsa después de servir. Sigue las indicaciones y la fecha de cada empaque."
+      }
+    },
+    {
+      "id": "tomate-cherry",
+      "name": "Tomate cherry deshidratado",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of naturally dehydrated cherry tomato halves: a modest pile of small roundish deep-red wrinkled tomato halves, irregular dry curled skins, visibly exposed shrunken seed chambers. Their distinctly small size and rounded silhouettes must be clear. Unseasoned natural variety, no herbs, completely dry with no oil.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition with the whole dish visible and clean breathing room, dish and product occupying 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh tomatoes, stems, fresh ingredients, herbs, garnish props, utensils, other products, collage, plastic, illustration, 3D, oil, wet sauce, char or grill marks.",
+      "finalImagePath": "dist/assets/products/tomate-cherry-studio.webp",
+      "thumbnailPath": "dist/assets/products/tomate-cherry-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Tomate cherry deshidratado"
+      ],
+      "ingredientsNote": "Elige natural o finas hierbas para consultar los ingredientes de esa opción.",
+      "ingredientVariants": {
+        "Natural": {
+          "ingredients": [
+            "Tomate cherry deshidratado"
+          ],
+          "note": "Opción natural en presentación seca. Confirma la formulación completa del lote."
+        },
+        "Finas hierbas": {
+          "ingredients": [
+            "Tomate cherry deshidratado",
+            "Finas hierbas"
+          ],
+          "note": "Confirma la selección de hierbas y la presencia de sal u otros condimentos de esta opción."
+        }
+      },
+      "storageGuidance": {
+        "closed": "Mantén el tomate cherry seco en su empaque cerrado, en un lugar fresco, seco y protegido de la luz.",
+        "opened": "Vuelve a cerrar herméticamente. Si rehidratas una porción, úsala en la preparación y no la devuelvas a la bolsa de producto seco."
+      }
+    },
+    {
+      "id": "ajo-hojuelas",
+      "name": "Ajo deshidratado en hojuelas",
+      "method": "built-in image_gen",
+      "prompt": "Use case: product-mockup. Asset type: dedicated premium food catalog product photograph for Deshidrataditos.\nCreate square 1024x1024 photorealistic professional studio photograph of thin dried garlic slices. Modest heap of pale ivory garlic chips with curved small elongated oval silhouettes, pointed teardrop ends and a few curved crescent sections typical of sliced garlic cloves. Very thin slices with irregular translucent matte edges, subtle ivory variation and delicate internal garlic structure. They must unmistakably look like dehydrated sliced garlic, not onion flakes or potato chips.\nOne shallow off-white handmade ceramic dish on warm pale ivory seamless studio background. Camera 45-degree overhead, centered composition with the whole dish visible and clean breathing room, dish and product occupying 65–75% frame. Large softbox upper left, soft contact shadows, sharp natural imperfect food texture, realistic restrained colors and premium catalog food photography.\nNo text, logo, watermark, packaging, fresh garlic bulbs or cloves, fresh ingredients, garnish props, utensils, other foods, herbs, collage, plastic, illustration, 3D, oil, glossy or wet appearance.",
+      "finalImagePath": "dist/assets/products/ajo-hojuelas-studio.webp",
+      "thumbnailPath": "dist/assets/products/ajo-hojuelas-studio-480.webp",
+      "sourceManifest": "prompts-pantry-jerky.json",
+      "sourceVisualReview": "passed: dedicated product, photoreal dehydrated food texture, consistent studio background and ceramic dish, no text or packaging",
+      "ingredientsReference": [
+        "Ajo deshidratado en hojuelas"
+      ],
+      "ingredientsNote": "",
+      "ingredientVariants": null,
+      "storageGuidance": {
+        "closed": "Conserva las hojuelas en su empaque cerrado, en un lugar fresco, seco y protegido de la luz.",
+        "opened": "Usa utensilios secos y cierra herméticamente para conservar el aroma. Mantén el ajo separado de productos de aroma delicado y alejado del vapor."
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ Tienda estática de alimentos deshidratados de La Barca, Jalisco. GitHub Pages p
 - Tomate cherry deshidratado con opciones natural y finas hierbas; ajo deshidratado en hojuelas como incorporación sobre pedido.
 - Frutas de temporada, cherry y ajo se consultan por WhatsApp, conservando la opción elegida, sin inventar precios o presentaciones. No entran al carrito hasta contar con una oferta definida.
 - Búsqueda sin distinción de acentos, filtros por categoría/uso/novedades y orden por precio, precio por 100 g o nombre.
-- Fichas con uso sugerido, variantes, cantidad y contenido exacto de paquetes.
+- Fichas con imagen dedicada, ingredientes de referencia, conservación y cuidados después de abrir, uso sugerido, variantes, cantidad y contenido exacto de paquetes. Los ingredientes de cherry cambian con la opción natural o finas hierbas.
 - Carrito local con recuperación tolerante a datos dañados, precios recalculados desde el catálogo, cantidades limitadas y sincronización entre pestañas.
 - Recomendaciones por afinidad con los productos del carrito.
 - Envío nacional de $200, gratis desde $2,000; entrega regional pendiente de cotización por debajo de ese importe.
@@ -60,10 +60,12 @@ Las consultas de cobertura solicitan únicamente ciudad, estado y código postal
 
 ## Imágenes
 
-Se conservan los assets originales. Se agregaron tres imágenes editoriales generadas con IA para cítricos, sazonadores y rollitos, optimizadas a JPEG de 1,000 × 1,000 px. Las imágenes del catálogo se identifican como ilustrativas y no sustituyen fotografías del producto final.
+Los 27 artículos tienen una imagen de estudio dedicada generada con ImageGen, con fondo marfil, iluminación suave y textura realista del alimento deshidratado. Las fichas y tarjetas comparten la foto correcta de cada artículo; no utilizan recortes de las antiguas imágenes por categoría. Las imágenes se identifican como ilustrativas y no sustituyen fotografías del producto final. La ficha de cherry aclara que la fotografía representa la opción natural.
 
-El plátano macho usa `dist/assets/platano-macho-editorial.jpg`, generado con ImageGen a partir de la referencia visual aportada y optimizado a 1,000 × 1,000 px. El prompt completo y el método están en [Imagen de plátano macho](notes/imagen-platano-macho.md).
+Cada imagen se publica en `dist/assets/products/{id}-studio.webp` (1,000 × 1,000) y en una versión `{id}-studio-480.webp` (480 × 480), sincronizadas con `docs/assets/products/`. Las 54 imágenes suman aproximadamente 5 MB; la tienda elige el tamaño según el espacio de visualización. Los originales PNG se conservaron fuera de la carpeta pública, en `../asset-work/studio-originals/`. Los recursos editoriales anteriores se mantienen para cabeceras y compatibilidad.
 
-## Pull request
+Inventario, fuentes y alcance de la información alimentaria: [Catálogo, fotografías e ingredientes](notes/catalogo-fotografias-ingredientes.md). Prompts exactos y método de generación: [Prompts de las 27 fotografías](notes/fotografias-prompts.json).
 
-El resumen de la corrección y nueva auditoría está en `PR_DESCRIPTION.md`; su rama es `corregir-alertas-auditoria-20260909`. La actualización del catálogo y la primera entrega de seguridad ya están integradas en `main`. La carpeta local se recibió sin `.git`; las ramas se gestionan mediante la conexión de GitHub.
+## Proponer cambios
+
+Trabajar en una rama nueva y abrir una propuesta hacia `main` con `dist` y `docs` sincronizados. Antes de la revisión, ejecutar el build y las comprobaciones descritas arriba. La propuesta debe incluir la validación de las fichas y explicar qué datos comerciales o de etiquetado siguen pendientes de confirmar. La publicación de GitHub Pages utiliza la carpeta `docs` de `main`.
