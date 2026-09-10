@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260909r2">
-  <link rel="stylesheet" href="cart-enhancements.css?v=20260909r2">
-  <link rel="stylesheet" href="storefront.css?v=20260909r2">
+  <link rel="stylesheet" href="styles.css?v=20260909r3">
+  <link rel="stylesheet" href="cart-enhancements.css?v=20260909r3">
+  <link rel="stylesheet" href="storefront.css?v=20260909r3">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -144,7 +144,7 @@
         <div class="catalog-results"><span id="catalog-count" role="status" aria-live="polite"></span><label class="checkbox-label"><input id="catalog-new" type="checkbox">Solo novedades</label><button type="button" class="text-link" id="catalog-reset" hidden>Limpiar filtros</button></div>
         <div class="product-grid" id="catalog-grid"></div>
         <div class="empty-state" id="catalog-empty" hidden><h2>No encontramos esa combinación</h2><p>Prueba otra palabra o elimina los filtros para ver más sabores.</p><button type="button" class="button button-secondary" id="empty-reset">Ver todos los productos</button></div>
-        <p class="catalog-footnote">Precios en MXN. El precio por 100 g permite comparar presentaciones; el orden por precio usa la presentación inicial de cada producto. Las opciones por cotizar aparecen al final al ordenar por precio. Las imágenes son ilustrativas.</p>
+        <p class="catalog-footnote">Precios en MXN. El precio por 100 g permite comparar presentaciones; el orden por precio usa la presentación inicial de cada producto. Las opciones por cotizar aparecen al final al ordenar por precio. Las imágenes de producto son ilustrativas y generadas con IA. Consulta los ingredientes y cuidados en la ficha de cada artículo.</p>
       </div>
     </section>
 
@@ -417,7 +417,7 @@
   </aside>
 
   <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-title">
-    <button type="button" class="icon-button dialog-close" id="detail-close" aria-label="Cerrar detalles">×</button>
+    <div class="dialog-toolbar"><button type="button" class="icon-button dialog-close" id="detail-close" aria-label="Cerrar detalles">×</button></div>
     <div class="detail-layout">
       <div id="detail-photo" class="detail-photo"></div>
       <div class="detail-body"><span class="eyebrow" id="detail-type"></span><h2 id="detail-title"></h2><span id="detail-status" class="availability"></span><p id="detail-description"></p>
@@ -426,7 +426,22 @@
         <p id="detail-preorder" class="catalog-note" hidden>Se prepara sobre pedido. Confirmamos disponibilidad y fecha de preparación antes del pago.</p>
         <form id="detail-form"><div class="detail-controls"><label><span id="detail-option-label">Presentación</span><select id="detail-variant"></select></label><label id="detail-quantity-label">Cantidad<input id="detail-quantity" type="number" min="1" max="99" step="1" value="1" inputmode="numeric" required></label></div><div class="detail-price-line"><strong class="price" id="detail-price"></strong><small id="detail-unit-price"></small></div><button id="detail-add" type="submit" class="button button-primary button-full">Agregar al carrito</button></form>
         <a id="detail-quote" class="button button-primary button-full" target="_blank" rel="noopener noreferrer" hidden>Consultar disponibilidad por WhatsApp ↗</a>
-        <details class="ingredient-details"><summary>Ingredientes y conservación</summary><p>Consulta la lista de ingredientes, alérgenos, fecha e indicaciones de conservación del envase. Si necesitas confirmar algún ingrediente antes de comprar, escríbenos.</p><a id="detail-contact" target="_blank" rel="noopener noreferrer">Consultar ingredientes por WhatsApp ↗</a></details>
+        <section class="product-composition" aria-labelledby="detail-ingredients-title" aria-live="polite">
+          <h3 id="detail-ingredients-title">Ingredientes de referencia<span id="detail-ingredient-variant"></span></h3>
+          <ul id="detail-ingredients" class="ingredient-list"></ul>
+          <p id="detail-ingredient-note" class="ingredient-note" hidden></p>
+          <p class="ingredient-disclosure">Basados en la descripción del producto. Consulta la etiqueta del lote para conocer la lista completa y su orden por cantidad.</p>
+        </section>
+        <details id="detail-care" class="ingredient-details" open>
+          <summary>Conservación y cuidados</summary>
+          <dl class="storage-guide">
+            <div><dt>Cómo guardarlo</dt><dd id="detail-storage"></dd></div>
+            <div><dt>Después de abrir</dt><dd id="detail-opened"></dd></div>
+            <div><dt>Fecha de consumo</dt><dd>Respeta la fecha y las indicaciones de la etiqueta de tu lote. El plazo depende del producto, su proceso y su empaque.</dd></div>
+          </dl>
+          <p class="care-note">Si observas moho, olor extraño o un empaque dañado, no lo consumas y contáctanos.</p>
+        </details>
+        <div class="allergen-note"><strong>¿Tienes alguna alergia?</strong><p>Confirma los ingredientes y el posible contacto con alérgenos antes de comprar. Esta ficha no acredita ausencia de alérgenos.</p><a id="detail-contact" target="_blank" rel="noopener noreferrer">Consultar ingredientes y cuidados ↗</a></div>
       </div>
     </div>
   </dialog>
@@ -436,8 +451,8 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
   </a>
 
-  <script src="catalog.js?v=20260909r2"></script>
-  <script src="commerce.js?v=20260909r2"></script>
-  <script src="app.js?v=20260909r2"></script>
+  <script src="catalog.js?v=20260909r3"></script>
+  <script src="commerce.js?v=20260909r3"></script>
+  <script src="app.js?v=20260909r3"></script>
 </body>
 </html>

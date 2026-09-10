@@ -1,17 +1,9 @@
-# Corregir alertas de CodeQL y exigir resultados sin hallazgos
+Los 27 artículos del catálogo ahora tienen una imagen dedicada de estilo estudio y fichas con ingredientes de referencia, conservación del empaque cerrado y cuidados después de abrir.
 
-La primera entrega terminó su análisis en verde aunque CodeQL señaló dos problemas en las pruebas de HTML: cierres de script no reconocidos y eliminación incompleta de comentarios. Esta corrección analiza el documento original con parse5 y comprueba variantes mal formadas que los navegadores aceptan. No desactiva reglas ni excluye las pruebas del análisis.
+- Incorpora 27 imágenes ilustrativas generadas con IA, cada una en WebP de 1,000 × 1,000 y 480 × 480: 54 recursos, aproximadamente 5 MB por copia del sitio. Tarjetas y fichas usan el tamaño adecuado; `dist` y `docs` quedan sincronizados.
+- Los ingredientes de tomate cherry cambian entre Natural y Finas hierbas; la imagen identifica la opción natural. El paquete degustación muestra y enumera sus tres sabores en bolsas separadas de 50 g.
+- Mantiene nombres, precios, variantes, disponibilidad, consultas y contenido de paquetes. Documenta el inventario, los prompts y el alcance de la información alimentaria.
 
-Se añade un bloqueo explícito después de CodeQL. Revisa el SARIF y hace fallar el trabajo ante cualquier hallazgo o salida ausente, inválida o incompleta. El resumen indica regla, archivo, nivel y severidad; terminar la acción de análisis ya no basta para aprobar el trabajo. Para impedir una fusión se deben exigir los dos trabajos en la protección de main, que requiere administración.
+Validación local: build y comprobaciones aprobados, con 17 casos de comercio, 13 de seguridad, 6 grupos del control SARIF, sintaxis, estructura HTML, referencias e igualdad entre `dist` y `docs`. Se abrieron las 27 fichas en navegador y cargaron sus 27 imágenes sin errores ni advertencias; revisión visual adicional en móvil a 390 × 844, variantes de cherry y paquete degustación.
 
-La nueva auditoría detectó además un recorte de emojis que podía provocar URIError al preparar WhatsApp. Los límites ahora conservan Unicode válido. La herramienta HTML solo se instala para verificar el proyecto, con versiones e integridad en el lockfile y sin ejecutar scripts de instalación; no forma parte de la tienda publicada. Se actualizan las versiones de recursos y la copia exacta dist/docs.
-
-## Validación
-
-- 17 pruebas de comercio, 13 de seguridad y 6 grupos de comprobaciones SARIF aprobados; sintaxis, referencias y publicación sincronizada.
-- Casos que reproducen las dos alertas; casos de emojis y unidades Unicode sueltas; pruebas del bloqueo con cero/un hallazgo, salida ausente o inválida y ejecución fallida.
-- 6 comprobaciones CSP aprobadas en navegador, con eventos reales de bloqueo. Carrito, total nacional, texto especial, límites de notas y privacidad de cobertura revisados sin enviar mensajes. Consola de la tienda sin errores.
-- npm audit: cero vulnerabilidades conocidas en las dos dependencias de desarrollo. Workflow validado con actionlint.
-- Se comprobará el resultado real de CodeQL en esta propuesta: el bloqueo exige análisis completo y cero hallazgos.
-
-Informe y límites: [auditoría de corrección](notes/auditoria-seguridad-20260909.md). La configuración administrativa de cuentas, protección de ramas y cabeceras del alojamiento sigue pendiente; esta propuesta no modifica DNS ni fusiona cambios automáticamente.
+Las imágenes son ilustrativas. Los ingredientes proceden del catálogo disponible y requieren contrastarse con recetas y etiquetas definitivas; no se declaran alérgenos ni caducidades validados. La validación indicada es local y no acredita una nueva ejecución remota de CodeQL ni publicación en el dominio público.

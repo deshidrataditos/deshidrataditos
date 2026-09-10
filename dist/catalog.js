@@ -251,85 +251,6 @@ const PRODUCTS = [
     "color": "#862f48"
   }
 ];
-const PRODUCT_PHOTOS = {
-  "jerky-res": {
-    "src": "assets/product-jerky-temp.webp",
-    "position": "left center",
-    "scale": 1.45
-  },
-  "jerky-conejo": {
-    "src": "assets/product-jerky-temp.webp",
-    "position": "right center",
-    "scale": 1.45
-  },
-  "fresa-chile": {
-    "src": "assets/product-fruits-temp.webp",
-    "position": "left top",
-    "scale": 1.55
-  },
-  "manzana-canela": {
-    "src": "assets/product-fruits-temp.webp",
-    "position": "left bottom",
-    "scale": 1.55
-  },
-  "betabel": {
-    "src": "assets/product-vegetables-temp.webp",
-    "position": "left top",
-    "scale": 1.55
-  },
-  "jicama": {
-    "src": "assets/product-vegetables-temp.webp",
-    "position": "center top",
-    "scale": 1.55
-  },
-  "pepino": {
-    "src": "assets/product-vegetables-temp.webp",
-    "position": "right top",
-    "scale": 1.55
-  },
-  "camote": {
-    "src": "assets/product-vegetables-temp.webp",
-    "position": "left bottom",
-    "scale": 1.55
-  },
-  "mix-vegetales": {
-    "src": "assets/product-vegetables-temp.webp",
-    "position": "right bottom",
-    "scale": 1.55
-  },
-  "tisana-floral": {
-    "src": "assets/product-flowers-temp.webp",
-    "position": "right bottom",
-    "scale": 1.55
-  },
-  "flor-jamaica": {
-    "src": "assets/product-flowers-temp.webp",
-    "position": "left top",
-    "scale": 1.55
-  },
-  "manzanilla": {
-    "src": "assets/product-flowers-temp.webp",
-    "position": "center top",
-    "scale": 1.55
-  },
-  "petalos-rosa": {
-    "src": "assets/product-flowers-temp.webp",
-    "position": "left bottom",
-    "scale": 1.55
-  },
-  "fruta-temporada": {
-    "src": "assets/product-fruits-temp.webp",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de frutas; la oferta cambia según temporada"
-  },
-  "platano-macho": {
-    "src": "assets/platano-macho-editorial.jpg",
-    "position": "center",
-    "scale": 1,
-    "alt": "Rodajas doradas de plátano macho deshidratado junto a un plátano macho maduro; imagen ilustrativa"
-  }
-};
 const ADDITIONS = [
   {
     "id": "naranja-rodajas",
@@ -584,47 +505,299 @@ const ADDITIONS = [
 const CATEGORY_NAMES = {jerky:'Cecina jerky',fruit:'Frutas de temporada y favoritos',vegetable:'Vegetales',flower:'Flores y tisanas',citrus:'Cítricos',pantry:'Sazonadores y cocina',bundle:'Paquetes'};
 const occasionMap = {jerky:['snack'],fruit:['snack'],vegetable:['snack'],flower:['bebidas'],citrus:['bebidas'],pantry:['cocina'],bundle:['snack','regalo']};
 const gramsFor = label => label === '1 kg' ? 1000 : label === '4 × 25 g' ? 100 : label === '3 × 50 g' ? 150 : Number.parseInt(label,10);
-const newPhotos = {
-  "citrus": {
-    "src": "assets/citricos-editorial.jpg",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de cítricos deshidratados"
+const originalUses = {jerky:'Disfrútalo directamente como botana. Sigue las indicaciones de conservación y la fecha del envase.',fruit:'Disfruta la fruta directamente, sola o para acompañar tu botana favorita.',vegetable:'Listos para acompañar una pausa o compartir como botana.',flower:'Prepara una infusión siguiendo las indicaciones del envase y cuela antes de servir.'};
+// Ingredient references come from the existing catalog, not a validated label.
+const PRODUCT_DETAILS = {
+  "jerky-res": {
+    "ingredients": [
+      "Carne de res",
+      "Finas hierbas",
+      "Sal ahumada"
+    ],
+    "note": "Confirma la mezcla de hierbas y los condimentos del marinado, incluido el picante, antes de pedir."
   },
-  "pantry": {
-    "src": "assets/sazonadores-editorial.jpg",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de jitomate y sazonadores"
+  "jerky-conejo": {
+    "ingredients": [
+      "Carne de conejo",
+      "Finas hierbas",
+      "Sal ahumada"
+    ],
+    "note": "Confirma la mezcla de hierbas y los demás condimentos del marinado antes de pedir."
   },
-  "fruit": {
-    "src": "assets/rollitos-editorial.jpg",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de rollitos y frutas deshidratadas"
+  "fruta-temporada": {
+    "ingredients": [
+      "Fruta deshidratada de temporada"
+    ],
+    "note": "La fruta, los condimentos y la presentación se confirman según la cosecha y el lote disponible. La imagen muestra una selección de referencia."
   },
-  "flower": {
-    "src": "assets/product-flowers-temp.webp",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de flores para infusión"
+  "fresa-chile": {
+    "ingredients": [
+      "Fresa deshidratada",
+      "Chile en polvo",
+      "Sal"
+    ],
+    "note": "Consulta la composición del chile utilizado en el lote."
   },
-  "bundle": {
-    "src": "assets/product-fruits-temp.webp",
-    "position": "center",
-    "scale": 1,
-    "alt": "Selección ilustrativa de frutas deshidratadas"
+  "manzana-canela": {
+    "ingredients": [
+      "Manzana deshidratada",
+      "Canela"
+    ],
+    "note": ""
+  },
+  "platano-macho": {
+    "ingredients": [
+      "Plátano macho maduro deshidratado"
+    ],
+    "note": ""
+  },
+  "betabel": {
+    "ingredients": [
+      "Betabel deshidratado",
+      "Chile en polvo",
+      "Sal"
+    ],
+    "note": "Consulta la composición del chile utilizado en el lote."
+  },
+  "jicama": {
+    "ingredients": [
+      "Jícama deshidratada",
+      "Chile en polvo",
+      "Sal"
+    ],
+    "note": "Consulta la composición del chile utilizado en el lote."
+  },
+  "pepino": {
+    "ingredients": [
+      "Pepino deshidratado",
+      "Chile en polvo",
+      "Sal"
+    ],
+    "note": "Consulta la composición del chile utilizado en el lote."
+  },
+  "camote": {
+    "ingredients": [
+      "Camote deshidratado",
+      "Chile en polvo",
+      "Sal"
+    ],
+    "note": "Consulta la composición del chile utilizado en el lote."
+  },
+  "mix-vegetales": {
+    "ingredients": [
+      "Mezcla de vegetales deshidratados"
+    ],
+    "note": "Los vegetales y condimentos de la mezcla se confirman por lote. La imagen es una sugerencia de variedad; no define el contenido de tu bolsa."
+  },
+  "tisana-floral": {
+    "ingredients": [
+      "Mezcla de flores deshidratadas para infusión"
+    ],
+    "note": "Confirma las flores que componen la mezcla del lote antes de pedir. La imagen representa una mezcla floral de referencia."
+  },
+  "flor-jamaica": {
+    "ingredients": [
+      "Flor de jamaica deshidratada"
+    ],
+    "note": ""
+  },
+  "manzanilla": {
+    "ingredients": [
+      "Flores de manzanilla deshidratadas"
+    ],
+    "note": ""
+  },
+  "petalos-rosa": {
+    "ingredients": [
+      "Pétalos de rosa deshidratados"
+    ],
+    "note": ""
+  },
+  "naranja-rodajas": {
+    "ingredients": [
+      "Naranja deshidratada en rodajas, con cáscara"
+    ],
+    "note": ""
+  },
+  "limon-rodajas": {
+    "ingredients": [
+      "Limón deshidratado en rodajas, con cáscara"
+    ],
+    "note": ""
+  },
+  "toronja-rodajas": {
+    "ingredients": [
+      "Toronja deshidratada en rodajas, con cáscara"
+    ],
+    "note": ""
+  },
+  "tisana-jamaica-pina": {
+    "ingredients": [
+      "Flor de jamaica deshidratada",
+      "Piña deshidratada"
+    ],
+    "note": ""
+  },
+  "tisana-manzana-naranja": {
+    "ingredients": [
+      "Manzana deshidratada",
+      "Canela",
+      "Naranja deshidratada"
+    ],
+    "note": ""
+  },
+  "sazonador-hierbas": {
+    "ingredients": [
+      "Ajo deshidratado",
+      "Cebolla deshidratada",
+      "Hierbas"
+    ],
+    "note": "La selección de hierbas y la presencia de sal u otros condimentos se confirman por lote."
+  },
+  "sazonador-chile-citricos": {
+    "ingredients": [
+      "Chile",
+      "Cítricos deshidratados"
+    ],
+    "note": "Consulta los tipos de chile y cítricos, así como la presencia de sal u otros condimentos del lote."
+  },
+  "rollito-guayaba": {
+    "ingredients": [
+      "Guayaba",
+      "Canela"
+    ],
+    "note": "Confirma la formulación del rollito si necesitas conocer endulzantes u otros ingredientes."
+  },
+  "jitomate-hierbas": {
+    "ingredients": [
+      "Jitomate deshidratado",
+      "Hierbas"
+    ],
+    "note": "Presentación seca. Confirma la mezcla de hierbas, la sal y los demás condimentos del lote."
+  },
+  "tomate-cherry": {
+    "ingredients": [
+      "Tomate cherry deshidratado"
+    ],
+    "note": "Elige natural o finas hierbas para consultar los ingredientes de esa opción.",
+    "variants": {
+      "Natural": {
+        "ingredients": [
+          "Tomate cherry deshidratado"
+        ],
+        "note": "Opción natural en presentación seca. Confirma la formulación completa del lote."
+      },
+      "Finas hierbas": {
+        "ingredients": [
+          "Tomate cherry deshidratado",
+          "Finas hierbas"
+        ],
+        "note": "Confirma la selección de hierbas y la presencia de sal u otros condimentos de esta opción."
+      }
+    }
+  },
+  "ajo-hojuelas": {
+    "ingredients": [
+      "Ajo deshidratado en hojuelas"
+    ],
+    "note": ""
+  },
+  "pack-degustacion": {
+    "ingredients": [],
+    "note": "Las tres bolsas se entregan por separado. Revisa la etiqueta de cada sabor para conocer su formulación completa."
   }
 };
-const originalUses = {jerky:'Disfrútalo directamente como botana. Sigue las indicaciones de conservación y la fecha del envase.',fruit:'Disfruta la fruta directamente, sola o para acompañar tu botana favorita.',vegetable:'Listos para acompañar una pausa o compartir como botana.',flower:'Prepara una infusión siguiendo las indicaciones del envase y cuela antes de servir.'};
+const STORAGE_GUIDANCE = {
+  "fruit": {
+    "closed": "Mantén el empaque bien cerrado en un lugar fresco, seco y protegido de la luz directa.",
+    "opened": "Cierra la bolsa después de cada porción. Si no es resellable, utiliza un recipiente limpio, seco y hermético para proteger la textura."
+  },
+  "vegetable": {
+    "closed": "Guarda el empaque cerrado en un lugar fresco y seco, alejado del sol y de fuentes de calor.",
+    "opened": "Cierra herméticamente después de servir. Evita la humedad y usa manos o utensilios secos para conservar la textura."
+  },
+  "flower": {
+    "closed": "Conserva la mezcla seca en su empaque cerrado, protegida de la luz, la humedad y los olores intensos.",
+    "opened": "Usa una cuchara limpia y seca y vuelve a cerrar bien el empaque. Conserva por separado la mezcla seca y la bebida preparada."
+  },
+  "citrus": {
+    "closed": "Mantén las rodajas en su empaque cerrado, en un lugar fresco, seco y sin exposición directa al sol.",
+    "opened": "Saca únicamente las rodajas que utilizarás y cierra bien. Evita el vapor de las bebidas y no devuelvas rodajas húmedas a la bolsa."
+  },
+  "pantry": {
+    "closed": "Almacena en un lugar fresco, seco y protegido de la luz, lejos de la estufa y de fuentes de vapor.",
+    "opened": "Extrae la porción con un utensilio limpio y seco; cierra de inmediato. No espolvorees directamente sobre una olla humeante."
+  },
+  "jerky": {
+    "closed": "Sigue la temperatura de conservación indicada en la etiqueta del lote. Si requiere refrigeración, mantenla también durante el traslado.",
+    "opened": "Vuelve a cerrar el empaque y respeta la indicación de refrigeración y el plazo de consumo de la etiqueta. Si falta esta información, consúltanos antes de consumir."
+  },
+  "bundle": {
+    "closed": "Conserva las tres bolsas cerradas en un lugar fresco, seco y protegido de la luz directa.",
+    "opened": "Abre cada sabor por separado y vuelve a cerrar su bolsa después de servir. Sigue las indicaciones y la fecha de cada empaque."
+  }
+};
+const PHOTO_DESCRIPTIONS = {
+  "jerky-res": "Tiras de jerky de res con fibras visibles, finas hierbas y sal ahumada en plato marfil",
+  "jerky-conejo": "Tiras finas de jerky de conejo con hierbas en plato marfil",
+  "fruta-temporada": "Selección de referencia de frutas deshidratadas; la fruta disponible cambia según la temporada",
+  "fresa-chile": "Láminas de fresa deshidratada con chile y sal en plato marfil",
+  "manzana-canela": "Rodajas de manzana deshidratada con canela en plato marfil",
+  "platano-macho": "Rodajas de plátano macho maduro deshidratado, con bordes dorados y centros oscuros naturales",
+  "betabel": "Láminas onduladas de betabel deshidratado de color borgoña con chile y sal",
+  "jicama": "Láminas finas de jícama deshidratada con chile y sal en plato marfil",
+  "pepino": "Rodajas de pepino deshidratado con cáscara verde y chile en plato marfil",
+  "camote": "Láminas de camote deshidratado de color naranja con chile y sal",
+  "mix-vegetales": "Selección de referencia de vegetales deshidratados; la composición se confirma por lote",
+  "tisana-floral": "Mezcla de referencia de flores secas para tisana en plato marfil",
+  "flor-jamaica": "Cálices secos de jamaica de color borgoña intenso en plato marfil",
+  "manzanilla": "Flores secas de manzanilla con centros dorados y pétalos claros en plato marfil",
+  "petalos-rosa": "Pétalos secos de rosa con bordes rizados y tonos rosa y borgoña",
+  "naranja-rodajas": "Rodajas deshidratadas de naranja con pulpa ámbar y cáscara anaranjada",
+  "limon-rodajas": "Rodajas deshidratadas de limón con cáscara verde oliva y pulpa translúcida",
+  "toronja-rodajas": "Rodajas deshidratadas de toronja rosada con pulpa rojiza y corteza clara",
+  "tisana-jamaica-pina": "Mezcla seca de jamaica y trozos de piña deshidratada en plato marfil",
+  "tisana-manzana-naranja": "Mezcla seca de manzana, canela y naranja para infusión en plato marfil",
+  "sazonador-hierbas": "Mezcla seca de ajo, cebolla y hierbas con hojuelas claras y verdes",
+  "sazonador-chile-citricos": "Sazonador de chile rojo con pequeños fragmentos de cítricos deshidratados",
+  "rollito-guayaba": "Láminas de fruta de guayaba con canela enrolladas en espiral",
+  "jitomate-hierbas": "Mitades de jitomate deshidratado con hierbas, en presentación seca",
+  "tomate-cherry": "Mitades pequeñas de tomate cherry deshidratado en presentación natural seca",
+  "ajo-hojuelas": "Hojuelas finas de ajo deshidratado color marfil en un plato de cerámica",
+  "pack-degustacion": "Tres platos separados con fresa con chile, plátano macho y manzana con canela"
+};
+const STORAGE_OVERRIDES = {
+  "rollito-guayaba": {
+    "closed": "Mantén el rollito en su empaque cerrado, en un lugar fresco y seco, protegido del sol y del calor.",
+    "opened": "Vuelve a envolver la porción restante y guárdala en un recipiente limpio, seco y hermético. Evita la humedad y sigue las indicaciones de su etiqueta."
+  },
+  "jitomate-hierbas": {
+    "closed": "Conserva el jitomate seco en su bolsa cerrada, protegido de la luz, el calor y la humedad.",
+    "opened": "Cierra bien después de servir. Rehidrata solo la porción que vayas a cocinar; guarda el producto restante seco y separado de los alimentos ya preparados."
+  },
+  "tomate-cherry": {
+    "closed": "Mantén el tomate cherry seco en su empaque cerrado, en un lugar fresco, seco y protegido de la luz.",
+    "opened": "Vuelve a cerrar herméticamente. Si rehidratas una porción, úsala en la preparación y no la devuelvas a la bolsa de producto seco."
+  },
+  "ajo-hojuelas": {
+    "closed": "Conserva las hojuelas en su empaque cerrado, en un lugar fresco, seco y protegido de la luz.",
+    "opened": "Usa utensilios secos y cierra herméticamente para conservar el aroma. Mantén el ajo separado de productos de aroma delicado y alejado del vapor."
+  }
+};
+const PRODUCT_TAGS = {"manzana-canela":["Sin chile","Con canela"],"mix-vegetales":["Selección variable","Para compartir"],"fresa-chile":["Con chile","Dulce y ácido"],"jerky-res":["Finas hierbas","Sal ahumada"],"jerky-conejo":["Finas hierbas","Sal ahumada"]};
 const products = [
   ...PRODUCTS.map((product,index) => ({
     ...product,rank:product.id === 'fruta-temporada' ? 0 : 20+index,isNew:false,
     use:product.use || originalUses[product.category],
-    tags:product.tags || [product.category === 'flower' ? 'Para infusión' : /chile|picante|sal/.test(product.description) ? 'Sazonado' : 'Sabor natural'],
-    photo:{...PRODUCT_PHOTOS[product.id],alt:PRODUCT_PHOTOS[product.id].alt || 'Selección ilustrativa de '+CATEGORY_NAMES[product.category].toLowerCase()}
+    tags:PRODUCT_TAGS[product.id] || product.tags || [product.category === 'flower' ? 'Para infusión' : /chile|picante|sal/.test(product.description) ? 'Sazonado' : 'Sabor natural']
   })),
-  ...ADDITIONS.map(product => ({...product,availability:'Sobre pedido',isNew:true,bg:'#fff0d7',color:'#542311',photo:newPhotos[product.category]}))
-].map(product => ({...product,occasions:occasionMap[product.category],variants:product.variants || Object.entries(product.prices).map(([label,price]) => ({label,price,grams:gramsFor(label)}))}));
+  ...ADDITIONS.map(product => ({...product,availability:'Sobre pedido',isNew:true,bg:'#fff0d7',color:'#542311'}))
+].map(product => ({...product,foodDetails:PRODUCT_DETAILS[product.id],storage:STORAGE_OVERRIDES[product.id] || STORAGE_GUIDANCE[product.category],photo:{src:"assets/products/"+product.id+"-studio.webp",thumbnail:"assets/products/"+product.id+"-studio-480.webp",position:"center",scale:1,alt:PHOTO_DESCRIPTIONS[product.id]+"; imagen ilustrativa generada con IA"},occasions:occasionMap[product.category],variants:product.variants || Object.entries(product.prices).map(([label,price]) => ({label,price,grams:gramsFor(label)}))}));
+for (const product of products.filter(item => item.bundle)) {
+  product.foodDetails.ingredients = product.bundle.map(item => {
+    const component = products.find(candidate => candidate.id === item.id);
+    return component.name + ': ' + component.foodDetails.ingredients.join(', ') + '.';
+  });
+}
 globalThis.DeshidrataditosCatalog = {products,categories:CATEGORY_NAMES};
 })();
