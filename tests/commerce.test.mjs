@@ -28,11 +28,11 @@ check("Frutas retiradas ausentes y plátano macho conserva sus precios",() => {
   for (const id of ["pina-chile","mango-chile","mix-tropical","rollito-mango","platano-natural"]) assert.equal(C.findProduct(products,id),undefined);
   const plantain = C.findProduct(products,"platano-macho");
   assert.equal(plantain.name,"Plátano macho deshidratado");
-  assert.deepEqual(plantain.variants.map(item => item.price),[29,49,109,399]);
+  assert.deepEqual(plantain.variants.map(item => item.price),[29,49,109]);
   assert.ok(plantain.photo.src.includes("platano-macho"));
 });
 check("Carrito antiguo: conserva cantidades, corrige precios y descarta artículos inválidos",() => {
-  const result = C.sanitizeCart([row("fresa-chile","100 g",2,1),row("no-existe","1 kg"),row("fresa-chile","10 kg"),null,row("fresa-chile","50 g",-1),row("fresa-chile","50 g",NaN),row("fresa-chile","50 g","3")],products);
+  const result = C.sanitizeCart([row("fresa-chile","100 g",2,1),row("fresa-chile","1 kg",1,749),row("no-existe","1 kg"),row("fresa-chile","10 kg"),null,row("fresa-chile","50 g",-1),row("fresa-chile","50 g",NaN),row("fresa-chile","50 g","3")],products);
   assert.equal(result.length,1);
   assert.equal(result[0].price,89);
   assert.equal(result[0].quantity,2);
@@ -133,6 +133,80 @@ check("Degustación: tres sabores vigentes, contenido de 150 g y ahorro real de 
   const grams = bundle.bundle.reduce((sum,item) => sum + C.variant(C.findProduct(products,item.id),item.label).grams * item.quantity,0);
   assert.equal(grams,150); assert.equal(bundle.variants[0].grams,grams);
   assert.equal(C.bundleValue(products[0],products),null);
+});
+check("Paquete personalizado: tres bolsas de 50 g suman sus precios vigentes sin descuento inventado",() => {
+  const ids = ["fresa-chile","platano-macho","manzana-canela"];
+  const pack = C.customPack(products,ids);
+  assert.deepEqual(pack,{items:ids.map(id => ({productId:id,weight:"50 g",price:C.variant(C.findProduct(products,id),"50 g").price,quantity:1})),subtotal:113,grams:150,preorder:true});
+  const updated = products.map(product => product.id === ids[0] ? {...product,variants:product.variants.map(item => item.label === "50 g" ? {...item,price:59} : item)} : product);
+  assert.equal(C.customPack(updated,ids).subtotal,123);
+  const available = products.map(product => ({...product,availability:"Disponible"}));
+  assert.equal(C.customPack(available,ids).preorder,false);
+});
+check("Opciones del paquete excluyen agotados, cotizaciones, paquetes y presentaciones que no son 50 g",() => {
+  const options = C.customPackOptions(products);
+  assert.ok(options.some(product => product.id === "fresa-chile"));
+  assert.ok(options.some(product => product.id === "manzana-canela"));
+  assert.ok(!options.some(product => product.id === "pack-degustacion" || product.quoteOnly));
+  const base = C.findProduct(products,"fresa-chile");
+  const rejected = [
+    {...base,availability:"Agotado"}, {...base,availability:"Según temporada"},
+    {...base,quoteOnly:true}, {...base,bundle:[{id:"fresa-chile",label:"50 g",quantity:1}]},
+    {...base,variants:[{label:"50 g",grams:100,price:49}]},
+    {...base,variants:[{label:"100 g",grams:50,price:49}]},
+    {...base,variants:[]},
+    ...[null,NaN,Infinity,0,-1,"49"].map(price => ({...base,variants:[{label:"50 g",grams:50,price}]}))
+  ];
+  for (const invalid of rejected) {
+    const catalog = products.map(product => product.id === invalid.id ? invalid : product);
+    assert.ok(!C.customPackOptions(catalog).some(product => product.id === invalid.id));
+    assert.equal(C.customPack(catalog,[invalid.id,"platano-macho","manzana-canela"]),null);
+  }
+});
+check("Paquete personalizado exige exactamente tres identificadores distintos y elegibles",() => {
+  const ids = ["fresa-chile","platano-macho","manzana-canela"];
+  const invalidSelections = [undefined,null,"fresa-chile",{},[],ids.slice(0,1),ids.slice(0,2),[...ids,"jerky-res"],[ids[0],ids[0],ids[1]],[ids[0],ids[1],"no-existe"],[ids[0],ids[1],123],[ids[0],ids[1],undefined],[ids[0],ids[1],"pack-degustacion"],[ids[0],ids[1],"tomate-cherry"],[ids[0],ids[1],"rollito-guayaba"],[ids[0],,ids[1]]];
+  const original = [row("jerky-res","50 g",2,1),row("fresa-chile","1 kg")];
+  for (const selection of invalidSelections) {
+    assert.equal(C.customPack(products,selection),null);
+    assert.deepEqual(C.addCustomPack(original,products,selection),{cart:C.sanitizeCart(original,products),added:false,reason:"selection"});
+  }
+});
+check("Agregar paquete conserva bolsas normales, suma cantidades y sobrevive al guardado y WhatsApp",() => {
+  const ids = ["fresa-chile","platano-macho","manzana-canela"];
+  const original = C.sanitizeCart([row("fresa-chile","50 g",2),row("fresa-chile","100 g",1)],products);
+  const snapshot = structuredClone(original);
+  const result = C.addCustomPack(original,products,ids);
+  assert.equal(result.added,true);
+  assert.equal(result.reason,null);
+  assert.deepEqual(original,snapshot);
+  assert.equal(result.cart.find(item => item.productId === "fresa-chile" && item.weight === "50 g").quantity,3);
+  assert.equal(result.cart.find(item => item.weight === "100 g").quantity,1);
+  const restored = C.readCart(JSON.stringify(result.cart),products);
+  assert.deepEqual(restored,result.cart);
+  assert.equal(C.totals(restored).subtotal,C.totals(original).subtotal + 113);
+  const message = C.orderMessage({cart:restored,products,delivery:"national",payment:"transferencia"});
+  for (const id of ids) assert.ok(message.includes(`• ${C.findProduct(products,id).name} | 50 g × ${id === "fresa-chile" ? 3 : 1} |`));
+  assert.ok(!message.includes("Contenido por paquete:"));
+  assert.ok(!restored.some(item => item.productId === "pack-degustacion"));
+  assert.equal(C.addCustomPack(null,products,ids).cart.length,3);
+});
+check("Paquete personalizado verifica el límite antes de agregar cualquier bolsa",() => {
+  const ids = ["fresa-chile","platano-macho","manzana-canela"];
+  for (const fullId of ids) {
+    const original = [row(fullId,"50 g",C.MAX_QUANTITY - 1),row(fullId,"50 g",1),row("jerky-res","50 g",1,1),row("fresa-chile","1 kg")];
+    const snapshot = structuredClone(original);
+    const result = C.addCustomPack(original,products,ids);
+    assert.deepEqual(result,{cart:C.sanitizeCart(original,products),added:false,reason:"limit"});
+    assert.deepEqual(original,snapshot);
+  }
+  const almostFull = ids.map(id => row(id,"50 g",C.MAX_QUANTITY - 1));
+  const added = C.addCustomPack(almostFull,products,ids);
+  assert.equal(added.added,true);
+  assert.ok(added.cart.every(item => item.quantity === C.MAX_QUANTITY));
+  const differentSize = C.addCustomPack([row("fresa-chile","100 g",C.MAX_QUANTITY)],products,ids);
+  assert.equal(differentSize.added,true);
+  assert.equal(differentSize.cart.length,4);
 });
 check("Mensaje conserva variantes, paquete, correo y entrega pendiente",() => {
   const cart = C.sanitizeCart([row("pack-degustacion","3 × 50 g",2)],products);

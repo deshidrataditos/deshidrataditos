@@ -5,6 +5,7 @@ Tienda estática de alimentos deshidratados de La Barca, Jalisco. GitHub Pages p
 ## Catálogo y compra
 
 - 27 artículos: frutas de temporada, favoritos, cítricos, tisanas, sazonadores y paquetes.
+- Desde el 12 de septiembre de 2026 se retiran las presentaciones de 1 kg de los 14 artículos que las ofrecían; conservan sus opciones de 50 g, 100 g y 250 g con los mismos precios. El resto de las presentaciones y paquetes sigue vigente. Los carritos guardados descartan las opciones retiradas al cargar el catálogo actual.
 - Fresa con chile se mantiene; plátano natural pasa a plátano macho deshidratado con imagen propia. Se retiran piña con chile, mango con chile, rollito de mango y mix tropical enchilado.
 - Tomate cherry deshidratado con opciones natural y finas hierbas; ajo deshidratado en hojuelas como incorporación sobre pedido.
 - Frutas de temporada, cherry y ajo se consultan por WhatsApp, conservando la opción elegida, sin inventar precios o presentaciones. No entran al carrito hasta contar con una oferta definida.
@@ -12,6 +13,7 @@ Tienda estática de alimentos deshidratados de La Barca, Jalisco. GitHub Pages p
 - Fichas con imagen dedicada, ingredientes de referencia, conservación y cuidados después de abrir, uso sugerido, variantes, cantidad y contenido exacto de paquetes. Los ingredientes de cherry cambian con la opción natural o finas hierbas.
 - Carrito local con recuperación tolerante a datos dañados, precios recalculados desde el catálogo, cantidades limitadas y sincronización entre pestañas.
 - Recomendaciones por afinidad con los productos del carrito.
+- “Arma tu paquete” en Paquetes, con acceso desde Tienda: tres sabores distintos en bolsas de 50 g, vista previa de cada producto, ingredientes, disponibilidad y total actualizado al elegir. Se suman los precios individuales sin descuento adicional; las tres bolsas se agregan juntas como artículos normales al carrito y al resumen de WhatsApp. Las opciones sobre pedido se identifican antes de agregar. No se permiten selecciones incompletas, duplicadas, agotadas o por cotizar; si una bolsa supera el límite del carrito se rechaza toda la adición.
 - Envío nacional de $200, gratis desde $2,000; entrega regional pendiente de cotización por debajo de ese importe.
 - Pedido y cotizaciones para negocios mediante un resumen que el cliente revisa y envía en WhatsApp. No se procesa ningún cobro en la página.
 
@@ -40,7 +42,7 @@ La ficha `fruta-temporada` mantiene la oferta abierta a la cosecha y disponibili
 
 ## Validación incluida
 
-`node scripts/check.mjs` comprueba sintaxis, 17 casos de comercio, 13 casos de seguridad y 6 grupos de comprobaciones del bloqueo de CodeQL; también referencias HTML, navegación, recursos y correspondencia exacta entre docs y dist. Se cubren precios alterados, límites, consultas, Unicode, privacidad, CSP, enlaces y las variantes de HTML mal formado que originaron las alertas anteriores. El HTML se interpreta con parse5 sin eliminar comentarios ni usar expresiones regulares para reconocer scripts.
+`node scripts/check.mjs` comprueba sintaxis, 22 casos de comercio, 13 casos de seguridad y 6 grupos de comprobaciones del bloqueo de CodeQL; también referencias HTML, navegación, recursos y correspondencia exacta entre docs y dist. Se cubren precios alterados, límites, selección y adición completa de paquetes personalizados, consultas, Unicode, privacidad, CSP, enlaces y las variantes de HTML mal formado que originaron las alertas anteriores. El HTML se interpreta con parse5 sin eliminar comentarios ni usar expresiones regulares para reconocer scripts.
 
 El workflow de GitHub revisa los archivos entregados antes de ejecutar el build y después comprueba que el build no modifica la publicación. CodeQL analiza JavaScript en otro trabajo con permisos limitados. El trabajo falla si su salida SARIF contiene cualquier hallazgo o no puede verificarse; terminar de ejecutar CodeQL no basta para aprobar. Dependabot propone actualizaciones de acciones y herramientas npm. Para impedir una fusión hay que exigir ambos trabajos en la protección de `main`, que requiere acceso de administrador. Detalles en [SECURITY.md](SECURITY.md), [Seguridad en GitHub](notes/seguridad-github.md) y [Auditoría de corrección](notes/auditoria-seguridad-20260909.md).
 

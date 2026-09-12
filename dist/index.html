@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260909r3">
-  <link rel="stylesheet" href="cart-enhancements.css?v=20260909r3">
-  <link rel="stylesheet" href="storefront.css?v=20260909r3">
+  <link rel="stylesheet" href="styles.css?v=20260912r2">
+  <link rel="stylesheet" href="cart-enhancements.css?v=20260912r2">
+  <link rel="stylesheet" href="storefront.css?v=20260912r2">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -124,6 +124,7 @@
         <span class="eyebrow">De La Barca a tu mesa</span>
         <h1>Encuentra tu próximo antojo.</h1>
         <p>Botanas, ingredientes y aromas para disfrutar a tu manera.</p>
+        <div class="pack-callout"><div><strong>Tres sabores, a tu gusto.</strong><span>Combina tres bolsas de 50 g y descubre tus favoritos.</span></div><button class="button button-secondary" type="button" data-view-link="paquetes">Arma tu paquete →</button></div>
       </div>
       <div class="section-shell catalog-shell">
         <div class="catalog-toolbar" role="search" aria-label="Buscar y filtrar productos">
@@ -160,7 +161,25 @@
 
     <section class="view catalog-view" data-view="paquetes">
       <div class="catalog-heading section-shell"><span class="eyebrow">Tres sabores, una elección</span><h1>Empieza con un poquito de todo.</h1><p>Un paquete para descubrir tus favoritos, compartir o regalar.</p></div>
-      <div class="section-shell catalog-shell"><div class="bundle-intro"><strong>Bolsas separadas, sabores bien elegidos.</strong><p>Consulta el contenido exacto y el ahorro frente a los productos individuales. Los paquetes se preparan sobre pedido.</p></div><div class="product-grid" id="bundle-grid"></div></div>
+      <div class="section-shell catalog-shell">
+        <section class="pack-builder" aria-labelledby="custom-pack-title">
+          <div class="pack-builder-heading"><div><span class="eyebrow">Tu combinación favorita</span><h2 id="custom-pack-title">Arma tu paquete</h2></div><span class="pack-size">3 bolsas × 50 g</span></div>
+          <p id="custom-pack-help" class="pack-help">Elige tres sabores diferentes. Cada uno va en su propia bolsa: 150 g para probar, compartir o regalar.</p>
+          <form id="custom-pack-form" aria-describedby="custom-pack-help custom-pack-pricing">
+            <div class="pack-choices">
+              <div class="pack-choice"><label for="custom-pack-1">Bolsa 1 <span>50 g</span></label><select id="custom-pack-1" data-pack-choice aria-describedby="custom-pack-preview-1" required><option value="">Elige un sabor</option></select><div class="pack-choice-preview" id="custom-pack-preview-1" data-pack-preview><span class="pack-placeholder" aria-hidden="true">1</span><p>Tu primer antojo</p></div></div>
+              <div class="pack-choice"><label for="custom-pack-2">Bolsa 2 <span>50 g</span></label><select id="custom-pack-2" data-pack-choice aria-describedby="custom-pack-preview-2" required><option value="">Elige un sabor</option></select><div class="pack-choice-preview" id="custom-pack-preview-2" data-pack-preview><span class="pack-placeholder" aria-hidden="true">2</span><p>Un sabor por descubrir</p></div></div>
+              <div class="pack-choice"><label for="custom-pack-3">Bolsa 3 <span>50 g</span></label><select id="custom-pack-3" data-pack-choice aria-describedby="custom-pack-preview-3" required><option value="">Elige un sabor</option></select><div class="pack-choice-preview" id="custom-pack-preview-3" data-pack-preview><span class="pack-placeholder" aria-hidden="true">3</span><p>El toque final</p></div></div>
+            </div>
+            <div class="pack-summary"><div class="pack-tally" role="status" aria-live="polite" aria-atomic="true"><span id="custom-pack-progress">0 de 3 sabores elegidos</span><div><span id="custom-pack-total-label">Total de tu selección</span><strong id="custom-pack-total">$0</strong><span>MXN</span></div></div><button class="button button-primary" type="submit" id="custom-pack-add" disabled>Elige tus 3 sabores</button></div>
+            <p id="custom-pack-pricing" class="pack-help pack-pricing">El total suma los precios individuales, sin descuento adicional. El envío se calcula en el carrito. Se agregarán las tres bolsas por separado para que puedas ajustar las cantidades.</p>
+            <p id="custom-pack-preorder" class="pack-preorder" hidden>Tu selección incluye sabores sobre pedido. Confirmaremos disponibilidad y fecha de preparación antes del pago.</p>
+            <div class="pack-form-footer"><button class="text-link" type="button" id="custom-pack-reset" disabled>Limpiar selección</button><p id="custom-pack-error" class="pack-error" role="alert"></p></div>
+          </form>
+        </section>
+        <div class="section-heading pack-curated-heading"><div><span class="eyebrow">Una combinación lista para ti</span><h2>También puedes probar…</h2></div></div>
+        <div class="bundle-intro"><strong>Bolsas separadas, sabores bien elegidos.</strong><p>Consulta el contenido exacto y el ahorro de nuestro paquete degustación frente a los productos individuales. Se prepara sobre pedido.</p></div><div class="product-grid" id="bundle-grid"></div>
+      </div>
     </section>
 
     <section class="view" data-view="negocios">
@@ -451,8 +470,8 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.2 4.7A15.5 15.5 0 0 0 2.8 23.4L.6 31.5l8.3-2.2a15.5 15.5 0 0 0 7.4 1.9h.1A15.6 15.6 0 0 0 27.2 4.7Zm-10.8 24a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5a12.9 12.9 0 1 1 10.9 6.1Zm7.1-9.7c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-2.3-1.1-3.8-2-5.3-4.6-.4-.7.4-.7 1.1-2.2.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.7-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 2.3-1.9 2.6-2.7.3-.8.3-1.5.2-1.7-.2-.4-.4-.5-.8-.7Z"/></svg>
   </a>
 
-  <script src="catalog.js?v=20260909r3"></script>
-  <script src="commerce.js?v=20260909r3"></script>
-  <script src="app.js?v=20260909r3"></script>
+  <script src="catalog.js?v=20260912r2"></script>
+  <script src="commerce.js?v=20260912r2"></script>
+  <script src="app.js?v=20260912r2"></script>
 </body>
 </html>

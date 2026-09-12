@@ -56,6 +56,37 @@
     $("catalog-search").value = ""; $("catalog-occasion").value = "all"; $("catalog-sort").value = "recommended"; $("catalog-new").checked = false;
     renderCatalog();
   }
+  const packChoices = Array.from(document.querySelectorAll("[data-pack-choice]"));
+  const packPreviews = Array.from(document.querySelectorAll("[data-pack-preview]"));
+  const packIds = () => packChoices.map(select => select.value);
+  function renderCustomPack() {
+    const ids = packIds(), eligible = C.customPackOptions(PRODUCTS);
+    const selected = ids.map(id => eligible.find(product => product.id === id));
+    const complete = C.customPack(PRODUCTS,ids);
+    const count = selected.filter(Boolean).length;
+    const subtotal = selected.reduce((sum,product) => sum + (product ? C.variant(product,"50 g").price : 0),0);
+    packChoices.forEach((select,index) => {
+      Array.from(select.options).forEach(option => { option.disabled = Boolean(option.value) && ids.some((id,other) => other !== index && id === option.value); });
+      const product = selected[index];
+      packPreviews[index].innerHTML = product ? photo(product,"small") + '<div><strong>' + escape(product.name) + '</strong><span class="availability ' + (product.availability === "Sobre pedido" ? "preorder" : "") + '">' + escape(product.availability) + '</span><button class="text-link" type="button" data-detail="' + escape(product.id) + '" data-detail-weight="50 g" aria-label="Ver ingredientes de ' + escape(product.name) + '">Ver ingredientes</button></div>' : '<span class="pack-placeholder" aria-hidden="true">' + (index + 1) + '</span><p>' + ["Tu primer antojo","Un sabor por descubrir","El toque final"][index] + '</p>';
+    });
+    $("custom-pack-progress").textContent = count + " de 3 sabores elegidos" + (complete ? " · 150 g en total" : "");
+    $("custom-pack-total-label").textContent = complete ? "Total de tu paquete" : "Total de tu selección";
+    $("custom-pack-total").textContent = money(complete ? complete.subtotal : subtotal);
+    $("custom-pack-add").disabled = !complete;
+    $("custom-pack-add").textContent = complete ? "Agregar las 3 bolsas al carrito" : "Elige tus 3 sabores";
+    $("custom-pack-reset").disabled = count === 0;
+    $("custom-pack-preorder").hidden = !selected.some(product => product?.availability === "Sobre pedido");
+    $("custom-pack-error").textContent = eligible.length < 3 ? "Por ahora no hay tres sabores para combinar. Puedes elegir bolsas individuales en la tienda." : "";
+  }
+  function initializeCustomPack() {
+    const eligible = C.customPackOptions(PRODUCTS);
+    packChoices.forEach(select => {
+      select.innerHTML = '<option value="">Elige un sabor</option>' + eligible.map(product => '<option value="' + escape(product.id) + '">' + escape(product.name) + ' · ' + money(C.variant(product,"50 g").price) + (product.availability === "Sobre pedido" ? " · Sobre pedido" : "") + '</option>').join("");
+      select.addEventListener("change",renderCustomPack);
+    });
+    renderCustomPack();
+  }
   function setBackgroundInert(value) { document.querySelectorAll("header,main,footer,.announcement,.whatsapp-float,.skip-link").forEach(element => { element.inert = value; }); }
   function closeCart(restore = true) {
     const wasOpen = $("cart-drawer").classList.contains("open");
@@ -140,9 +171,9 @@
     $("detail-opened").textContent = product.storage.opened;
     $("detail-contact").href = whatsappUrl("Hola, quisiera confirmar los ingredientes completos, alérgenos e indicaciones de conservación de " + product.name + " (" + label + ") antes de pedir.");
   }
-  function openDetails(id) {
+  function openDetails(id,preferredLabel) {
     const product = C.findProduct(PRODUCTS,id); if (!product) return; detailId = id;
-    const label = selections.get(id) || product.variants[0].label;
+    const label = C.variant(product,preferredLabel)?.label || selections.get(id) || product.variants[0].label;
     const imageCaption = product.id === "tomate-cherry" ? "Opción natural · imagen ilustrativa con IA" : "Imagen ilustrativa generada con IA";
     $("detail-photo").innerHTML = photo(product,"detail") + '<span class="image-caption">' + escape(imageCaption) + '</span>';
     $("detail-type").textContent = product.type; $("detail-title").textContent = product.name;
@@ -169,7 +200,7 @@
     if (button.dataset.viewLink) showView(button.dataset.viewLink);
     if (button.dataset.shopCategory) { filters.category = button.dataset.shopCategory; renderCatalog(); showView("catalogo"); }
     if (button.dataset.category) { filters.category = button.dataset.category; renderCatalog(); }
-    if (button.dataset.detail) openDetails(button.dataset.detail);
+    if (button.dataset.detail) openDetails(button.dataset.detail,button.dataset.detailWeight);
     if (button.dataset.addProduct) addToCart(button.dataset.addProduct,button.closest(".product-card").querySelector(".weight-select").value);
     if (button.dataset.quickAdd) addToCart(button.dataset.quickAdd,button.dataset.weight);
     if (button.dataset.cartChange) {
@@ -192,6 +223,18 @@
   $("catalog-sort").addEventListener("change",event => { filters.sort = event.target.value; renderCatalog(); });
   $("catalog-new").addEventListener("change",event => { filters.onlyNew = event.target.checked; renderCatalog(); });
   $("catalog-reset").addEventListener("click",resetFilters); $("empty-reset").addEventListener("click",resetFilters);
+  $("custom-pack-reset").addEventListener("click",() => { packChoices.forEach(select => { select.value = ""; }); renderCustomPack(); packChoices[0].focus(); });
+  $("custom-pack-form").addEventListener("submit",event => {
+    event.preventDefault();
+    const result = C.addCustomPack(cart,PRODUCTS,packIds());
+    if (!result.added) {
+      $("custom-pack-error").textContent = result.reason === "limit" ? "Uno de estos sabores ya alcanzó el límite de 99 bolsas. Ajusta su cantidad en el carrito para agregar tu paquete." : "Elige tres sabores diferentes de 50 g para agregar tu paquete.";
+      return;
+    }
+    cart = result.cart; saveCart();
+    $("custom-pack-error").textContent = "";
+    toast("Tus tres bolsas de 50 g se agregaron al carrito."); openCart();
+  });
   $("menu-toggle").addEventListener("click",() => { $("menu-toggle").setAttribute("aria-expanded",String($("main-nav").classList.toggle("open"))); });
   $("cart-trigger").addEventListener("click",openCart); $("cart-close").addEventListener("click",() => closeCart());
   $("drawer-backdrop").addEventListener("click",() => closeCart()); $("back-to-cart").addEventListener("click",openCart);
@@ -241,5 +284,5 @@
   window.addEventListener("pagehide",() => ["checkout","quote","business"].forEach(invalidateHandoff));
   [["cart-checkout","checkout"],["quote-form","quote"],["business-form","business"]].forEach(([id,prefix]) => $(id).addEventListener("reset",() => invalidateHandoff(prefix)));
   $("year").textContent = new Date().getFullYear();
-  renderProducts(); renderCart(); updateQuote(); showView(location.hash.slice(1) || "inicio",false,false);
+  renderProducts(); initializeCustomPack(); renderCart(); updateQuote(); showView(location.hash.slice(1) || "inicio",false,false);
 })();
