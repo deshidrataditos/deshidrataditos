@@ -48,6 +48,40 @@
     return sanitizeCart([...cart, {productId, weight:label, quantity}], products);
   }
 
+  function customPackOptions(products) {
+    return products.filter(product => {
+      const selected = variant(product, "50 g");
+      return !product.quoteOnly && !product.bundle
+        && (product.availability === "Disponible" || product.availability === "Sobre pedido")
+        && selected?.grams === 50 && Number.isFinite(selected.price) && selected.price > 0;
+    });
+  }
+
+  function customPack(products, ids) {
+    if (!Array.isArray(ids) || ids.length !== 3 || new Set(ids).size !== 3 || [...ids].some(id => typeof id !== "string")) return null;
+    const options = customPackOptions(products);
+    const selected = ids.map(id => findProduct(options, id));
+    if (selected.some(product => !product)) return null;
+    const items = selected.map(product => ({productId:product.id, weight:"50 g", price:variant(product, "50 g").price, quantity:1}));
+    return {items, subtotal:items.reduce((sum, item) => sum + item.price, 0), grams:150, preorder:selected.some(product => product.availability === "Sobre pedido")};
+  }
+
+  function addCustomPack(cart, products, ids) {
+    const clean = sanitizeCart(cart, products);
+    const pack = customPack(products, ids);
+    if (!pack) return {cart:clean, added:false, reason:"selection"};
+    if (pack.items.some(item => clean.some(row => row.productId === item.productId && row.weight === item.weight && row.quantity >= MAX_QUANTITY))) {
+      return {cart:clean, added:false, reason:"limit"};
+    }
+    const result = clean.map(row => ({...row}));
+    for (const item of pack.items) {
+      const existing = result.find(row => row.productId === item.productId && row.weight === item.weight);
+      if (existing) existing.quantity++;
+      else result.push({key:`${item.productId}-${item.weight}`, ...item});
+    }
+    return {cart:result, added:true, reason:null};
+  }
+
   function totals(cart, delivery = "national") {
     const subtotal = cart.reduce((sum, row) => sum + row.price * row.quantity, 0);
     const count = cart.reduce((sum, row) => sum + row.quantity, 0);
@@ -148,5 +182,5 @@
       "Por favor confirma disponibilidad, ingredientes y fecha de preparación/entrega antes del pago."
     ].filter(line => line !== null).join("\n");
   }
-  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, cleanText, readCart, sanitizeCart, addItem, totals, filterProducts, recommend, bundleValue, quoteMessage, deliveryMessage, orderMessage};
+  globalThis.DeshidrataditosCommerce = {MAX_QUANTITY, FREE_SHIPPING, NATIONAL_SHIPPING, normalize, variant, findProduct, cleanText, readCart, sanitizeCart, addItem, customPackOptions, customPack, addCustomPack, totals, filterProducts, recommend, bundleValue, quoteMessage, deliveryMessage, orderMessage};
 })();

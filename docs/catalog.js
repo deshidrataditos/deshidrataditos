@@ -12,8 +12,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 89,
       "100 g": 169,
-      "250 g": 399,
-      "1 kg": 1490
+      "250 g": 399
     },
     "bg": "#ead2bc",
     "color": "#542311"
@@ -28,8 +27,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 119,
       "100 g": 219,
-      "250 g": 519,
-      "1 kg": 1990
+      "250 g": 519
     },
     "bg": "#e7ddd3",
     "color": "#6b442c"
@@ -67,8 +65,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 49,
       "100 g": 89,
-      "250 g": 209,
-      "1 kg": 749
+      "250 g": 209
     },
     "bg": "#f5b1a6",
     "color": "#a62622"
@@ -83,8 +80,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 35,
       "100 g": 59,
-      "250 g": 139,
-      "1 kg": 499
+      "250 g": 139
     },
     "bg": "#ead39f",
     "color": "#75401e"
@@ -100,8 +96,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 29,
       "100 g": 49,
-      "250 g": 109,
-      "1 kg": 399
+      "250 g": 109
     },
     "bg": "#f1dc7f",
     "color": "#725819"
@@ -116,8 +111,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 39,
       "100 g": 69,
-      "250 g": 159,
-      "1 kg": 549
+      "250 g": 159
     },
     "bg": "#d7a0b3",
     "color": "#7a193d"
@@ -132,8 +126,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 39,
       "100 g": 69,
-      "250 g": 159,
-      "1 kg": 549
+      "250 g": 159
     },
     "bg": "#efe6d5",
     "color": "#6f5135"
@@ -148,8 +141,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 39,
       "100 g": 69,
-      "250 g": 159,
-      "1 kg": 549
+      "250 g": 159
     },
     "bg": "#b8db9d",
     "color": "#295f2d"
@@ -164,8 +156,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 35,
       "100 g": 59,
-      "250 g": 139,
-      "1 kg": 499
+      "250 g": 139
     },
     "bg": "#efb17d",
     "color": "#8d3e19"
@@ -180,8 +171,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 39,
       "100 g": 69,
-      "250 g": 159,
-      "1 kg": 549
+      "250 g": 159
     },
     "bg": "#c7dc75",
     "color": "#3b6728"
@@ -196,8 +186,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 55,
       "100 g": 99,
-      "250 g": 229,
-      "1 kg": 849
+      "250 g": 229
     },
     "bg": "#f2b7c6",
     "color": "#8b3151"
@@ -212,8 +201,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 35,
       "100 g": 59,
-      "250 g": 129,
-      "1 kg": 449
+      "250 g": 129
     },
     "bg": "#d895aa",
     "color": "#731d3d"
@@ -228,8 +216,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 45,
       "100 g": 79,
-      "250 g": 179,
-      "1 kg": 649
+      "250 g": 179
     },
     "bg": "#f4df80",
     "color": "#7a5d16"
@@ -244,8 +231,7 @@ const PRODUCTS = [
     "prices": {
       "50 g": 65,
       "100 g": 119,
-      "250 g": 279,
-      "1 kg": 999
+      "250 g": 279
     },
     "bg": "#efb0bc",
     "color": "#862f48"
@@ -504,7 +490,7 @@ const ADDITIONS = [
 ];
 const CATEGORY_NAMES = {jerky:'Cecina jerky',fruit:'Frutas de temporada y favoritos',vegetable:'Vegetales',flower:'Flores y tisanas',citrus:'Cítricos',pantry:'Sazonadores y cocina',bundle:'Paquetes'};
 const occasionMap = {jerky:['snack'],fruit:['snack'],vegetable:['snack'],flower:['bebidas'],citrus:['bebidas'],pantry:['cocina'],bundle:['snack','regalo']};
-const gramsFor = label => label === '1 kg' ? 1000 : label === '4 × 25 g' ? 100 : label === '3 × 50 g' ? 150 : Number.parseInt(label,10);
+const gramsFor = label => label === '4 × 25 g' ? 100 : label === '3 × 50 g' ? 150 : Number.parseInt(label,10);
 const originalUses = {jerky:'Disfrútalo directamente como botana. Sigue las indicaciones de conservación y la fecha del envase.',fruit:'Disfruta la fruta directamente, sola o para acompañar tu botana favorita.',vegetable:'Listos para acompañar una pausa o compartir como botana.',flower:'Prepara una infusión siguiendo las indicaciones del envase y cuela antes de servir.'};
 // Ingredient references come from the existing catalog, not a validated label.
 const PRODUCT_DETAILS = {
