@@ -4,7 +4,8 @@ Tienda estática de alimentos deshidratados de La Barca, Jalisco. GitHub Pages p
 
 ## Catálogo y compra
 
-- 27 artículos: frutas de temporada, favoritos, cítricos, tisanas, sazonadores y paquetes.
+- 26 artículos: frutas de temporada, favoritos, cítricos, tisanas, sazonadores y paquetes.
+- Se retira la flor de jamaica como producto individual. La tisana jamaica y piña continúa disponible; los carritos guardados descartan las presentaciones de la flor retirada.
 - Desde el 12 de septiembre de 2026 se retiran las presentaciones de 1 kg de los 14 artículos que las ofrecían; conservan sus opciones de 50 g, 100 g y 250 g con los mismos precios. El resto de las presentaciones y paquetes sigue vigente. Los carritos guardados descartan las opciones retiradas al cargar el catálogo actual.
 - Fresa con chile se mantiene; plátano natural pasa a plátano macho deshidratado con imagen propia. Se retiran piña con chile, mango con chile, rollito de mango y mix tropical enchilado.
 - Tomate cherry deshidratado con opciones natural y finas hierbas; ajo deshidratado en hojuelas como incorporación sobre pedido.
@@ -62,7 +63,7 @@ Las consultas de cobertura solicitan únicamente ciudad, estado y código postal
 
 ## Imágenes
 
-Los 27 artículos tienen una imagen de estudio dedicada generada con ImageGen, con fondo marfil, iluminación suave y textura realista del alimento deshidratado. Las fichas y tarjetas comparten la foto correcta de cada artículo; no utilizan recortes de las antiguas imágenes por categoría. Las imágenes se identifican como ilustrativas y no sustituyen fotografías del producto final. La ficha de cherry aclara que la fotografía representa la opción natural.
+Los 26 artículos tienen una imagen de estudio dedicada generada con ImageGen, con fondo marfil, iluminación suave y textura realista del alimento deshidratado. Las fichas y tarjetas comparten la foto correcta de cada artículo; no utilizan recortes de las antiguas imágenes por categoría. Las imágenes se identifican como ilustrativas y no sustituyen fotografías del producto final. La ficha de cherry aclara que la fotografía representa la opción natural.
 
 Cada imagen se publica en `dist/assets/products/{id}-studio.webp` (1,000 × 1,000) y en una versión `{id}-studio-480.webp` (480 × 480), sincronizadas con `docs/assets/products/`. Las 54 imágenes suman aproximadamente 5 MB; la tienda elige el tamaño según el espacio de visualización. Los originales PNG se conservaron fuera de la carpeta pública, en `../asset-work/studio-originals/`. Los recursos editoriales anteriores se mantienen para cabeceras y compatibilidad.
 

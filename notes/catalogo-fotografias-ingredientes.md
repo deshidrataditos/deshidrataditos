@@ -1,6 +1,6 @@
 # Catálogo: fotografías, ingredientes y conservación
 
-Se documentan los 27 artículos del catálogo, cada uno con una imagen dedicada de aspecto fotográfico profesional. Las imágenes son ilustrativas y fueron generadas con IA mediante la herramienta integrada `image_gen`, una generación por artículo. No corresponden a fotografías tomadas de unidades físicas reales ni certifican el contenido o aspecto exacto de un lote.
+Se documentan los 26 artículos vigentes del catálogo, cada uno con una imagen dedicada de aspecto fotográfico profesional. Las imágenes son ilustrativas y fueron generadas con IA mediante la herramienta integrada `image_gen`, una generación por artículo. No corresponden a fotografías tomadas de unidades físicas reales ni certifican el contenido o aspecto exacto de un lote.
 
 La dirección visual mantiene platos de cerámica marfil, fondo cálido claro, iluminación suave lateral y texturas de alimentos deshidratados. El paquete degustación presenta sus tres sabores por separado. Las selecciones de temporada, el mix de vegetales y la tisana floral se muestran como composiciones de referencia porque su contenido aún debe confirmarse.
 
@@ -22,7 +22,6 @@ No se facilitaron recetas ni etiquetas de producto. Los ingredientes que siguen 
 | Chips de camote | `dist/assets/products/camote-studio.webp` | Camote deshidratado; Chile en polvo; Sal | Consulta la composición del chile utilizado en el lote. |
 | Mix de vegetales | `dist/assets/products/mix-vegetales-studio.webp` | Mezcla de vegetales deshidratados | Los vegetales y condimentos de la mezcla se confirman por lote. La imagen es una sugerencia de variedad; no define el contenido de tu bolsa. |
 | Tisana floral | `dist/assets/products/tisana-floral-studio.webp` | Mezcla de flores deshidratadas para infusión | Confirma las flores que componen la mezcla del lote antes de pedir. La imagen representa una mezcla floral de referencia. |
-| Flor de jamaica | `dist/assets/products/flor-jamaica-studio.webp` | Flor de jamaica deshidratada | Sin pendiente específico adicional; aplica la validación general de receta y etiqueta. |
 | Manzanilla | `dist/assets/products/manzanilla-studio.webp` | Flores de manzanilla deshidratadas | Sin pendiente específico adicional; aplica la validación general de receta y etiqueta. |
 | Pétalos de rosa | `dist/assets/products/petalos-rosa-studio.webp` | Pétalos de rosa deshidratados | Sin pendiente específico adicional; aplica la validación general de receta y etiqueta. |
 | Naranja en rodajas | `dist/assets/products/naranja-rodajas-studio.webp` | Naranja deshidratada en rodajas, con cáscara | Sin pendiente específico adicional; aplica la validación general de receta y etiqueta. |
