@@ -28,26 +28,30 @@ check("Frutas retiradas ausentes y plátano macho refleja los precios actualizad
   for (const id of ["pina-chile","mango-chile","mix-tropical","rollito-mango","platano-natural"]) assert.equal(C.findProduct(products,id),undefined);
   const plantain = C.findProduct(products,"platano-macho");
   assert.equal(plantain.name,"Plátano macho deshidratado");
-  assert.deepEqual(plantain.variants.map(item => item.price),[35,70,175]);
+  assert.deepEqual(plantain.variants.map(item => item.price),[35,68,166]);
   assert.ok(plantain.photo.src.includes("platano-macho"));
 });
-check("Precios por gramaje: cecina de 50 g a $95 y conversión proporcional para 100 y 250 g",() => {
+check("Precios por gramaje: escala $95/$185/$450 y ahorro progresivo en todo el catálogo",() => {
   const cecina = C.findProduct(products,"jerky-res");
-  assert.deepEqual(cecina.variants.map(item => [item.grams,item.price]),[[50,95],[100,190],[250,475]]);
+  assert.deepEqual(cecina.variants.map(item => [item.grams,item.price]),[[50,95],[100,185],[250,450]]);
   const priced50 = products.filter(product => product.variants.some(item => item.label === "50 g" && Number.isFinite(item.price)));
   assert.equal(priced50.length,20);
   for (const product of priced50) {
     const base = C.variant(product,"50 g").price;
-    assert.equal(C.variant(product,"100 g").price,base * 2,product.id + " 100 g");
-    assert.equal(C.variant(product,"250 g").price,base * 5,product.id + " 250 g");
+    const price100 = C.variant(product,"100 g").price;
+    const price250 = C.variant(product,"250 g").price;
+    assert.equal(price100,Math.round(base * 185 / 95),product.id + " 100 g");
+    assert.equal(price250,Math.round(base * 450 / 95),product.id + " 250 g");
+    assert.ok(price100 / 100 < base / 50,product.id + " ahorro en 100 g");
+    assert.ok(price250 / 250 < price100 / 100,product.id + " ahorro adicional en 250 g");
   }
 });
 check("Carrito antiguo: conserva cantidades, corrige precios y descarta artículos inválidos",() => {
   const result = C.sanitizeCart([row("fresa-chile","100 g",2,1),row("fresa-chile","1 kg",1,749),row("no-existe","1 kg"),row("fresa-chile","10 kg"),null,row("fresa-chile","50 g",-1),row("fresa-chile","50 g",NaN),row("fresa-chile","50 g","3")],products);
   assert.equal(result.length,1);
-  assert.equal(result[0].price,110);
+  assert.equal(result[0].price,107);
   assert.equal(result[0].quantity,2);
-  assert.equal(C.totals(result).subtotal,220);
+  assert.equal(C.totals(result).subtotal,214);
   assert.deepEqual(C.sanitizeCart({malformed:true},products),[]);
   assert.deepEqual(C.sanitizeCart(null,products),[]);
 });

@@ -11,8 +11,8 @@ const PRODUCTS = [
     "availability": "Disponible",
     "prices": {
       "50 g": 95,
-      "100 g": 190,
-      "250 g": 475
+      "100 g": 185,
+      "250 g": 450
     },
     "bg": "#ead2bc",
     "color": "#542311"
@@ -26,8 +26,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 125,
-      "100 g": 250,
-      "250 g": 625
+      "100 g": 243,
+      "250 g": 592
     },
     "bg": "#e7ddd3",
     "color": "#6b442c"
@@ -64,8 +64,8 @@ const PRODUCTS = [
     "availability": "Disponible",
     "prices": {
       "50 g": 55,
-      "100 g": 110,
-      "250 g": 275
+      "100 g": 107,
+      "250 g": 261
     },
     "bg": "#f5b1a6",
     "color": "#a62622"
@@ -79,8 +79,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 41,
-      "100 g": 82,
-      "250 g": 205
+      "100 g": 80,
+      "250 g": 194
     },
     "bg": "#ead39f",
     "color": "#75401e"
@@ -95,8 +95,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 35,
-      "100 g": 70,
-      "250 g": 175
+      "100 g": 68,
+      "250 g": 166
     },
     "bg": "#f1dc7f",
     "color": "#725819"
@@ -110,8 +110,8 @@ const PRODUCTS = [
     "availability": "Disponible",
     "prices": {
       "50 g": 45,
-      "100 g": 90,
-      "250 g": 225
+      "100 g": 88,
+      "250 g": 213
     },
     "bg": "#d7a0b3",
     "color": "#7a193d"
@@ -125,8 +125,8 @@ const PRODUCTS = [
     "availability": "Disponible",
     "prices": {
       "50 g": 45,
-      "100 g": 90,
-      "250 g": 225
+      "100 g": 88,
+      "250 g": 213
     },
     "bg": "#efe6d5",
     "color": "#6f5135"
@@ -140,8 +140,8 @@ const PRODUCTS = [
     "availability": "Disponible",
     "prices": {
       "50 g": 45,
-      "100 g": 90,
-      "250 g": 225
+      "100 g": 88,
+      "250 g": 213
     },
     "bg": "#b8db9d",
     "color": "#295f2d"
@@ -155,8 +155,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 41,
-      "100 g": 82,
-      "250 g": 205
+      "100 g": 80,
+      "250 g": 194
     },
     "bg": "#efb17d",
     "color": "#8d3e19"
@@ -170,8 +170,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 45,
-      "100 g": 90,
-      "250 g": 225
+      "100 g": 88,
+      "250 g": 213
     },
     "bg": "#c7dc75",
     "color": "#3b6728"
@@ -185,8 +185,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 61,
-      "100 g": 122,
-      "250 g": 305
+      "100 g": 119,
+      "250 g": 289
     },
     "bg": "#f2b7c6",
     "color": "#8b3151"
@@ -200,8 +200,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 41,
-      "100 g": 82,
-      "250 g": 205
+      "100 g": 80,
+      "250 g": 194
     },
     "bg": "#d895aa",
     "color": "#731d3d"
@@ -215,8 +215,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 51,
-      "100 g": 102,
-      "250 g": 255
+      "100 g": 99,
+      "250 g": 242
     },
     "bg": "#f4df80",
     "color": "#7a5d16"
@@ -230,8 +230,8 @@ const PRODUCTS = [
     "availability": "Sobre pedido",
     "prices": {
       "50 g": 71,
-      "100 g": 142,
-      "250 g": 355
+      "100 g": 138,
+      "250 g": 336
     },
     "bg": "#efb0bc",
     "color": "#862f48"
@@ -246,8 +246,8 @@ const ADDITIONS = [
     "description": "Rodajas aromáticas para darle un toque cítrico a tus bebidas y a la mesa.",
     "prices": {
       "50 g": 61,
-      "100 g": 122,
-      "250 g": 305
+      "100 g": 119,
+      "250 g": 289
     },
     "tags": [
       "Cítrico",
@@ -265,8 +265,8 @@ const ADDITIONS = [
     "description": "Un acento ácido y aromático para agua mineral, infusiones y coctelería.",
     "prices": {
       "50 g": 61,
-      "100 g": 122,
-      "250 g": 305
+      "100 g": 119,
+      "250 g": 289
     },
     "tags": [
       "Ácido",
@@ -284,8 +284,8 @@ const ADDITIONS = [
     "description": "Notas cítricas y ligeramente amargas para bebidas con personalidad.",
     "prices": {
       "50 g": 65,
-      "100 g": 130,
-      "250 g": 325
+      "100 g": 127,
+      "250 g": 308
     },
     "tags": [
       "Cítrico",
@@ -303,8 +303,8 @@ const ADDITIONS = [
     "description": "La acidez de la jamaica y el sabor tropical de la piña, para disfrutar caliente o con hielo.",
     "prices": {
       "50 g": 65,
-      "100 g": 130,
-      "250 g": 325
+      "100 g": 127,
+      "250 g": 308
     },
     "tags": [
       "Frutal",
@@ -322,8 +322,8 @@ const ADDITIONS = [
     "description": "Una mezcla de fruta y especias con aroma cálido y un toque cítrico.",
     "prices": {
       "50 g": 71,
-      "100 g": 142,
-      "250 g": 355
+      "100 g": 138,
+      "250 g": 336
     },
     "tags": [
       "Frutal",
@@ -395,8 +395,8 @@ const ADDITIONS = [
     "description": "Sabor concentrado para pastas, pizzas y ensaladas. Presentación seca en bolsa.",
     "prices": {
       "50 g": 51,
-      "100 g": 102,
-      "250 g": 255
+      "100 g": 99,
+      "250 g": 242
     },
     "tags": [
       "Salado",
