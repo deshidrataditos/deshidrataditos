@@ -192,21 +192,6 @@ const PRODUCTS = [
     "color": "#8b3151"
   },
   {
-    "id": "flor-jamaica",
-    "name": "Flor de jamaica",
-    "category": "flower",
-    "type": "Flor deshidratada",
-    "description": "De sabor ácido y color intenso, ideal para preparar infusiones calientes o agua fresca.",
-    "availability": "Sobre pedido",
-    "prices": {
-      "50 g": 41,
-      "100 g": 80,
-      "250 g": 194
-    },
-    "bg": "#d895aa",
-    "color": "#731d3d"
-  },
-  {
     "id": "manzanilla",
     "name": "Manzanilla",
     "category": "flower",
@@ -581,12 +566,6 @@ const PRODUCT_DETAILS = {
     ],
     "note": "Confirma las flores que componen la mezcla del lote antes de pedir. La imagen representa una mezcla floral de referencia."
   },
-  "flor-jamaica": {
-    "ingredients": [
-      "Flor de jamaica deshidratada"
-    ],
-    "note": ""
-  },
   "manzanilla": {
     "ingredients": [
       "Flores de manzanilla deshidratadas"
@@ -736,7 +715,6 @@ const PHOTO_DESCRIPTIONS = {
   "camote": "Láminas de camote deshidratado de color naranja con chile y sal",
   "mix-vegetales": "Selección de referencia de vegetales deshidratados; la composición se confirma por lote",
   "tisana-floral": "Mezcla de referencia de flores secas para tisana en plato marfil",
-  "flor-jamaica": "Cálices secos de jamaica de color borgoña intenso en plato marfil",
   "manzanilla": "Flores secas de manzanilla con centros dorados y pétalos claros en plato marfil",
   "petalos-rosa": "Pétalos secos de rosa con bordes rizados y tonos rosa y borgoña",
   "naranja-rodajas": "Rodajas deshidratadas de naranja con pulpa ámbar y cáscara anaranjada",

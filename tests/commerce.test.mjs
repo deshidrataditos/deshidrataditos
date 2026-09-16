@@ -8,9 +8,9 @@ let passed = 0;
 const check = (name,fn) => { fn(); passed++; console.log("OK " + name); };
 const row = (productId,weight,quantity = 1,price = -100) => ({productId,weight,quantity,price});
 
-check("27 productos únicos y 12 incorporaciones sobre pedido",() => {
-  assert.equal(products.length,27);
-  assert.equal(new Set(products.map(product => product.id)).size,27);
+check("26 productos únicos y 12 incorporaciones sobre pedido",() => {
+  assert.equal(products.length,26);
+  assert.equal(new Set(products.map(product => product.id)).size,26);
   assert.equal(products.filter(product => product.isNew).length,12);
   assert.ok(products.filter(product => product.isNew).every(product => product.availability === "Sobre pedido"));
   products.forEach(product => {
@@ -24,8 +24,8 @@ check("27 productos únicos y 12 incorporaciones sobre pedido",() => {
     });
   });
 });
-check("Frutas retiradas ausentes y plátano macho refleja los precios actualizados",() => {
-  for (const id of ["pina-chile","mango-chile","mix-tropical","rollito-mango","platano-natural"]) assert.equal(C.findProduct(products,id),undefined);
+check("Productos retirados ausentes y plátano macho refleja los precios actualizados",() => {
+  for (const id of ["pina-chile","mango-chile","mix-tropical","rollito-mango","platano-natural","flor-jamaica"]) assert.equal(C.findProduct(products,id),undefined);
   const plantain = C.findProduct(products,"platano-macho");
   assert.equal(plantain.name,"Plátano macho deshidratado");
   assert.deepEqual(plantain.variants.map(item => item.price),[35,68,166]);
@@ -35,7 +35,7 @@ check("Precios por gramaje: escala $95/$185/$450 y ahorro progresivo en todo el 
   const cecina = C.findProduct(products,"jerky-res");
   assert.deepEqual(cecina.variants.map(item => [item.grams,item.price]),[[50,95],[100,185],[250,450]]);
   const priced50 = products.filter(product => product.variants.some(item => item.label === "50 g" && Number.isFinite(item.price)));
-  assert.equal(priced50.length,20);
+  assert.equal(priced50.length,19);
   for (const product of priced50) {
     const base = C.variant(product,"50 g").price;
     const price100 = C.variant(product,"100 g").price;
@@ -56,7 +56,7 @@ check("Carrito antiguo: conserva cantidades, corrige precios y descarta artícul
   assert.deepEqual(C.sanitizeCart(null,products),[]);
 });
 check("Un carrito guardado elimina productos retirados sin cambiarlos por otro producto",() => {
-  const retired = [row("pina-chile","50 g"),row("mango-chile","100 g"),row("mix-tropical","50 g"),row("rollito-mango","25 g"),row("platano-natural","50 g")];
+  const retired = [row("pina-chile","50 g"),row("mango-chile","100 g"),row("mix-tropical","50 g"),row("rollito-mango","25 g"),row("platano-natural","50 g"),row("flor-jamaica","50 g"),row("flor-jamaica","100 g"),row("flor-jamaica","250 g")];
   const result = C.sanitizeCart([...retired,row("fresa-chile","50 g",2)],products);
   assert.deepEqual(result.map(item => item.productId),["fresa-chile"]);
   assert.equal(result[0].quantity,2);
