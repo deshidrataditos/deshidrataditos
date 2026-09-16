@@ -29,7 +29,7 @@
     const bundle = C.bundleValue(product,PRODUCTS);
     return '<article class="product-card" data-product-card="' + escape(product.id) + '">' +
       '<button type="button" class="product-photo-button" data-detail="' + escape(product.id) + '" aria-label="Ver detalles de ' + escape(product.name) + '"><span class="product-image-placeholder">' + photo(product) +
-      (product.isNew ? '<span class="new-badge">Nuevo</span>' : "") + '<span class="image-caption">Imagen ilustrativa</span></span></button>' +
+      (product.isNew ? '<span class="new-badge">Nuevo</span>' : "") + (product.id === "jerky-res" ? "" : '<span class="image-caption">Imagen ilustrativa</span>') + '</span></button>' +
       '<div class="product-body"><div class="product-meta"><span class="product-type">' + escape(product.type) + '</span><span class="availability ' + (product.availability === "Sobre pedido" ? "preorder" : "") + '">' + escape(product.availability) + '</span></div>' +
       '<h3><button type="button" data-detail="' + escape(product.id) + '">' + escape(product.name) + '</button></h3><p>' + escape(product.description) + '</p>' +
       '<div class="product-tags">' + product.tags.slice(0,2).map(tag => "<span>" + escape(tag) + "</span>").join("") + '</div>' +
@@ -174,8 +174,8 @@
   function openDetails(id,preferredLabel) {
     const product = C.findProduct(PRODUCTS,id); if (!product) return; detailId = id;
     const label = C.variant(product,preferredLabel)?.label || selections.get(id) || product.variants[0].label;
-    const imageCaption = product.id === "tomate-cherry" ? "Opción natural · imagen ilustrativa con IA" : "Imagen ilustrativa generada con IA";
-    $("detail-photo").innerHTML = photo(product,"detail") + '<span class="image-caption">' + escape(imageCaption) + '</span>';
+    const imageCaption = product.id === "jerky-res" ? "" : product.id === "tomate-cherry" ? "Opción natural · imagen ilustrativa con IA" : "Imagen ilustrativa generada con IA";
+    $("detail-photo").innerHTML = photo(product,"detail") + (imageCaption ? '<span class="image-caption">' + escape(imageCaption) + '</span>' : "");
     $("detail-type").textContent = product.type; $("detail-title").textContent = product.name;
     $("detail-description").textContent = product.description; $("detail-use").textContent = product.use; $("detail-status").textContent = product.availability;
     $("detail-preorder").hidden = product.availability !== "Sobre pedido"; $("detail-variant").innerHTML = options(product,label);
