@@ -24,19 +24,30 @@ check("27 productos únicos y 12 incorporaciones sobre pedido",() => {
     });
   });
 });
-check("Frutas retiradas ausentes y plátano macho conserva sus precios",() => {
+check("Frutas retiradas ausentes y plátano macho refleja los precios actualizados",() => {
   for (const id of ["pina-chile","mango-chile","mix-tropical","rollito-mango","platano-natural"]) assert.equal(C.findProduct(products,id),undefined);
   const plantain = C.findProduct(products,"platano-macho");
   assert.equal(plantain.name,"Plátano macho deshidratado");
-  assert.deepEqual(plantain.variants.map(item => item.price),[29,49,109]);
+  assert.deepEqual(plantain.variants.map(item => item.price),[35,70,175]);
   assert.ok(plantain.photo.src.includes("platano-macho"));
+});
+check("Precios por gramaje: cecina de 50 g a $95 y conversión proporcional para 100 y 250 g",() => {
+  const cecina = C.findProduct(products,"jerky-res");
+  assert.deepEqual(cecina.variants.map(item => [item.grams,item.price]),[[50,95],[100,190],[250,475]]);
+  const priced50 = products.filter(product => product.variants.some(item => item.label === "50 g" && Number.isFinite(item.price)));
+  assert.equal(priced50.length,20);
+  for (const product of priced50) {
+    const base = C.variant(product,"50 g").price;
+    assert.equal(C.variant(product,"100 g").price,base * 2,product.id + " 100 g");
+    assert.equal(C.variant(product,"250 g").price,base * 5,product.id + " 250 g");
+  }
 });
 check("Carrito antiguo: conserva cantidades, corrige precios y descarta artículos inválidos",() => {
   const result = C.sanitizeCart([row("fresa-chile","100 g",2,1),row("fresa-chile","1 kg",1,749),row("no-existe","1 kg"),row("fresa-chile","10 kg"),null,row("fresa-chile","50 g",-1),row("fresa-chile","50 g",NaN),row("fresa-chile","50 g","3")],products);
   assert.equal(result.length,1);
-  assert.equal(result[0].price,89);
+  assert.equal(result[0].price,110);
   assert.equal(result[0].quantity,2);
-  assert.equal(C.totals(result).subtotal,178);
+  assert.equal(C.totals(result).subtotal,220);
   assert.deepEqual(C.sanitizeCart({malformed:true},products),[]);
   assert.deepEqual(C.sanitizeCart(null,products),[]);
 });
@@ -126,10 +137,10 @@ check("Las recomendaciones para cocina nunca ofrecen agregar productos por cotiz
   assert.ok(result.length > 0);
   assert.ok(result.every(product => !product.quoteOnly));
 });
-check("Degustación: tres sabores vigentes, contenido de 150 g y ahorro real de $14",() => {
+check("Degustación: tres sabores vigentes, contenido de 150 g y ahorro real de $32",() => {
   const bundle = C.findProduct(products,"pack-degustacion");
   assert.deepEqual(bundle.bundle,[{id:"fresa-chile",label:"50 g",quantity:1},{id:"platano-macho",label:"50 g",quantity:1},{id:"manzana-canela",label:"50 g",quantity:1}]);
-  assert.deepEqual(C.bundleValue(bundle,products),{regular:113,saving:14});
+  assert.deepEqual(C.bundleValue(bundle,products),{regular:131,saving:32});
   const grams = bundle.bundle.reduce((sum,item) => sum + C.variant(C.findProduct(products,item.id),item.label).grams * item.quantity,0);
   assert.equal(grams,150); assert.equal(bundle.variants[0].grams,grams);
   assert.equal(C.bundleValue(products[0],products),null);
@@ -137,9 +148,9 @@ check("Degustación: tres sabores vigentes, contenido de 150 g y ahorro real de 
 check("Paquete personalizado: tres bolsas de 50 g suman sus precios vigentes sin descuento inventado",() => {
   const ids = ["fresa-chile","platano-macho","manzana-canela"];
   const pack = C.customPack(products,ids);
-  assert.deepEqual(pack,{items:ids.map(id => ({productId:id,weight:"50 g",price:C.variant(C.findProduct(products,id),"50 g").price,quantity:1})),subtotal:113,grams:150,preorder:true});
+  assert.deepEqual(pack,{items:ids.map(id => ({productId:id,weight:"50 g",price:C.variant(C.findProduct(products,id),"50 g").price,quantity:1})),subtotal:131,grams:150,preorder:true});
   const updated = products.map(product => product.id === ids[0] ? {...product,variants:product.variants.map(item => item.label === "50 g" ? {...item,price:59} : item)} : product);
-  assert.equal(C.customPack(updated,ids).subtotal,123);
+  assert.equal(C.customPack(updated,ids).subtotal,135);
   const available = products.map(product => ({...product,availability:"Disponible"}));
   assert.equal(C.customPack(available,ids).preorder,false);
 });
@@ -184,7 +195,7 @@ check("Agregar paquete conserva bolsas normales, suma cantidades y sobrevive al 
   assert.equal(result.cart.find(item => item.weight === "100 g").quantity,1);
   const restored = C.readCart(JSON.stringify(result.cart),products);
   assert.deepEqual(restored,result.cart);
-  assert.equal(C.totals(restored).subtotal,C.totals(original).subtotal + 113);
+  assert.equal(C.totals(restored).subtotal,C.totals(original).subtotal + 131);
   const message = C.orderMessage({cart:restored,products,delivery:"national",payment:"transferencia"});
   for (const id of ids) assert.ok(message.includes(`• ${C.findProduct(products,id).name} | 50 g × ${id === "fresa-chile" ? 3 : 1} |`));
   assert.ok(!message.includes("Contenido por paquete:"));

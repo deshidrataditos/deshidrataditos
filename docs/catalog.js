@@ -10,9 +10,9 @@ const PRODUCTS = [
     "description": "Carne de res con finas hierbas y sal ahumada. Picante bajo a intermedio.",
     "availability": "Disponible",
     "prices": {
-      "50 g": 89,
-      "100 g": 169,
-      "250 g": 399
+      "50 g": 95,
+      "100 g": 190,
+      "250 g": 475
     },
     "bg": "#ead2bc",
     "color": "#542311"
@@ -25,9 +25,9 @@ const PRODUCTS = [
     "description": "Carne de conejo con finas hierbas y sal ahumada. Elaboración sobre pedido.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 119,
-      "100 g": 219,
-      "250 g": 519
+      "50 g": 125,
+      "100 g": 250,
+      "250 g": 625
     },
     "bg": "#e7ddd3",
     "color": "#6b442c"
@@ -63,9 +63,9 @@ const PRODUCTS = [
     "description": "Notas dulces y ácidas con chile en polvo y una pizca de sal.",
     "availability": "Disponible",
     "prices": {
-      "50 g": 49,
-      "100 g": 89,
-      "250 g": 209
+      "50 g": 55,
+      "100 g": 110,
+      "250 g": 275
     },
     "bg": "#f5b1a6",
     "color": "#a62622"
@@ -78,9 +78,9 @@ const PRODUCTS = [
     "description": "Crujiente, aromática y naturalmente dulce. Una opción sin picante.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 35,
-      "100 g": 59,
-      "250 g": 139
+      "50 g": 41,
+      "100 g": 82,
+      "250 g": 205
     },
     "bg": "#ead39f",
     "color": "#75401e"
@@ -94,9 +94,9 @@ const PRODUCTS = [
     "description": "Rodajas de plátano macho maduro, de sabor concentrado y dulzor natural. Una botana sin chile para disfrutar donde quieras.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 29,
-      "100 g": 49,
-      "250 g": 109
+      "50 g": 35,
+      "100 g": 70,
+      "250 g": 175
     },
     "bg": "#f1dc7f",
     "color": "#725819"
@@ -109,9 +109,9 @@ const PRODUCTS = [
     "description": "Láminas crujientes con chile en polvo, sal y un color naturalmente intenso.",
     "availability": "Disponible",
     "prices": {
-      "50 g": 39,
-      "100 g": 69,
-      "250 g": 159
+      "50 g": 45,
+      "100 g": 90,
+      "250 g": 225
     },
     "bg": "#d7a0b3",
     "color": "#7a193d"
@@ -124,9 +124,9 @@ const PRODUCTS = [
     "description": "Ligera y crujiente, con chile en polvo y sal. Picante bajo a intermedio.",
     "availability": "Disponible",
     "prices": {
-      "50 g": 39,
-      "100 g": 69,
-      "250 g": 159
+      "50 g": 45,
+      "100 g": 90,
+      "250 g": 225
     },
     "bg": "#efe6d5",
     "color": "#6f5135"
@@ -139,9 +139,9 @@ const PRODUCTS = [
     "description": "Una botana fresca de sabor con chile en polvo y sal.",
     "availability": "Disponible",
     "prices": {
-      "50 g": 39,
-      "100 g": 69,
-      "250 g": 159
+      "50 g": 45,
+      "100 g": 90,
+      "250 g": 225
     },
     "bg": "#b8db9d",
     "color": "#295f2d"
@@ -154,9 +154,9 @@ const PRODUCTS = [
     "description": "Dulzor natural, textura crujiente y un toque de chile con sal.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 35,
-      "100 g": 59,
-      "250 g": 139
+      "50 g": 41,
+      "100 g": 82,
+      "250 g": 205
     },
     "bg": "#efb17d",
     "color": "#8d3e19"
@@ -169,9 +169,9 @@ const PRODUCTS = [
     "description": "Una mezcla para probar diferentes sabores y texturas en una sola bolsa.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 39,
-      "100 g": 69,
-      "250 g": 159
+      "50 g": 45,
+      "100 g": 90,
+      "250 g": 225
     },
     "bg": "#c7dc75",
     "color": "#3b6728"
@@ -184,9 +184,9 @@ const PRODUCTS = [
     "description": "Mezcla aromática de flores deshidratadas para preparar una bebida caliente o fría.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 55,
-      "100 g": 99,
-      "250 g": 229
+      "50 g": 61,
+      "100 g": 122,
+      "250 g": 305
     },
     "bg": "#f2b7c6",
     "color": "#8b3151"
@@ -199,9 +199,9 @@ const PRODUCTS = [
     "description": "De sabor ácido y color intenso, ideal para preparar infusiones calientes o agua fresca.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 35,
-      "100 g": 59,
-      "250 g": 129
+      "50 g": 41,
+      "100 g": 82,
+      "250 g": 205
     },
     "bg": "#d895aa",
     "color": "#731d3d"
@@ -214,9 +214,9 @@ const PRODUCTS = [
     "description": "Flores deshidratadas de aroma suave y delicado para preparar una infusión reconfortante.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 45,
-      "100 g": 79,
-      "250 g": 179
+      "50 g": 51,
+      "100 g": 102,
+      "250 g": 255
     },
     "bg": "#f4df80",
     "color": "#7a5d16"
@@ -229,9 +229,9 @@ const PRODUCTS = [
     "description": "Pétalos deshidratados de aroma floral, pensados para tisanas y mezclas especiales.",
     "availability": "Sobre pedido",
     "prices": {
-      "50 g": 65,
-      "100 g": 119,
-      "250 g": 279
+      "50 g": 71,
+      "100 g": 142,
+      "250 g": 355
     },
     "bg": "#efb0bc",
     "color": "#862f48"
@@ -245,9 +245,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Rodajas aromáticas para darle un toque cítrico a tus bebidas y a la mesa.",
     "prices": {
-      "50 g": 55,
-      "100 g": 99,
-      "250 g": 229
+      "50 g": 61,
+      "100 g": 122,
+      "250 g": 305
     },
     "tags": [
       "Cítrico",
@@ -264,9 +264,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Un acento ácido y aromático para agua mineral, infusiones y coctelería.",
     "prices": {
-      "50 g": 55,
-      "100 g": 99,
-      "250 g": 229
+      "50 g": 61,
+      "100 g": 122,
+      "250 g": 305
     },
     "tags": [
       "Ácido",
@@ -283,9 +283,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Notas cítricas y ligeramente amargas para bebidas con personalidad.",
     "prices": {
-      "50 g": 59,
-      "100 g": 109,
-      "250 g": 249
+      "50 g": 65,
+      "100 g": 130,
+      "250 g": 325
     },
     "tags": [
       "Cítrico",
@@ -302,9 +302,9 @@ const ADDITIONS = [
     "type": "Tisana frutal",
     "description": "La acidez de la jamaica y el sabor tropical de la piña, para disfrutar caliente o con hielo.",
     "prices": {
-      "50 g": 59,
-      "100 g": 109,
-      "250 g": 249
+      "50 g": 65,
+      "100 g": 130,
+      "250 g": 325
     },
     "tags": [
       "Frutal",
@@ -321,9 +321,9 @@ const ADDITIONS = [
     "type": "Tisana frutal",
     "description": "Una mezcla de fruta y especias con aroma cálido y un toque cítrico.",
     "prices": {
-      "50 g": 65,
-      "100 g": 119,
-      "250 g": 279
+      "50 g": 71,
+      "100 g": 142,
+      "250 g": 355
     },
     "tags": [
       "Frutal",
@@ -394,9 +394,9 @@ const ADDITIONS = [
     "type": "Ingrediente de cocina",
     "description": "Sabor concentrado para pastas, pizzas y ensaladas. Presentación seca en bolsa.",
     "prices": {
-      "50 g": 45,
-      "100 g": 79,
-      "250 g": 179
+      "50 g": 51,
+      "100 g": 102,
+      "250 g": 255
     },
     "tags": [
       "Salado",
@@ -724,7 +724,7 @@ const STORAGE_GUIDANCE = {
   }
 };
 const PHOTO_DESCRIPTIONS = {
-  "jerky-res": "Tiras de jerky de res con fibras visibles, finas hierbas y sal ahumada en plato marfil",
+  "jerky-res": "Láminas amplias y delgadas de cecina de res deshidratada, de tono rojizo y fibra fina, en plato marfil",
   "jerky-conejo": "Tiras finas de jerky de conejo con hierbas en plato marfil",
   "fruta-temporada": "Selección de referencia de frutas deshidratadas; la fruta disponible cambia según la temporada",
   "fresa-chile": "Láminas de fresa deshidratada con chile y sal en plato marfil",
@@ -778,7 +778,7 @@ const products = [
     tags:PRODUCT_TAGS[product.id] || product.tags || [product.category === 'flower' ? 'Para infusión' : /chile|picante|sal/.test(product.description) ? 'Sazonado' : 'Sabor natural']
   })),
   ...ADDITIONS.map(product => ({...product,availability:'Sobre pedido',isNew:true,bg:'#fff0d7',color:'#542311'}))
-].map(product => ({...product,foodDetails:PRODUCT_DETAILS[product.id],storage:STORAGE_OVERRIDES[product.id] || STORAGE_GUIDANCE[product.category],photo:{src:"assets/products/"+product.id+"-studio.webp",thumbnail:"assets/products/"+product.id+"-studio-480.webp",position:"center",scale:1,alt:PHOTO_DESCRIPTIONS[product.id]+"; imagen ilustrativa generada con IA"},occasions:occasionMap[product.category],variants:product.variants || Object.entries(product.prices).map(([label,price]) => ({label,price,grams:gramsFor(label)}))}));
+].map(product => ({...product,foodDetails:PRODUCT_DETAILS[product.id],storage:STORAGE_OVERRIDES[product.id] || STORAGE_GUIDANCE[product.category],photo:{src:"assets/products/"+product.id+"-studio.webp",thumbnail:"assets/products/"+product.id+"-studio-480.webp",position:"center",scale:1,alt:PHOTO_DESCRIPTIONS[product.id]+(product.id === "jerky-res" ? "" : "; imagen ilustrativa generada con IA")},occasions:occasionMap[product.category],variants:product.variants || Object.entries(product.prices).map(([label,price]) => ({label,price,grams:gramsFor(label)}))}));
 for (const product of products.filter(item => item.bundle)) {
   product.foodDetails.ingredients = product.bundle.map(item => {
     const component = products.find(candidate => candidate.id === item.id);
