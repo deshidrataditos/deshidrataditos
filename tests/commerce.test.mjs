@@ -31,7 +31,7 @@ check("Productos retirados ausentes y plátano macho refleja los precios actuali
   assert.deepEqual(plantain.variants.map(item => item.price),[35,68,166]);
   assert.ok(plantain.photo.src.includes("platano-macho"));
 });
-check("Precios por gramaje: escala $95/$185/$450 y ahorro progresivo en todo el catálogo",() => {
+check("Precios por gramaje: cítricos con tarifa propia y ahorro progresivo en todo el catálogo",() => {
   const cecina = C.findProduct(products,"jerky-res");
   assert.deepEqual(cecina.variants.map(item => [item.grams,item.price]),[[50,95],[100,185],[250,450]]);
   const priced50 = products.filter(product => product.variants.some(item => item.label === "50 g" && Number.isFinite(item.price)));
@@ -40,8 +40,10 @@ check("Precios por gramaje: escala $95/$185/$450 y ahorro progresivo en todo el 
     const base = C.variant(product,"50 g").price;
     const price100 = C.variant(product,"100 g").price;
     const price250 = C.variant(product,"250 g").price;
-    assert.equal(price100,Math.round(base * 185 / 95),product.id + " 100 g");
-    assert.equal(price250,Math.round(base * 450 / 95),product.id + " 250 g");
+    if (product.category !== "citrus") {
+      assert.equal(price100,Math.round(base * 185 / 95),product.id + " 100 g");
+      assert.equal(price250,Math.round(base * 450 / 95),product.id + " 250 g");
+    }
     assert.ok(price100 / 100 < base / 50,product.id + " ahorro en 100 g");
     assert.ok(price250 / 250 < price100 / 100,product.id + " ahorro adicional en 250 g");
   }
