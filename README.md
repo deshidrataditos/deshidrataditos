@@ -51,6 +51,8 @@ Se verificaron en navegador la ficha e imagen de plátano macho, la compra de do
 
 ## Datos comerciales
 
+Desde el 8 de octubre de 2026, los cítricos tienen precios propios para venta a bares y restaurantes, en MXN: limón $45/$70/$140, naranja $40/$65/$140 y toronja $45/$80/$160 para 50/100/250 g respectivamente. El precio por gramo disminuye en cada tamaño. El paquete personalizado con los tres cítricos de 50 g suma $130 y los carritos guardados se recalculan con los nuevos importes. Son precios de venta acordados a partir de referencias de mercado; la rentabilidad todavía requiere confirmar el rendimiento del limón y la naranja y los costos completos de producción.
+
 Se conservan los precios existentes de los productos que siguen en catálogo, incluido el plátano al cambiar a macho. Los precios heredados de incorporaciones anteriores son propuestas de lanzamiento, no márgenes calculados. Frutas de temporada, cherry y ajo quedan por cotizar. El paquete de 3 bolsas de 50 g contiene fresa con chile, plátano macho y manzana con canela: $99 frente a $113 por separado, ahorro de $14 calculado desde el catálogo. No se ofrecen descuentos mayoristas automáticos.
 
 La viabilidad técnica inicial del ajo, los límites de la evaluación del equipo Desali de 16 bandejas y el costeo por tanda están documentados en [Producción y temporada](notes/produccion-y-temporada.md). La rentabilidad requiere medir insumos, merma, energía, trabajo, empaque y demanda.

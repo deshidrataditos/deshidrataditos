@@ -230,9 +230,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Rodajas aromáticas para darle un toque cítrico a tus bebidas y a la mesa.",
     "prices": {
-      "50 g": 61,
-      "100 g": 119,
-      "250 g": 289
+      "50 g": 40,
+      "100 g": 65,
+      "250 g": 140
     },
     "tags": [
       "Cítrico",
@@ -249,9 +249,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Un acento ácido y aromático para agua mineral, infusiones y coctelería.",
     "prices": {
-      "50 g": 61,
-      "100 g": 119,
-      "250 g": 289
+      "50 g": 45,
+      "100 g": 70,
+      "250 g": 140
     },
     "tags": [
       "Ácido",
@@ -268,9 +268,9 @@ const ADDITIONS = [
     "type": "Cítricos para bebidas",
     "description": "Notas cítricas y ligeramente amargas para bebidas con personalidad.",
     "prices": {
-      "50 g": 65,
-      "100 g": 127,
-      "250 g": 308
+      "50 g": 45,
+      "100 g": 80,
+      "250 g": 160
     },
     "tags": [
       "Cítrico",
